@@ -65,6 +65,7 @@ void Game::Init()
 	ResourceManager::GetShader("sprite").SetMatrix4("projection", projection);
 
 	//Load textures
+	ResourceManager::LoadTexture("Assets/Textures/Background.png", GL_TRUE, "Background");
 	ResourceManager::LoadTexture("Assets/Textures/StandLeft.png", GL_TRUE, "StandLeft");
 	ResourceManager::LoadTexture("Assets/Textures/StandRight.png", GL_TRUE, "StandRight");
 	ResourceManager::LoadTexture("Assets/Textures/CrouchLeft.png", GL_TRUE, "CrouchLeft");
@@ -98,7 +99,8 @@ void Game::Update(GLfloat _dt)
 void Game::Render()
 {
 	postProcessor->BeginRender();
-
+	
+	spriteRenderer->DrawSprite(ResourceManager::GetTexture("Background"), glm::vec2(0.0f, 0.0f), glm::vec2(width, height));
 	spriteRenderer->DrawSprite(ResourceManager::GetTexture("StandLeft"), glm::vec2(512.0f, 384.0f), glm::vec2(30, 60));
 
 	postProcessor->EndRender();

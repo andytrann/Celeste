@@ -98,6 +98,9 @@
     <Image Include="Assets\Textures\StandRight.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Assets\Textures\Background.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Assets\Fonts\arialbd.ttf" />

@@ -175,6 +175,7 @@
     <ClInclude Include="Gameplay\Game.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Assets\Textures\Background.png" />
     <Image Include="Assets\Textures\CrouchLeft.png" />
     <Image Include="Assets\Textures\CrouchRight.png" />
     <Image Include="Assets\Textures\StandLeft.png" />
