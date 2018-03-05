@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Engine.cpp" />
+    <ClCompile Include="Gameplay\GameObject.cpp" />
     <ClCompile Include="Engine\Graphics\PostProcessor.cpp" />
     <ClCompile Include="Engine\Graphics\Shader.cpp" />
     <ClCompile Include="Engine\Graphics\SpriteRenderer.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="Engine\Graphics\Texture2D.cpp" />
     <ClCompile Include="Engine\IO\Keyboard.cpp" />
     <ClCompile Include="Engine\ResourceManager.cpp" />
+    <ClCompile Include="Gameplay\Celeste.cpp" />
     <ClCompile Include="Gameplay\Game.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
@@ -165,6 +167,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Engine.h" />
+    <ClInclude Include="Gameplay\GameObject.h" />
     <ClInclude Include="Engine\Graphics\PostProcessor.h" />
     <ClInclude Include="Engine\Graphics\Shader.h" />
     <ClInclude Include="Engine\Graphics\SpriteRenderer.h" />
@@ -172,6 +175,7 @@
     <ClInclude Include="Engine\Graphics\Texture2D.h" />
     <ClInclude Include="Engine\IO\Keyboard.h" />
     <ClInclude Include="Engine\ResourceManager.h" />
+    <ClInclude Include="Gameplay\Celeste.h" />
     <ClInclude Include="Gameplay\Game.h" />
   </ItemGroup>
   <ItemGroup>
