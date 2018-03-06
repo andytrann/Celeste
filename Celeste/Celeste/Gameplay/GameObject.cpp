@@ -7,7 +7,8 @@ GameObject::GameObject() :
 	color(1.0f),
 	rot(0.0f),
 	sprite(),
-	destroyed(false)
+	destroyed(false),
+	objectType(ObjectType::NONE)
 {
 }
 
@@ -18,11 +19,17 @@ GameObject::GameObject(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, glm::
 	color(_color),
 	rot(0.0f),
 	sprite(_sprite),
-	destroyed(false)
+	destroyed(false),
+	objectType(ObjectType::NONE)
 {
 }
 
 void GameObject::Draw(SpriteRenderer & _renderer)
 {
 	_renderer.DrawSprite(sprite, pos, size, rot, color);
+}
+
+ObjectType GameObject::GetType() const
+{
+	return objectType;
 }

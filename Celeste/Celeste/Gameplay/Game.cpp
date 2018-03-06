@@ -6,6 +6,7 @@
 #include "../Engine/Graphics/PostProcessor.h"
 #include "../Engine/Graphics/TextRenderer.h"
 #include "../Engine/IO/Keyboard.h"
+#include "Celeste.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -27,6 +28,8 @@ SpriteRenderer* spriteRenderer;
 PostProcessor* postProcessor;
 TextRenderer* textRenderer;
 ISoundEngine* soundEngine = createIrrKlangDevice();
+
+Celeste* celeste;
 
 Game::Game(GLuint _width, GLuint _height) :
 	state(GameState::GAME_MENU),
@@ -50,6 +53,9 @@ Game::~Game()
 
 	delete soundEngine;
 	soundEngine = nullptr;
+
+	delete celeste;
+	celeste = nullptr;
 }
 
 void Game::Init()
@@ -79,11 +85,16 @@ void Game::Init()
 	textRenderer = new TextRenderer(width, height);
 	textRenderer->Load("Assets/Fonts/arialbd.ttf", 32);
 
+	//Load Celeste
+	glm::vec2 playerPos = glm::vec2((width / 2), (height / 2));
+	celeste = new Celeste(playerPos, glm::vec2(30.0f, 60.0f), ResourceManager::GetTexture("StandLeft"), 100.0f);
+
 }
 
 void Game::ProcessInput()
 {
 	//put celestestate input handler in here
+	celeste->HandleInput();
 
 	if (Keyboard::KeyDown(GLFW_KEY_ESCAPE))
 	{
@@ -93,7 +104,7 @@ void Game::ProcessInput()
 
 void Game::Update(GLfloat _dt)
 {
-
+	celeste->Update(_dt);
 }
 
 void Game::Render()
@@ -101,7 +112,7 @@ void Game::Render()
 	postProcessor->BeginRender();
 	
 	spriteRenderer->DrawSprite(ResourceManager::GetTexture("Background"), glm::vec2(0.0f, 0.0f), glm::vec2(width, height));
-	spriteRenderer->DrawSprite(ResourceManager::GetTexture("StandLeft"), glm::vec2(512.0f, 384.0f), glm::vec2(30, 60));
+	celeste->Render(*spriteRenderer);
 
 	postProcessor->EndRender();
 	postProcessor->Render();

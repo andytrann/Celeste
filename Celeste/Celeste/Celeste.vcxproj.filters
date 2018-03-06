@@ -51,6 +51,9 @@
     <ClCompile Include="Gameplay\GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Gameplay\CelesteStates\StateStanding.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Graphics\Shaders\PostProcessing.fs" />
@@ -94,6 +97,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Gameplay\GameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Gameplay\CelesteStates\CelesteState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Gameplay\CelesteStates\StateStanding.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
