@@ -3,32 +3,41 @@
 #include "../Celeste.h"
 #include "../../Engine/IO/Keyboard.h"
 #include "../../Engine/ResourceManager.h"
-
-StateStanding::~StateStanding()
-{
-	//delete this;
-}
+#include "StateCrouching.h"
 
 CelesteState* StateStanding::HandleInput(Celeste& _celeste)
 {
 	if (Keyboard::KeyDown(GLFW_KEY_S))
 	{
-		//return new StateCrouching();
-		return nullptr;
+		return new StateCrouching();
 	}
 	else
 	{
-		int direction = 0;
+		int newDirection = 0;
 		if (Keyboard::Key(GLFW_KEY_D))
 		{
-			direction++;
+			newDirection++;
 		}
 		if (Keyboard::Key(GLFW_KEY_A))
 		{
-			direction--;
+			newDirection--;
 		}
 
-		_celeste.vel.x = (GLfloat)direction * _celeste.GetSpeed();
+		if (_celeste.direction == -1 && newDirection == 1)
+		{
+			_celeste.sprite = ResourceManager::GetTexture("StandRight");
+		}
+		else if (_celeste.direction == 1 && newDirection == -1)
+		{
+			_celeste.sprite = ResourceManager::GetTexture("StandLeft");
+		}
+
+		if (newDirection != 0)
+		{
+			_celeste.direction = newDirection;
+		}
+
+		_celeste.vel.x = (GLfloat)newDirection * _celeste.GetSpeed();
 
 		return nullptr;
 	}
@@ -41,5 +50,12 @@ void StateStanding::Update(Celeste& _celeste, GLfloat _dt)
 
 void StateStanding::Enter(Celeste& _celeste)
 {
-
+	if (_celeste.direction == 1)
+	{
+		_celeste.sprite = ResourceManager::GetTexture("StandRight");
+	}
+	else if (_celeste.direction == -1)
+	{
+		_celeste.sprite = ResourceManager::GetTexture("StandLeft");
+	}
 }

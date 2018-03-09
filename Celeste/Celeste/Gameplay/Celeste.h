@@ -18,6 +18,7 @@ public:
 
 	GLfloat GetSpeed() const;
 
+	int direction;
 private:
 	CelesteState* currentState;
 	GLfloat speed;

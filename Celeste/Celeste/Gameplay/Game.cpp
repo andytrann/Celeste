@@ -87,7 +87,7 @@ void Game::Init()
 
 	//Load Celeste
 	glm::vec2 playerPos = glm::vec2((width / 2), (height / 2));
-	celeste = new Celeste(playerPos, glm::vec2(30.0f, 60.0f), ResourceManager::GetTexture("StandLeft"), 100.0f);
+	celeste = new Celeste(playerPos, glm::vec2(30.0f, 60.0f), ResourceManager::GetTexture("StandRight"), 100.0f);
 
 }
 

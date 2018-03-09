@@ -4,7 +4,8 @@
 
 Celeste::Celeste() : 
 	GameObject(),
-	speed(100.0f)
+	speed(100.0f),
+	direction(1)
 {
 	objectType = ObjectType::CELESTE;
 }
@@ -12,7 +13,8 @@ Celeste::Celeste() :
 Celeste::Celeste(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, GLfloat _speed, glm::vec3 _color, glm::vec2 _vel) :
 	GameObject(_pos, _size, _sprite, _color, _vel),
 	currentState(new StateStanding()),
-	speed(_speed)
+	speed(_speed),
+	direction(1)
 {
 	objectType = ObjectType::CELESTE;
 }
