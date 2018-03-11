@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClCompile Include="Engine\Engine.cpp" />
     <ClCompile Include="Gameplay\CelesteStates\StateCrouching.cpp" />
+    <ClCompile Include="Gameplay\CelesteStates\StateInAir.cpp" />
     <ClCompile Include="Gameplay\CelesteStates\StateStanding.cpp" />
     <ClCompile Include="Gameplay\GameObject.cpp" />
     <ClCompile Include="Engine\Graphics\PostProcessor.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="Engine\Engine.h" />
     <ClInclude Include="Gameplay\CelesteStates\CelesteState.h" />
     <ClInclude Include="Gameplay\CelesteStates\StateCrouching.h" />
+    <ClInclude Include="Gameplay\CelesteStates\StateInAir.h" />
     <ClInclude Include="Gameplay\CelesteStates\StateStanding.h" />
     <ClInclude Include="Gameplay\GameObject.h" />
     <ClInclude Include="Engine\Graphics\PostProcessor.h" />

@@ -24,8 +24,8 @@ public:
 	GameObject(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, glm::vec3 _color = glm::vec3(1.0f),  glm::vec2 _vel = glm::vec2(0.0f, 0.0f));
 
 	virtual void Update(GLfloat _dt) {}
-	void Draw(SpriteRenderer& _renderer);
-	virtual bool CheckCollision(GameObject& _object) { return false; }
+	virtual void DoCollision(GameObject& _object) {}
+	virtual void Render(SpriteRenderer& _renderer);
 	ObjectType GetType() const;
 
 	glm::vec2 pos, size, vel;
@@ -35,6 +35,7 @@ public:
 	Texture2D sprite;
 
 protected:
+	GLboolean CheckCollision(GameObject& _object);
 	ObjectType objectType;
 };
 

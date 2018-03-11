@@ -36,3 +36,8 @@ void StateCrouching::Enter(Celeste & _celeste)
 		_celeste.sprite = ResourceManager::GetTexture("CrouchLeft");
 	}
 }
+
+LocationState StateCrouching::GetState()
+{
+	return LocationState::ON_GROUND;
+}

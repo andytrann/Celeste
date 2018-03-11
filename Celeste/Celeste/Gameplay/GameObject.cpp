@@ -24,7 +24,7 @@ GameObject::GameObject(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, glm::
 {
 }
 
-void GameObject::Draw(SpriteRenderer & _renderer)
+void GameObject::Render(SpriteRenderer & _renderer)
 {
 	_renderer.DrawSprite(sprite, pos, size, rot, color);
 }
@@ -32,4 +32,17 @@ void GameObject::Draw(SpriteRenderer & _renderer)
 ObjectType GameObject::GetType() const
 {
 	return objectType;
+}
+
+GLboolean GameObject::CheckCollision(GameObject& _other)
+{
+	// Collision x - axis ?
+	bool collisionX = pos.x + size.x >= _other.pos.x &&
+		_other.pos.x + _other.size.x >= pos.x;
+	// Collision y-axis?
+	bool collisionY = pos.y + size.y >= _other.pos.y &&
+		_other.pos.y + _other.size.y >= pos.y;
+
+	// Collision only if on both axes
+	return collisionX && collisionY;
 }

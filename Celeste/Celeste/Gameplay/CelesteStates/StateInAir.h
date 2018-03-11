@@ -1,9 +1,9 @@
-#ifndef STATE_CROUCHING_H
-#define STATE_CROUCHING_H
+#ifndef STATE_IN_AIR_H
+#define STATE_IN_AIR_H
 
 #include "CelesteState.h"
 
-class StateCrouching : public CelesteState
+class StateInAir : public CelesteState
 {
 public:
 	CelesteState* HandleInput(Celeste& _celeste);

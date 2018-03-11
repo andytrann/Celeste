@@ -1,6 +1,7 @@
 #include "Celeste.h"
 
 #include "CelesteStates/StateStanding.h"
+#include "CelesteStates/StateInAir.h"
 
 Celeste::Celeste() : 
 	GameObject(),
@@ -43,6 +44,54 @@ void Celeste::Update(GLfloat _dt)
 	currentState->Update(*this, _dt);
 }
 
+void Celeste::DoCollision(GameObject& _other)
+{
+	if (CheckCollision(_other))
+	{
+		GLfloat top = this->pos.y;
+		GLfloat bot = this->pos.y + this->size.y;
+		GLfloat left = this->pos.x;
+		GLfloat right = this->pos.x + this->size.x;
+
+		GLfloat otherTop = _other.pos.y;
+		GLfloat otherBot = _other.pos.y + _other.size.y;
+		GLfloat otherLeft = _other.pos.x;
+		GLfloat otherRight = _other.pos.x + _other.size.x;
+
+		if (top <= otherBot)
+		{
+			
+		}
+
+		else if (bot >= otherTop)
+		{
+			if (_other.GetType() == ObjectType::PLATFORM && GetState() == LocationState::IN_AIR)
+			{
+				delete currentState;
+				currentState = new StateStanding();
+				currentState->Enter(*this);
+			}
+		}
+
+		else if (left <= otherRight)
+		{
+
+		}
+
+		else if (right >= otherLeft)
+		{
+
+		}
+	}
+
+	else
+	{
+		delete currentState;
+		currentState = new StateInAir();
+		currentState->Enter(*this);
+	}
+}
+
 void Celeste::Render(SpriteRenderer & _renderer)
 {
 	_renderer.DrawSprite(sprite, pos, size, rot, color);
@@ -51,4 +100,9 @@ void Celeste::Render(SpriteRenderer & _renderer)
 GLfloat Celeste::GetSpeed() const
 {
 	return speed;
+}
+
+LocationState Celeste::GetState()
+{
+	return currentState->GetState();
 }

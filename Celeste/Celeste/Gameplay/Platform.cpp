@@ -1,5 +1,7 @@
 #include "Platform.h"
 
+#include "Celeste.h"
+
 Platform::Platform() : 
 	GameObject()
 {

@@ -115,6 +115,7 @@ void Game::Update(GLfloat _dt)
 {
 	celeste->Update(_dt);
 	ground->Update(_dt);
+	celeste->DoCollision(*ground);
 }
 
 void Game::Render()

@@ -3,8 +3,7 @@
 
 #include "GameObject.h"
 #include "PhysicsComponent.h"
-
-class CelesteState;
+#include "CelesteStates/CelesteState.h"
 
 class Celeste : public GameObject
 {
@@ -15,9 +14,11 @@ public:
 
 	void HandleInput();
 	void Update(GLfloat _dt);
+	void DoCollision(GameObject& _other);
 	void Render(SpriteRenderer& _renderer);
 
 	GLfloat GetSpeed() const;
+	LocationState GetState();
 
 	int direction;
 private:
