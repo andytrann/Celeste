@@ -7,6 +7,7 @@
 #include "../Engine/Graphics/TextRenderer.h"
 #include "../Engine/IO/Keyboard.h"
 #include "Celeste.h"
+#include "Platform.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -30,6 +31,7 @@ TextRenderer* textRenderer;
 ISoundEngine* soundEngine = createIrrKlangDevice();
 
 Celeste* celeste;
+Platform* ground;
 
 Game::Game(GLuint _width, GLuint _height) :
 	state(GameState::GAME_MENU),
@@ -56,6 +58,9 @@ Game::~Game()
 
 	delete celeste;
 	celeste = nullptr;
+
+	delete ground;
+	ground = nullptr;
 }
 
 void Game::Init()
@@ -72,6 +77,7 @@ void Game::Init()
 
 	//Load textures
 	ResourceManager::LoadTexture("Assets/Textures/Background.png", GL_TRUE, "Background");
+	ResourceManager::LoadTexture("Assets/Textures/Ground.png", GL_TRUE, "Ground");
 	ResourceManager::LoadTexture("Assets/Textures/StandLeft.png", GL_TRUE, "StandLeft");
 	ResourceManager::LoadTexture("Assets/Textures/StandRight.png", GL_TRUE, "StandRight");
 	ResourceManager::LoadTexture("Assets/Textures/CrouchLeft.png", GL_TRUE, "CrouchLeft");
@@ -86,8 +92,11 @@ void Game::Init()
 	textRenderer->Load("Assets/Fonts/arialbd.ttf", 32);
 
 	//Load Celeste
-	glm::vec2 playerPos = glm::vec2((width / 2), (height / 2));
+	glm::vec2 playerPos = glm::vec2(135.0f, (height / 2));
 	celeste = new Celeste(playerPos, glm::vec2(30.0f, 60.0f), ResourceManager::GetTexture("StandRight"), 100.0f);
+
+	//Load Platforms
+	ground = new Platform(glm::vec2(0.0f, Engine::SCREEN_HEIGHT * 7.0f / 8.0f), glm::vec2(300.0f, Engine::SCREEN_HEIGHT / 8.0f), ResourceManager::GetTexture("Ground"));
 
 }
 
@@ -105,6 +114,7 @@ void Game::ProcessInput()
 void Game::Update(GLfloat _dt)
 {
 	celeste->Update(_dt);
+	ground->Update(_dt);
 }
 
 void Game::Render()
@@ -113,6 +123,7 @@ void Game::Render()
 	
 	spriteRenderer->DrawSprite(ResourceManager::GetTexture("Background"), glm::vec2(0.0f, 0.0f), glm::vec2(width, height));
 	celeste->Render(*spriteRenderer);
+	ground->Render(*spriteRenderer);
 
 	postProcessor->EndRender();
 	postProcessor->Render();

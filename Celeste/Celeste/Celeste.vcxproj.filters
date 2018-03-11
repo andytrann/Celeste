@@ -57,6 +57,9 @@
     <ClCompile Include="Gameplay\CelesteStates\StateCrouching.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Gameplay\Platform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Graphics\Shaders\PostProcessing.fs" />
@@ -111,6 +114,9 @@
     <ClInclude Include="Gameplay\CelesteStates\StateCrouching.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Gameplay\Platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Textures\CrouchLeft.png">
@@ -126,6 +132,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Assets\Textures\Background.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Textures\Ground.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

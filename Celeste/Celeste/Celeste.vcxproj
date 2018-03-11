@@ -155,6 +155,7 @@
     <ClCompile Include="Engine\ResourceManager.cpp" />
     <ClCompile Include="Gameplay\Celeste.cpp" />
     <ClCompile Include="Gameplay\Game.cpp" />
+    <ClCompile Include="Gameplay\Platform.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -182,11 +183,13 @@
     <ClInclude Include="Engine\ResourceManager.h" />
     <ClInclude Include="Gameplay\Celeste.h" />
     <ClInclude Include="Gameplay\Game.h" />
+    <ClInclude Include="Gameplay\Platform.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Textures\Background.png" />
     <Image Include="Assets\Textures\CrouchLeft.png" />
     <Image Include="Assets\Textures\CrouchRight.png" />
+    <Image Include="Assets\Textures\Ground.png" />
     <Image Include="Assets\Textures\StandLeft.png" />
     <Image Include="Assets\Textures\StandRight.png" />
   </ItemGroup>
