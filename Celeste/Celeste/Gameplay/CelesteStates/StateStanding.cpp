@@ -45,6 +45,7 @@ CelesteState* StateStanding::HandleInput(Celeste& _celeste)
 
 void StateStanding::Update(Celeste& _celeste, GLfloat _dt)
 {
+	_celeste.vel.y = 0.0f;
 	_celeste.pos += (_celeste.vel * _dt);
 }
 

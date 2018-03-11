@@ -155,6 +155,7 @@
     <ClCompile Include="Engine\ResourceManager.cpp" />
     <ClCompile Include="Gameplay\Celeste.cpp" />
     <ClCompile Include="Gameplay\Game.cpp" />
+    <ClCompile Include="Gameplay\PhysicsComponent.cpp" />
     <ClCompile Include="Gameplay\Platform.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
@@ -183,6 +184,7 @@
     <ClInclude Include="Engine\ResourceManager.h" />
     <ClInclude Include="Gameplay\Celeste.h" />
     <ClInclude Include="Gameplay\Game.h" />
+    <ClInclude Include="Gameplay\PhysicsComponent.h" />
     <ClInclude Include="Gameplay\Platform.h" />
   </ItemGroup>
   <ItemGroup>

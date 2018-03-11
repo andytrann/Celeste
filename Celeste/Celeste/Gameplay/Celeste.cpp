@@ -39,6 +39,7 @@ void Celeste::HandleInput()
 
 void Celeste::Update(GLfloat _dt)
 {
+	physics.Update(*this, _dt);
 	currentState->Update(*this, _dt);
 }
 

@@ -2,6 +2,7 @@
 #define CELESTE_H
 
 #include "GameObject.h"
+#include "PhysicsComponent.h"
 
 class CelesteState;
 
@@ -21,6 +22,7 @@ public:
 	int direction;
 private:
 	CelesteState* currentState;
+	PhysicsComponent physics;
 	GLfloat speed;
 };
 #endif
