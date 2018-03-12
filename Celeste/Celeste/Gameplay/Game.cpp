@@ -17,7 +17,7 @@
 #include <fstream>
 #include <string>
 #include <algorithm>
-#include <sstream>
+#include <vector>
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -32,6 +32,10 @@ ISoundEngine* soundEngine = createIrrKlangDevice();
 
 Celeste* celeste;
 Platform* ground;
+Platform* ground2;
+Platform* ground3;
+
+std::vector<GameObject> platforms;
 
 Game::Game(GLuint _width, GLuint _height) :
 	state(GameState::GAME_MENU),
@@ -61,6 +65,12 @@ Game::~Game()
 
 	delete ground;
 	ground = nullptr;
+
+	delete ground2;
+	ground2 = nullptr;
+
+	delete ground3;
+	ground3 = nullptr;
 }
 
 void Game::Init()
@@ -92,12 +102,16 @@ void Game::Init()
 	textRenderer->Load("Assets/Fonts/arialbd.ttf", 32);
 
 	//Load Celeste
-	glm::vec2 playerPos = glm::vec2(135.0f, (height / 2));
-	celeste = new Celeste(playerPos, glm::vec2(30.0f, 60.0f), ResourceManager::GetTexture("StandRight"), 100.0f);
+	glm::vec2 playerPos = glm::vec2(500.0f, (height / 8));
+	celeste = new Celeste(playerPos, glm::vec2(30.0f, 60.0f), ResourceManager::GetTexture("StandRight"));
 
 	//Load Platforms
 	ground = new Platform(glm::vec2(50.0f, Engine::SCREEN_HEIGHT * 7.0f / 8.0f), glm::vec2(300.0f, Engine::SCREEN_HEIGHT / 8.0f), ResourceManager::GetTexture("Ground"));
-
+	ground2 = new Platform(glm::vec2(450.0f, Engine::SCREEN_HEIGHT * 6.5f / 8.0f), glm::vec2(300.0f, Engine::SCREEN_HEIGHT / 8.0f), ResourceManager::GetTexture("Ground"));
+	ground3 = new Platform(glm::vec2(450.0f, Engine::SCREEN_HEIGHT * 2.0f/8.0f), glm::vec2(300.0f, Engine::SCREEN_HEIGHT / 8.0f), ResourceManager::GetTexture("Ground"));
+	platforms.push_back(*ground);
+	platforms.push_back(*ground2);
+	platforms.push_back(*ground3);
 }
 
 void Game::ProcessInput()
@@ -115,7 +129,9 @@ void Game::Update(GLfloat _dt)
 {
 	celeste->Update(_dt);
 	ground->Update(_dt);
-	celeste->DoCollision(*ground);
+	ground2->Update(_dt);
+	ground3->Update(_dt);
+	celeste->DoCollision(platforms);
 }
 
 void Game::Render()
@@ -125,6 +141,8 @@ void Game::Render()
 	spriteRenderer->DrawSprite(ResourceManager::GetTexture("Background"), glm::vec2(0.0f, 0.0f), glm::vec2(width, height));
 	celeste->Render(*spriteRenderer);
 	ground->Render(*spriteRenderer);
+	ground2->Render(*spriteRenderer);
+	ground3->Render(*spriteRenderer);
 
 	postProcessor->EndRender();
 	postProcessor->Render();

@@ -5,16 +5,18 @@
 
 Celeste::Celeste() : 
 	GameObject(),
-	speed(100.0f),
+	speed(250.0f),
+	jump(550.0f),
 	direction(1)
 {
 	objectType = ObjectType::CELESTE;
 }
 
-Celeste::Celeste(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, GLfloat _speed, glm::vec3 _color, glm::vec2 _vel) :
+Celeste::Celeste(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, glm::vec3 _color, glm::vec2 _vel) :
 	GameObject(_pos, _size, _sprite, _color, _vel),
 	currentState(new StateStanding()),
-	speed(_speed),
+	speed(250.0f),
+	jump(550.0f),
 	direction(1)
 {
 	objectType = ObjectType::CELESTE;
@@ -41,41 +43,48 @@ void Celeste::HandleInput()
 void Celeste::Update(GLfloat _dt)
 {
 	physics.Update(*this, _dt);
-	currentState->Update(*this, _dt);
 }
 
-void Celeste::DoCollision(GameObject& _other)
+void Celeste::DoCollision(std::vector<GameObject> _other)
 {
-	Collision col = GetCollision(_other);
-	
-	switch (std::get<0>(col))
+	bool inAir = true;
+	for (unsigned int i = 0; i < _other.size(); i++)
 	{
-	case Direction::UP :
-		if (_other.GetType() == ObjectType::PLATFORM && GetState() == LocationState::IN_AIR)
-		{
-			//move celeste back up difference of penetration
-			GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
-			pos.y -= penetration;
+		Collision col = GetCollision(_other[i]);
 
-			//change state
-			delete currentState;
-			currentState = new StateStanding();
-			currentState->Enter(*this);
+		switch (std::get<0>(col))
+		{
+		case Direction::UP:
+			if (_other[i].GetType() == ObjectType::PLATFORM && GetState() == LocationState::IN_AIR)
+			{
+				//move celeste back up difference of penetration
+				GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
+				pos.y -= penetration;
+
+				//change state
+				delete currentState;
+				currentState = new StateStanding();
+				currentState->Enter(*this);
+			}
+			inAir = false;
+			break;
+		case Direction::DOWN:
+			break;
+		case Direction::LEFT:
+			break;
+		case Direction::RIGHT:
+			break;
+		case Direction::NONE:
+			break;
+		default:
+			break;
 		}
-		break;
-	case Direction::DOWN:
-		break;
-	case Direction::LEFT:
-		break;
-	case Direction::RIGHT:
-		break;
-	case Direction::NONE:
+	}
+	if (inAir)
+	{
 		delete currentState;
 		currentState = new StateInAir();
 		currentState->Enter(*this);
-		break;
-	default:
-		break;
 	}
 }
 
@@ -87,6 +96,11 @@ void Celeste::Render(SpriteRenderer & _renderer)
 GLfloat Celeste::GetSpeed() const
 {
 	return speed;
+}
+
+GLfloat Celeste::GetJump() const
+{
+	return jump;
 }
 
 LocationState Celeste::GetState()

@@ -17,12 +17,6 @@ CelesteState * StateCrouching::HandleInput(Celeste & _celeste)
 	}
 }
 
-void StateCrouching::Update(Celeste & _celeste, GLfloat _dt)
-{
-	_celeste.vel.y = 0.0f;
-	_celeste.pos += (_celeste.vel * _dt);
-}
-
 void StateCrouching::Enter(Celeste & _celeste)
 {
 	_celeste.vel.x = 0.0f;

@@ -35,11 +35,6 @@ CelesteState* StateInAir::HandleInput(Celeste& _celeste)
 	return nullptr;
 }
 
-void StateInAir::Update(Celeste& _celeste, GLfloat _dt)
-{
-	_celeste.pos += (_celeste.vel * _dt);
-}
-
 void StateInAir::Enter(Celeste& _celeste)
 {
 	if (_celeste.direction == 1)
