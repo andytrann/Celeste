@@ -96,7 +96,7 @@ void Game::Init()
 	celeste = new Celeste(playerPos, glm::vec2(30.0f, 60.0f), ResourceManager::GetTexture("StandRight"), 100.0f);
 
 	//Load Platforms
-	ground = new Platform(glm::vec2(0.0f, Engine::SCREEN_HEIGHT * 7.0f / 8.0f), glm::vec2(300.0f, Engine::SCREEN_HEIGHT / 8.0f), ResourceManager::GetTexture("Ground"));
+	ground = new Platform(glm::vec2(50.0f, Engine::SCREEN_HEIGHT * 7.0f / 8.0f), glm::vec2(300.0f, Engine::SCREEN_HEIGHT / 8.0f), ResourceManager::GetTexture("Ground"));
 
 }
 

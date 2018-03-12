@@ -46,49 +46,36 @@ void Celeste::Update(GLfloat _dt)
 
 void Celeste::DoCollision(GameObject& _other)
 {
-	if (CheckCollision(_other))
+	Collision col = GetCollision(_other);
+	
+	switch (std::get<0>(col))
 	{
-		GLfloat top = this->pos.y;
-		GLfloat bot = this->pos.y + this->size.y;
-		GLfloat left = this->pos.x;
-		GLfloat right = this->pos.x + this->size.x;
-
-		GLfloat otherTop = _other.pos.y;
-		GLfloat otherBot = _other.pos.y + _other.size.y;
-		GLfloat otherLeft = _other.pos.x;
-		GLfloat otherRight = _other.pos.x + _other.size.x;
-
-		if (top <= otherBot)
+	case Direction::UP :
+		if (_other.GetType() == ObjectType::PLATFORM && GetState() == LocationState::IN_AIR)
 		{
-			
+			//move celeste back up difference of penetration
+			GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
+			pos.y -= penetration;
+
+			//change state
+			delete currentState;
+			currentState = new StateStanding();
+			currentState->Enter(*this);
 		}
-
-		else if (bot >= otherTop)
-		{
-			if (_other.GetType() == ObjectType::PLATFORM && GetState() == LocationState::IN_AIR)
-			{
-				delete currentState;
-				currentState = new StateStanding();
-				currentState->Enter(*this);
-			}
-		}
-
-		else if (left <= otherRight)
-		{
-
-		}
-
-		else if (right >= otherLeft)
-		{
-
-		}
-	}
-
-	else
-	{
+		break;
+	case Direction::DOWN:
+		break;
+	case Direction::LEFT:
+		break;
+	case Direction::RIGHT:
+		break;
+	case Direction::NONE:
 		delete currentState;
 		currentState = new StateInAir();
 		currentState->Enter(*this);
+		break;
+	default:
+		break;
 	}
 }
 
