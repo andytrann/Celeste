@@ -20,8 +20,10 @@ public:
 
 	LocationState GetState();
 
-	const static GLfloat speed;
-	const static GLfloat jump;
+	const static GLfloat MAX_SPEED;
+	const static GLfloat ACCELERATION;
+	const static GLfloat FRICTION;
+	const static GLfloat JUMP_FORCE;
 	int direction;
 private:
 	CelesteState* currentState;

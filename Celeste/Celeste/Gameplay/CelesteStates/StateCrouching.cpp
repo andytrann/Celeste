@@ -5,7 +5,7 @@
 #include "../../Engine/ResourceManager.h"
 #include "StateStanding.h"
 
-CelesteState * StateCrouching::HandleInput(Celeste & _celeste)
+CelesteState * StateCrouching::HandleInput(Celeste & _celeste, GLfloat _dt)
 {
 	if (Keyboard::KeyUp(GLFW_KEY_S))
 	{

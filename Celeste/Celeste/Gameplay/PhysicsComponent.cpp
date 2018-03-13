@@ -17,10 +17,28 @@ void PhysicsComponent::Update(Celeste& _celeste, float _dt)
 		{
 			_celeste.vel.y = MAX_FALL_SPEED;
 		}
+
+		if (_celeste.vel.x > _celeste.MAX_SPEED)
+		{
+			_celeste.vel.x = _celeste.MAX_SPEED;
+		}
+		else if (_celeste.vel.x < -_celeste.MAX_SPEED)
+		{
+			_celeste.vel.x = -_celeste.MAX_SPEED;
+		}
 	}
 	else if (_celeste.GetState() == LocationState::ON_GROUND)
 	{
 		_celeste.vel.y = 0;
+
+		if (_celeste.vel.x > _celeste.MAX_SPEED)
+		{
+			_celeste.vel.x = _celeste.MAX_SPEED;
+		}
+		else if (_celeste.vel.x < -_celeste.MAX_SPEED)
+		{
+			_celeste.vel.x = -_celeste.MAX_SPEED;
+		}
 	}
 
 	_celeste.pos += (_celeste.vel * _dt);

@@ -6,7 +6,7 @@
 class StateStanding : public CelesteState
 {
 public:
-	CelesteState* HandleInput(Celeste& _celeste);
+	CelesteState* HandleInput(Celeste& _celeste, GLfloat _dt);
 	//change sprite
 	void Enter(Celeste& _celeste);
 	LocationState GetState();

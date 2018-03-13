@@ -1,11 +1,14 @@
 #include "Celeste.h"
 
+#include "../Engine/Engine.h"
 #include "CelesteStates/StateStanding.h"
 #include "CelesteStates/StateInAir.h"
 
 
-const GLfloat Celeste::speed = 250.0f;
-const GLfloat Celeste::jump = 550.0f;
+const GLfloat Celeste::MAX_SPEED = 250.0f;
+const GLfloat Celeste::ACCELERATION = 1000.0f;
+const GLfloat Celeste::FRICTION = .4f;
+const GLfloat Celeste::JUMP_FORCE = 550.0f;
 
 Celeste::Celeste() : 
 	GameObject(),
@@ -30,7 +33,7 @@ Celeste::~Celeste()
 
 void Celeste::HandleInput()
 {
-	CelesteState* state = currentState->HandleInput(*this);
+	CelesteState* state = currentState->HandleInput(*this, Engine::GetDT());
 	if (state != nullptr)
 	{
 		delete currentState;
