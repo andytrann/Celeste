@@ -107,7 +107,7 @@ void Game::Init()
 
 	//Load Platforms
 	ground = new Platform(glm::vec2(50.0f, Engine::SCREEN_HEIGHT * 7.0f / 8.0f), glm::vec2(300.0f, Engine::SCREEN_HEIGHT / 8.0f), ResourceManager::GetTexture("Ground"));
-	ground2 = new Platform(glm::vec2(450.0f, Engine::SCREEN_HEIGHT * 6.5f / 8.0f), glm::vec2(300.0f, Engine::SCREEN_HEIGHT / 8.0f), ResourceManager::GetTexture("Ground"));
+	ground2 = new Platform(glm::vec2(350.0f, Engine::SCREEN_HEIGHT * 6.5f / 8.0f), glm::vec2(300.0f, Engine::SCREEN_HEIGHT / 8.0f), ResourceManager::GetTexture("Ground"));
 	ground3 = new Platform(glm::vec2(450.0f, Engine::SCREEN_HEIGHT * 2.0f/8.0f), glm::vec2(300.0f, Engine::SCREEN_HEIGHT / 8.0f), ResourceManager::GetTexture("Ground"));
 	platforms.push_back(*ground);
 	platforms.push_back(*ground2);

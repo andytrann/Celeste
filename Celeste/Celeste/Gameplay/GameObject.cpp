@@ -38,11 +38,11 @@ ObjectType GameObject::GetType() const
 GLboolean GameObject::CheckCollision(GameObject& _other)
 {
 	// Collision x - axis ?
-	bool collisionX = pos.x + size.x >= _other.pos.x &&
-		_other.pos.x + _other.size.x >= pos.x;
+	bool collisionX = pos.x + size.x > _other.pos.x &&
+		_other.pos.x + _other.size.x > pos.x;
 	// Collision y-axis?
-	bool collisionY = pos.y + size.y >= _other.pos.y &&
-		_other.pos.y + _other.size.y >= pos.y;
+	bool collisionY = pos.y + size.y > _other.pos.y &&
+		_other.pos.y + _other.size.y > pos.y;
 
 	// Collision only if on both axes
 	return collisionX && collisionY;
@@ -74,9 +74,9 @@ Collision GameObject::GetCollision(GameObject& _other) // AABB collision
 		//{
 			glm::vec2 compass[] = {
 				glm::vec2(0.0f, 1.0f),	// up
-				glm::vec2(1.0f, 0.0f),	// right
+				glm::vec2(-1.0f, 0.0f),	// right
 				glm::vec2(0.0f, -1.0f),	// down
-				glm::vec2(-1.0f, 0.0f)	// left
+				glm::vec2(1.0f, 0.0f)	// left
 			};
 			GLfloat max = 0.0f;
 			GLuint best_match = -1;
