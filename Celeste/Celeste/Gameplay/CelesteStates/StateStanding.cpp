@@ -14,7 +14,7 @@ CelesteState* StateStanding::HandleInput(Celeste& _celeste)
 	}
 	else if (Keyboard::KeyDown(GLFW_KEY_N))
 	{
-		_celeste.vel.y = -_celeste.GetJump();
+		_celeste.vel.y = -_celeste.jump;
 		return new StateInAir();
 	}
 	else
@@ -43,7 +43,7 @@ CelesteState* StateStanding::HandleInput(Celeste& _celeste)
 			_celeste.direction = newDirection;
 		}
 
-		_celeste.vel.x = (GLfloat)newDirection * _celeste.GetSpeed();
+		_celeste.vel.x = (GLfloat)newDirection * _celeste.speed;
 
 		return nullptr;
 	}

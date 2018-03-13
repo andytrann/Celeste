@@ -3,10 +3,12 @@
 #include "CelesteStates/StateStanding.h"
 #include "CelesteStates/StateInAir.h"
 
+
+const GLfloat Celeste::speed = 250.0f;
+const GLfloat Celeste::jump = 550.0f;
+
 Celeste::Celeste() : 
 	GameObject(),
-	speed(250.0f),
-	jump(550.0f),
 	direction(1)
 {
 	objectType = ObjectType::CELESTE;
@@ -15,8 +17,6 @@ Celeste::Celeste() :
 Celeste::Celeste(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, glm::vec3 _color, glm::vec2 _vel) :
 	GameObject(_pos, _size, _sprite, _color, _vel),
 	currentState(new StateStanding()),
-	speed(250.0f),
-	jump(550.0f),
 	direction(1)
 {
 	objectType = ObjectType::CELESTE;
@@ -112,16 +112,6 @@ void Celeste::DoCollision(std::vector<GameObject> _other)
 void Celeste::Render(SpriteRenderer & _renderer)
 {
 	_renderer.DrawSprite(sprite, pos, size, rot, color);
-}
-
-GLfloat Celeste::GetSpeed() const
-{
-	return speed;
-}
-
-GLfloat Celeste::GetJump() const
-{
-	return jump;
 }
 
 LocationState Celeste::GetState()

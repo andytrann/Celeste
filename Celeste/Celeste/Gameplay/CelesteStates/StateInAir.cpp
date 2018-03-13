@@ -30,7 +30,7 @@ CelesteState* StateInAir::HandleInput(Celeste& _celeste)
 		_celeste.direction = newDirection;
 	}
 
-	_celeste.vel.x = (GLfloat)newDirection * _celeste.GetSpeed();
+	_celeste.vel.x = (GLfloat)newDirection * _celeste.speed;
 
 	return nullptr;
 }

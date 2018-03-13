@@ -18,15 +18,13 @@ public:
 	void DoCollision(std::vector<GameObject> _other);
 	void Render(SpriteRenderer& _renderer);
 
-	GLfloat GetSpeed() const;
-	GLfloat GetJump() const;
 	LocationState GetState();
 
+	const static GLfloat speed;
+	const static GLfloat jump;
 	int direction;
 private:
 	CelesteState* currentState;
 	PhysicsComponent physics;
-	GLfloat speed;
-	GLfloat jump;
 };
 #endif
