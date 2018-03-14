@@ -60,9 +60,5 @@ void StateInAir::Enter(Celeste& _celeste)
 	{
 		_celeste.sprite = ResourceManager::GetTexture("JumpLeft");
 	}
-}
-
-LocationState StateInAir::GetState()
-{
-	return LocationState::IN_AIR;
+	_celeste.GetLocationState() = LocationState::IN_AIR;
 }

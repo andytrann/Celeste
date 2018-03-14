@@ -18,7 +18,7 @@ public:
 	void DoCollision(std::vector<GameObject> _other);
 	void Render(SpriteRenderer& _renderer);
 
-	LocationState GetState();
+	LocationState& GetLocationState();
 	int GetFacingDirection() const;
 
 	const static GLfloat MAX_SPEED;
@@ -26,9 +26,12 @@ public:
 	const static GLfloat FRICTION;
 	const static GLfloat JUMP_FORCE;
 	const static GLfloat DASH_FORCE;
+	const static GLfloat DASH_CD;
 	glm::ivec2 direction;
+	GLfloat dashTimer;
 private:
 	int facingDirection;
+	LocationState locState;
 
 	CelesteState* currentState;
 	PhysicsComponent physics;

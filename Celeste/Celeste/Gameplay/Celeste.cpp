@@ -12,11 +12,13 @@ const GLfloat Celeste::ACCELERATION = 1000.0f;
 const GLfloat Celeste::FRICTION = .4f;
 const GLfloat Celeste::JUMP_FORCE = 550.0f;
 const GLfloat Celeste::DASH_FORCE = 800.0f;
+const GLfloat Celeste::DASH_CD = .5f;
 
 Celeste::Celeste() : 
 	GameObject(),
 	direction(glm::ivec2(1,0)),
-	facingDirection(1)
+	facingDirection(1),
+	dashTimer(0.0f)
 {
 	objectType = ObjectType::CELESTE;
 }
@@ -25,7 +27,8 @@ Celeste::Celeste(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, glm::vec3 _
 	GameObject(_pos, _size, _sprite, _color, _vel),
 	currentState(new StateStanding()),
 	direction(glm::ivec2(1,0)),
-	facingDirection(1)
+	facingDirection(1),
+	dashTimer(0.0f)
 {
 	objectType = ObjectType::CELESTE;
 }
@@ -55,6 +58,19 @@ void Celeste::Update(GLfloat _dt)
 	{
 		facingDirection = direction.x;
 	}
+	switch (locState)
+	{
+	case LocationState::ON_GROUND:
+		std::cout << "ON_GROUND" << std::endl;
+		break;
+	case LocationState::IN_AIR:
+		std::cout << "IN_AIR" << std::endl;
+		break;
+	default:
+		std::cout << "None or CLIMBING" << std::endl;
+		break;
+	}
+	
 	physics.Update(*this, _dt);
 }
 
@@ -68,8 +84,9 @@ void Celeste::DoCollision(std::vector<GameObject> _other)
 		switch (std::get<0>(col))
 		{
 		case Direction::UP:
-			if (_other[i].GetType() == ObjectType::PLATFORM && GetState() == LocationState::IN_AIR && vel.y > 0)
+			if (_other[i].GetType() == ObjectType::PLATFORM && locState == LocationState::IN_AIR && vel.y > 0)
 			{
+				std::cout << "UP" << std::endl;
 				//move celeste back up difference of penetration
 				GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
 				pos.y -= penetration;
@@ -82,7 +99,7 @@ void Celeste::DoCollision(std::vector<GameObject> _other)
 			inAir = false;
 			break;
 		case Direction::DOWN:
-			if (_other[i].GetType() == ObjectType::PLATFORM && GetState() == LocationState::IN_AIR)
+			if (_other[i].GetType() == ObjectType::PLATFORM && locState == LocationState::IN_AIR)
 			{
 				//move celeste back up difference of penetration
 				GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
@@ -127,9 +144,9 @@ void Celeste::Render(SpriteRenderer & _renderer)
 	_renderer.DrawSprite(sprite, pos, size, rot, color);
 }
 
-LocationState Celeste::GetState()
+LocationState& Celeste::GetLocationState()
 {
-	return currentState->GetState();
+	return locState;
 }
 
 int Celeste::GetFacingDirection() const

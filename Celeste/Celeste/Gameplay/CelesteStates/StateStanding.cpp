@@ -71,9 +71,5 @@ void StateStanding::Enter(Celeste& _celeste)
 	{
 		_celeste.sprite = ResourceManager::GetTexture("StandLeft");
 	}
-}
-
-LocationState StateStanding::GetState()
-{
-	return LocationState::ON_GROUND;
+	_celeste.GetLocationState() = LocationState::ON_GROUND;
 }

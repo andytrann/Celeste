@@ -1,9 +1,9 @@
-#ifndef STATE_STANDING_H
-#define STATE_STANDING_H
+#ifndef STATE_DASHING_H
+#define STATE_DASHING_H
 
 #include "CelesteState.h"
 
-class StateStanding : public CelesteState
+class StateDashing : public CelesteState
 {
 public:
 	CelesteState* HandleInput(Celeste& _celeste, GLfloat _dt);
