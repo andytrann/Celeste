@@ -22,10 +22,10 @@ CelesteState* StateStanding::HandleInput(Celeste& _celeste, GLfloat _dt)
 	{
 		newDirection.y--;
 	}
-	if (Keyboard::KeyDown(GLFW_KEY_S))
+	if (Keyboard::Key(GLFW_KEY_S))
 	{
 		newDirection.y++;
-		_celeste.direction = glm::ivec2(0, 1);
+		_celeste.direction.y = 1;
 		return new StateCrouching();
 	}
 
@@ -46,9 +46,13 @@ CelesteState* StateStanding::HandleInput(Celeste& _celeste, GLfloat _dt)
 	}
 
 	//update direction
-	if (newDirection != glm::ivec2(0,0))
+	if (newDirection.x != 0)
 	{
-		_celeste.direction = newDirection;
+		_celeste.direction.x = newDirection.x;
+	}
+	if (newDirection.y != 0)
+	{
+		_celeste.direction.y = newDirection.y;
 	}
 
 	//apply friction

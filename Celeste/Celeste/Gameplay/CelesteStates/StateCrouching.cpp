@@ -4,9 +4,11 @@
 #include "../../Engine/IO/Keyboard.h"
 #include "../../Engine/ResourceManager.h"
 #include "StateStanding.h"
+#include <iostream>
 
 CelesteState * StateCrouching::HandleInput(Celeste & _celeste, GLfloat _dt)
 {
+
 	if (Keyboard::KeyUp(GLFW_KEY_S))
 	{
 		return new StateStanding();
