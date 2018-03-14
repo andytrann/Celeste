@@ -19,6 +19,7 @@ public:
 	void Render(SpriteRenderer& _renderer);
 
 	LocationState GetState();
+	int GetFacingDirection() const;
 
 	const static GLfloat MAX_SPEED;
 	const static GLfloat ACCELERATION;
@@ -27,6 +28,8 @@ public:
 	const static GLfloat DASH_FORCE;
 	glm::ivec2 direction;
 private:
+	int facingDirection;
+
 	CelesteState* currentState;
 	PhysicsComponent physics;
 };

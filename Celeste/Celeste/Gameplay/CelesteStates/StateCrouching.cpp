@@ -30,20 +30,17 @@ CelesteState * StateCrouching::HandleInput(Celeste & _celeste, GLfloat _dt)
 	else
 	{
 		//change sprite according to new direction
-		if (_celeste.direction.x == -1 && newDirection.x == 1)
+		if (_celeste.direction.x == 1 && _celeste.GetFacingDirection() == 1)
 		{
 			_celeste.sprite = ResourceManager::GetTexture("CrouchRight");
 		}
-		else if (_celeste.direction.x == 1 && newDirection.x == -1)
+		else if (_celeste.direction.x == -1 && _celeste.GetFacingDirection() == -1)
 		{
 			_celeste.sprite = ResourceManager::GetTexture("CrouchLeft");
 		}
 
 		//update direction
-		if (newDirection.x != 0)
-		{
-			_celeste.direction.x = newDirection.x;
-		}
+		_celeste.direction.x = newDirection.x;
 		return nullptr;
 	}
 }
@@ -52,11 +49,11 @@ void StateCrouching::Enter(Celeste & _celeste)
 {
 	_celeste.vel.x = 0.0f;
 
-	if (_celeste.direction.x == 1)
+	if (_celeste.GetFacingDirection() == 1)
 	{
 		_celeste.sprite = ResourceManager::GetTexture("CrouchRight");
 	}
-	else if (_celeste.direction.x == -1)
+	else if (_celeste.GetFacingDirection() == -1)
 	{
 		_celeste.sprite = ResourceManager::GetTexture("CrouchLeft");
 	}

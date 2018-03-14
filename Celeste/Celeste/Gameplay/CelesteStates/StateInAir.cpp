@@ -26,20 +26,18 @@ CelesteState* StateInAir::HandleInput(Celeste& _celeste, GLfloat _dt)
 	}
 
 	//change sprite according to new direction
-	if (_celeste.direction.x == -1 && newDirection.x == 1)
+	if (_celeste.direction.x == 1 && _celeste.GetFacingDirection() == 1)
 	{
 		_celeste.sprite = ResourceManager::GetTexture("JumpRight");
 	}
-	else if (_celeste.direction.x == 1 && newDirection.x == -1)
+	else if (_celeste.direction.x == -1 && _celeste.GetFacingDirection() == -1)
 	{
 		_celeste.sprite = ResourceManager::GetTexture("JumpLeft");
 	}
 
 	//update direction
-	if (newDirection.x != 0)
-	{
-		_celeste.direction.x = newDirection.x;
-	}
+	_celeste.direction.x = newDirection.x;
+	_celeste.direction.y = newDirection.y;
 
 	//apply friction
 	if (Keyboard::KeyUp(GLFW_KEY_D) || Keyboard::KeyUp(GLFW_KEY_A) || !(Keyboard::Key(GLFW_KEY_D) 
@@ -54,11 +52,11 @@ CelesteState* StateInAir::HandleInput(Celeste& _celeste, GLfloat _dt)
 
 void StateInAir::Enter(Celeste& _celeste)
 {
-	if (_celeste.direction.x == 1)
+	if (_celeste.GetFacingDirection() == 1)
 	{
 		_celeste.sprite = ResourceManager::GetTexture("JumpRight");
 	}
-	else if (_celeste.direction.x == -1)
+	else if (_celeste.GetFacingDirection() == -1)
 	{
 		_celeste.sprite = ResourceManager::GetTexture("JumpLeft");
 	}

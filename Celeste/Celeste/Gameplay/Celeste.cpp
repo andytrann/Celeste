@@ -4,6 +4,8 @@
 #include "CelesteStates/StateStanding.h"
 #include "CelesteStates/StateInAir.h"
 
+#include <iostream>
+
 
 const GLfloat Celeste::MAX_SPEED = 250.0f;
 const GLfloat Celeste::ACCELERATION = 1000.0f;
@@ -13,7 +15,8 @@ const GLfloat Celeste::DASH_FORCE = 800.0f;
 
 Celeste::Celeste() : 
 	GameObject(),
-	direction(glm::ivec2(1,0))
+	direction(glm::ivec2(1,0)),
+	facingDirection(1)
 {
 	objectType = ObjectType::CELESTE;
 }
@@ -21,7 +24,8 @@ Celeste::Celeste() :
 Celeste::Celeste(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, glm::vec3 _color, glm::vec2 _vel) :
 	GameObject(_pos, _size, _sprite, _color, _vel),
 	currentState(new StateStanding()),
-	direction(glm::ivec2(1,0))
+	direction(glm::ivec2(1,0)),
+	facingDirection(1)
 {
 	objectType = ObjectType::CELESTE;
 }
@@ -46,6 +50,11 @@ void Celeste::HandleInput()
 
 void Celeste::Update(GLfloat _dt)
 {
+	//update facing direction after input
+	if (direction.x != 0)
+	{
+		facingDirection = direction.x;
+	}
 	physics.Update(*this, _dt);
 }
 
@@ -121,4 +130,9 @@ void Celeste::Render(SpriteRenderer & _renderer)
 LocationState Celeste::GetState()
 {
 	return currentState->GetState();
+}
+
+int Celeste::GetFacingDirection() const
+{
+	return facingDirection;
 }
