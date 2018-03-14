@@ -8,13 +8,37 @@
 
 CelesteState * StateCrouching::HandleInput(Celeste & _celeste, GLfloat _dt)
 {
-
+	//calculate new direction
+	glm::ivec2 newDirection(0, 0);
+	if (Keyboard::Key(GLFW_KEY_A))
+	{
+		newDirection.x--;
+	}
+	if (Keyboard::Key(GLFW_KEY_D))
+	{
+		newDirection.x++;
+	}
 	if (Keyboard::KeyUp(GLFW_KEY_S))
 	{
 		return new StateStanding();
 	}
 	else
 	{
+		//change sprite according to new direction
+		if (_celeste.direction.x == -1 && newDirection.x == 1)
+		{
+			_celeste.sprite = ResourceManager::GetTexture("CrouchRight");
+		}
+		else if (_celeste.direction.x == 1 && newDirection.x == -1)
+		{
+			_celeste.sprite = ResourceManager::GetTexture("CrouchLeft");
+		}
+
+		//update direction
+		if (newDirection.x != 0)
+		{
+			_celeste.direction.x = newDirection.x;
+		}
 		return nullptr;
 	}
 }

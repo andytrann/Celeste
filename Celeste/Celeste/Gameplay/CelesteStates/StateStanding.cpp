@@ -22,7 +22,7 @@ CelesteState* StateStanding::HandleInput(Celeste& _celeste, GLfloat _dt)
 	{
 		newDirection.y--;
 	}
-	if (Keyboard::Key(GLFW_KEY_S))
+	if (Keyboard::KeyDown(GLFW_KEY_S))
 	{
 		newDirection.y++;
 		_celeste.direction.y = 1;
