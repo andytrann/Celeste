@@ -4,7 +4,7 @@
 #include "../../Engine/IO/Keyboard.h"
 #include "../../Engine/ResourceManager.h"
 #include "StateStanding.h"
-#include <iostream>
+#include "StateInAir.h"
 
 CelesteState * StateCrouching::HandleInput(Celeste & _celeste, GLfloat _dt)
 {
@@ -21,6 +21,11 @@ CelesteState * StateCrouching::HandleInput(Celeste & _celeste, GLfloat _dt)
 	if (Keyboard::KeyUp(GLFW_KEY_S))
 	{
 		return new StateStanding();
+	}
+	if (Keyboard::KeyDown(GLFW_KEY_N))
+	{
+		_celeste.vel.y = -_celeste.JUMP_FORCE;
+		return new StateInAir();
 	}
 	else
 	{
