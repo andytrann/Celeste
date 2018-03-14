@@ -28,11 +28,11 @@ CelesteState* StateInAir::HandleInput(Celeste& _celeste, GLfloat _dt)
 	//change sprite according to new direction
 	if (_celeste.direction.x == -1 && newDirection.x == 1)
 	{
-		_celeste.sprite = ResourceManager::GetTexture("StandRight");
+		_celeste.sprite = ResourceManager::GetTexture("JumpRight");
 	}
 	else if (_celeste.direction.x == 1 && newDirection.x == -1)
 	{
-		_celeste.sprite = ResourceManager::GetTexture("StandLeft");
+		_celeste.sprite = ResourceManager::GetTexture("JumpLeft");
 	}
 
 	//update direction
@@ -56,11 +56,11 @@ void StateInAir::Enter(Celeste& _celeste)
 {
 	if (_celeste.direction.x == 1)
 	{
-		_celeste.sprite = ResourceManager::GetTexture("StandRight");
+		_celeste.sprite = ResourceManager::GetTexture("JumpRight");
 	}
 	else if (_celeste.direction.x == -1)
 	{
-		_celeste.sprite = ResourceManager::GetTexture("StandLeft");
+		_celeste.sprite = ResourceManager::GetTexture("JumpLeft");
 	}
 }
 

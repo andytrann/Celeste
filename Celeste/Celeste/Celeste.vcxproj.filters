@@ -149,6 +149,12 @@
     <Image Include="Assets\Textures\Ground.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Assets\Textures\JumpLeft.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Textures\JumpRight.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Assets\Fonts\arialbd.ttf" />

@@ -194,6 +194,8 @@
     <Image Include="Assets\Textures\CrouchLeft.png" />
     <Image Include="Assets\Textures\CrouchRight.png" />
     <Image Include="Assets\Textures\Ground.png" />
+    <Image Include="Assets\Textures\JumpLeft.png" />
+    <Image Include="Assets\Textures\JumpRight.png" />
     <Image Include="Assets\Textures\StandLeft.png" />
     <Image Include="Assets\Textures\StandRight.png" />
   </ItemGroup>
