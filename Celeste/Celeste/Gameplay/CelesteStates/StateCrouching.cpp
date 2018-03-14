@@ -21,11 +21,11 @@ void StateCrouching::Enter(Celeste & _celeste)
 {
 	_celeste.vel.x = 0.0f;
 
-	if (_celeste.direction == 1)
+	if (_celeste.direction.x == 1)
 	{
 		_celeste.sprite = ResourceManager::GetTexture("CrouchRight");
 	}
-	else if (_celeste.direction == -1)
+	else if (_celeste.direction.x == -1)
 	{
 		_celeste.sprite = ResourceManager::GetTexture("CrouchLeft");
 	}

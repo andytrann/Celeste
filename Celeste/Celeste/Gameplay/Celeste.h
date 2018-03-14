@@ -24,7 +24,8 @@ public:
 	const static GLfloat ACCELERATION;
 	const static GLfloat FRICTION;
 	const static GLfloat JUMP_FORCE;
-	int direction;
+	const static GLfloat DASH_FORCE;
+	glm::ivec2 direction;
 private:
 	CelesteState* currentState;
 	PhysicsComponent physics;

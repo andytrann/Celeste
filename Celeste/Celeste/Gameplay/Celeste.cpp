@@ -9,10 +9,11 @@ const GLfloat Celeste::MAX_SPEED = 250.0f;
 const GLfloat Celeste::ACCELERATION = 1000.0f;
 const GLfloat Celeste::FRICTION = .4f;
 const GLfloat Celeste::JUMP_FORCE = 550.0f;
+const GLfloat Celeste::DASH_FORCE = 800.0f;
 
 Celeste::Celeste() : 
 	GameObject(),
-	direction(1)
+	direction(glm::ivec2(1,0))
 {
 	objectType = ObjectType::CELESTE;
 }
@@ -20,7 +21,7 @@ Celeste::Celeste() :
 Celeste::Celeste(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, glm::vec3 _color, glm::vec2 _vel) :
 	GameObject(_pos, _size, _sprite, _color, _vel),
 	currentState(new StateStanding()),
-	direction(1)
+	direction(glm::ivec2(1,0))
 {
 	objectType = ObjectType::CELESTE;
 }

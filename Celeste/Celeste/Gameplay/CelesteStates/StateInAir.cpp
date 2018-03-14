@@ -7,49 +7,58 @@
 CelesteState* StateInAir::HandleInput(Celeste& _celeste, GLfloat _dt)
 {
 	//calculate new direction
-	int newDirection = 0;
-	if (Keyboard::Key(GLFW_KEY_D))
-	{
-		newDirection++;
-	}
+	glm::ivec2 newDirection(0, 0);
 	if (Keyboard::Key(GLFW_KEY_A))
 	{
-		newDirection--;
+		newDirection.x--;
+	}
+	if (Keyboard::Key(GLFW_KEY_D))
+	{
+		newDirection.x++;
+	}
+	if (Keyboard::Key(GLFW_KEY_W))
+	{
+		newDirection.y--;
+	}
+	if (Keyboard::Key(GLFW_KEY_S))
+	{
+		newDirection.y++;
 	}
 
 	//change sprite according to new direction
-	if (_celeste.direction == -1 && newDirection == 1)
+	if (_celeste.direction.x == -1 && newDirection.x == 1)
 	{
 		_celeste.sprite = ResourceManager::GetTexture("StandRight");
 	}
-	else if (_celeste.direction == 1 && newDirection == -1)
+	else if (_celeste.direction.x == 1 && newDirection.x == -1)
 	{
 		_celeste.sprite = ResourceManager::GetTexture("StandLeft");
 	}
 
 	//update direction
-	if (newDirection != 0)
+	if (newDirection.x != 0)
 	{
-		_celeste.direction = newDirection;
+		_celeste.direction.x = newDirection.x;
 	}
 
 	//apply friction
-	if (Keyboard::KeyUp(GLFW_KEY_D) || Keyboard::KeyUp(GLFW_KEY_A) || !(Keyboard::Key(GLFW_KEY_D) || Keyboard::Key(GLFW_KEY_A)))
+	if (Keyboard::KeyUp(GLFW_KEY_D) || Keyboard::KeyUp(GLFW_KEY_A) || !(Keyboard::Key(GLFW_KEY_D) 
+		|| Keyboard::Key(GLFW_KEY_A)) || (Keyboard::Key(GLFW_KEY_D) && Keyboard::Key(GLFW_KEY_A)))
 	{
 		_celeste.vel.x *= _celeste.FRICTION;
 	}
-	_celeste.vel.x += (GLfloat)newDirection * _celeste.ACCELERATION * _dt;
+	_celeste.vel.x += (GLfloat)newDirection.x * _celeste.ACCELERATION * _dt * .75f;
 
 	return nullptr;
 }
 
 void StateInAir::Enter(Celeste& _celeste)
 {
-	if (_celeste.direction == 1)
+	if (_celeste.direction.x == 1)
 	{
 		_celeste.sprite = ResourceManager::GetTexture("StandRight");
 	}
-	else if (_celeste.direction == -1)
+	else if (_celeste.direction.x == -1)
 	{
 		_celeste.sprite = ResourceManager::GetTexture("StandLeft");
 	}
