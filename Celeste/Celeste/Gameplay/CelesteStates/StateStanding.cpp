@@ -5,6 +5,7 @@
 #include "../../Engine/ResourceManager.h"
 #include "StateCrouching.h"
 #include "StateInAir.h"
+#include "StateDashing.h"
 
 CelesteState* StateStanding::HandleInput(Celeste& _celeste, GLfloat _dt)
 {
@@ -33,6 +34,24 @@ CelesteState* StateStanding::HandleInput(Celeste& _celeste, GLfloat _dt)
 	{
 		_celeste.vel.y = -_celeste.JUMP_FORCE;
 		return new StateInAir();
+	}
+	if (Keyboard::KeyDown(GLFW_KEY_M))
+	{
+		if (newDirection == glm::ivec2(0, 0))
+		{
+			_celeste.vel.x = (GLfloat)_celeste.GetFacingDirection() * Celeste::DASH_FORCE;
+			return new StateDashing();
+		}
+		else if (newDirection.x != 0 && newDirection.y != 0)
+		{
+			_celeste.vel = (glm::vec2)newDirection * glm::sin(glm::quarter_pi<GLfloat>()) * Celeste::DASH_FORCE;
+			return new StateDashing();
+		}
+		else
+		{
+			_celeste.vel = (glm::vec2)newDirection * Celeste::DASH_FORCE;
+			return new StateDashing();
+		}
 	}
 
 	//change sprite according to new direction

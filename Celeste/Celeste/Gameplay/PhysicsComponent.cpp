@@ -7,7 +7,7 @@ float PhysicsComponent::MAX_FALL_SPEED = 700.0f;
 
 void PhysicsComponent::Update(Celeste& _celeste, float _dt)
 {
-	if (_celeste.GetLocationState() == LocationState::IN_AIR)
+	if (_celeste.GetLocationState() == LocationState::IN_AIR && !_celeste.isDashing)
 	{
 		if (_celeste.vel.y < MAX_FALL_SPEED)
 		{
@@ -27,7 +27,7 @@ void PhysicsComponent::Update(Celeste& _celeste, float _dt)
 			_celeste.vel.x = -_celeste.MAX_SPEED;
 		}
 	}
-	else if (_celeste.GetLocationState() == LocationState::ON_GROUND)
+	else if (_celeste.GetLocationState() == LocationState::ON_GROUND && !_celeste.isDashing)
 	{
 		_celeste.vel.y = 0;
 

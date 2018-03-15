@@ -29,6 +29,7 @@ public:
 	const static GLfloat DASH_CD;
 	glm::ivec2 direction;
 	GLfloat dashTimer;
+	GLboolean isDashing;
 private:
 	int facingDirection;
 	LocationState locState;

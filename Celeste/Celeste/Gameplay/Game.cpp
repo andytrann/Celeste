@@ -94,6 +94,8 @@ void Game::Init()
 	ResourceManager::LoadTexture("Assets/Textures/CrouchRight.png", GL_TRUE, "CrouchRight");
 	ResourceManager::LoadTexture("Assets/Textures/JumpLeft.png", GL_TRUE, "JumpLeft");
 	ResourceManager::LoadTexture("Assets/Textures/JumpRight.png", GL_TRUE, "JumpRight");
+	ResourceManager::LoadTexture("Assets/Textures/DashLeft.png", GL_TRUE, "DashLeft");
+	ResourceManager::LoadTexture("Assets/Textures/DashRight.png", GL_TRUE, "DashRight");
 
 	//Set render-specific controls
 	spriteRenderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));

@@ -11,14 +11,15 @@ const GLfloat Celeste::MAX_SPEED = 250.0f;
 const GLfloat Celeste::ACCELERATION = 1000.0f;
 const GLfloat Celeste::FRICTION = .4f;
 const GLfloat Celeste::JUMP_FORCE = 550.0f;
-const GLfloat Celeste::DASH_FORCE = 800.0f;
-const GLfloat Celeste::DASH_CD = .5f;
+const GLfloat Celeste::DASH_FORCE = 400.0f;
+const GLfloat Celeste::DASH_CD = .2f;
 
 Celeste::Celeste() : 
 	GameObject(),
 	direction(glm::ivec2(1,0)),
 	facingDirection(1),
-	dashTimer(0.0f)
+	dashTimer(0.0f),
+	isDashing(false)
 {
 	objectType = ObjectType::CELESTE;
 }
@@ -28,7 +29,8 @@ Celeste::Celeste(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, glm::vec3 _
 	currentState(new StateStanding()),
 	direction(glm::ivec2(1,0)),
 	facingDirection(1),
-	dashTimer(0.0f)
+	dashTimer(0.0f),
+	isDashing(false)
 {
 	objectType = ObjectType::CELESTE;
 }
@@ -84,9 +86,17 @@ void Celeste::DoCollision(std::vector<GameObject> _other)
 		switch (std::get<0>(col))
 		{
 		case Direction::UP:
+			//if dashing and collides with ground from top
+			if (_other[i].GetType() == ObjectType::PLATFORM && isDashing && vel.y > 0)
+			{
+				GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
+				pos.y -= penetration;
+				vel.y = 0.0f;
+				locState = LocationState::ON_GROUND;
+			}
+			//if collides with ground normally 
 			if (_other[i].GetType() == ObjectType::PLATFORM && locState == LocationState::IN_AIR && vel.y > 0)
 			{
-				std::cout << "UP" << std::endl;
 				//move celeste back up difference of penetration
 				GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
 				pos.y -= penetration;
@@ -101,7 +111,7 @@ void Celeste::DoCollision(std::vector<GameObject> _other)
 		case Direction::DOWN:
 			if (_other[i].GetType() == ObjectType::PLATFORM && locState == LocationState::IN_AIR)
 			{
-				//move celeste back up difference of penetration
+				//move celeste back down difference of penetration
 				GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
 				vel.y = 0.0f;
 				pos.y += penetration;
@@ -110,7 +120,7 @@ void Celeste::DoCollision(std::vector<GameObject> _other)
 		case Direction::LEFT:
 			if (_other[i].GetType() == ObjectType::PLATFORM)
 			{
-				//move celeste back up difference of penetration
+				//move celeste back left difference of penetration
 				GLfloat penetration = size.x / 2.0f - abs(std::get<1>(col).x);
 				vel.x = 0.0f;
 				pos.x -= penetration;
@@ -119,7 +129,7 @@ void Celeste::DoCollision(std::vector<GameObject> _other)
 		case Direction::RIGHT:
 			if (_other[i].GetType() == ObjectType::PLATFORM)
 			{
-				//move celeste back up difference of penetration
+				//move celeste back right difference of penetration
 				GLfloat penetration = size.x / 2.0f - abs(std::get<1>(col).x);
 				vel.x = 0.0f;
 				pos.x += penetration;
@@ -131,7 +141,7 @@ void Celeste::DoCollision(std::vector<GameObject> _other)
 			break;
 		}
 	}
-	if (inAir)
+	if (inAir && !isDashing)
 	{
 		delete currentState;
 		currentState = new StateInAir();
