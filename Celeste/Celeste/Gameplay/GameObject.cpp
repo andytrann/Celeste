@@ -73,10 +73,10 @@ Collision GameObject::GetCollision(GameObject& _other) // AABB collision
 		//if (difference.x <= size.x / 2.0f && difference.y <= size.y / 2.0f)
 		//{
 			glm::vec2 compass[] = {
-				glm::vec2(0.0f, 1.0f),	// up
-				glm::vec2(-1.0f, 0.0f),	// right
-				glm::vec2(0.0f, -1.0f),	// down
-				glm::vec2(1.0f, 0.0f)	// left
+				glm::vec2(0.0f, .5f),	// up
+				glm::vec2(-1.0f, 0.0f),	// left
+				glm::vec2(0.0f, -.5f),	// down
+				glm::vec2(1.f, 0.0f)	// right
 			};
 			GLfloat max = 0.0f;
 			GLuint best_match = -1;
