@@ -2,7 +2,7 @@
 
 #include "Celeste.h"
 
-float PhysicsComponent::GRAVITY = 1600.0f;
+float PhysicsComponent::GRAVITY = 1800.0f;
 float PhysicsComponent::MAX_FALL_SPEED = 700.0f;
 
 void PhysicsComponent::Update(Celeste& _celeste, float _dt)

@@ -30,6 +30,22 @@ CelesteState* StateStanding::HandleInput(Celeste& _celeste, GLfloat _dt)
 		return new StateCrouching();
 	}
 
+	//update direction
+	_celeste.direction.x = newDirection.x;
+	_celeste.direction.y = newDirection.y;
+
+	//change sprite according to new direction
+	if (_celeste.direction.x == 1 && _celeste.facingDirection == -1)
+	{
+		_celeste.sprite = ResourceManager::GetTexture("StandRight");
+		_celeste.facingDirection = 1;
+	}
+	else if (_celeste.direction.x == -1 && _celeste.facingDirection == 1)
+	{
+		_celeste.sprite = ResourceManager::GetTexture("StandLeft");
+		_celeste.facingDirection = -1;
+	}
+
 	if (Keyboard::KeyDown(GLFW_KEY_N))
 	{
 		_celeste.vel.y = -_celeste.JUMP_FORCE;
@@ -39,7 +55,7 @@ CelesteState* StateStanding::HandleInput(Celeste& _celeste, GLfloat _dt)
 	{
 		if (newDirection == glm::ivec2(0, 0))
 		{
-			_celeste.vel.x = (GLfloat)_celeste.GetFacingDirection() * Celeste::DASH_FORCE;
+			_celeste.vel.x = (GLfloat)_celeste.facingDirection * Celeste::DASH_FORCE;
 			return new StateDashing();
 		}
 		else if (newDirection.x != 0 && newDirection.y != 0)
@@ -53,20 +69,6 @@ CelesteState* StateStanding::HandleInput(Celeste& _celeste, GLfloat _dt)
 			return new StateDashing();
 		}
 	}
-
-	//change sprite according to new direction
-	if (_celeste.direction.x == 1 && _celeste.GetFacingDirection() == 1)
-	{
-		_celeste.sprite = ResourceManager::GetTexture("StandRight");
-	}
-	else if (_celeste.direction.x == -1 && _celeste.GetFacingDirection() == -1)
-	{
-		_celeste.sprite = ResourceManager::GetTexture("StandLeft");
-	}
-
-	//update direction
-	_celeste.direction.x = newDirection.x;
-	_celeste.direction.y = newDirection.y;
 
 	//apply friction
 	if (Keyboard::KeyUp(GLFW_KEY_D) || Keyboard::KeyUp(GLFW_KEY_A) || !(Keyboard::Key(GLFW_KEY_D) 
@@ -82,11 +84,11 @@ CelesteState* StateStanding::HandleInput(Celeste& _celeste, GLfloat _dt)
 
 void StateStanding::Enter(Celeste& _celeste)
 {
-	if (_celeste.GetFacingDirection() == 1)
+	if (_celeste.facingDirection == 1)
 	{
 		_celeste.sprite = ResourceManager::GetTexture("StandRight");
 	}
-	else if (_celeste.GetFacingDirection() == -1)
+	else if (_celeste.facingDirection == -1)
 	{
 		_celeste.sprite = ResourceManager::GetTexture("StandLeft");
 	}

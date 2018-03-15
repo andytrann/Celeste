@@ -8,10 +8,10 @@
 
 
 const GLfloat Celeste::MAX_SPEED = 250.0f;
-const GLfloat Celeste::ACCELERATION = 1000.0f;
+const GLfloat Celeste::ACCELERATION = 1400.0f;
 const GLfloat Celeste::FRICTION = .4f;
-const GLfloat Celeste::JUMP_FORCE = 550.0f;
-const GLfloat Celeste::DASH_FORCE = 400.0f;
+const GLfloat Celeste::JUMP_FORCE = 600.0f;
+const GLfloat Celeste::DASH_FORCE = 500.0f;
 const GLfloat Celeste::DASH_CD = .2f;
 
 Celeste::Celeste() : 
@@ -55,11 +55,6 @@ void Celeste::HandleInput()
 
 void Celeste::Update(GLfloat _dt)
 {
-	//update facing direction after input
-	if (direction.x != 0)
-	{
-		facingDirection = direction.x;
-	}
 	switch (locState)
 	{
 	case LocationState::ON_GROUND:
@@ -157,9 +152,4 @@ void Celeste::Render(SpriteRenderer & _renderer)
 LocationState& Celeste::GetLocationState()
 {
 	return locState;
-}
-
-int Celeste::GetFacingDirection() const
-{
-	return facingDirection;
 }

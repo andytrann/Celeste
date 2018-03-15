@@ -13,6 +13,7 @@ CelesteState * StateDashing::HandleInput(Celeste & _celeste, GLfloat _dt)
 	{
 		_celeste.dashTimer = 0.0f;
 		_celeste.isDashing = false;
+		_celeste.vel.y *= .6f;
 		return new StateInAir();
 	}
 
@@ -22,11 +23,11 @@ CelesteState * StateDashing::HandleInput(Celeste & _celeste, GLfloat _dt)
 
 void StateDashing::Enter(Celeste & _celeste)
 {
-	if (_celeste.GetFacingDirection() == 1)
+	if (_celeste.facingDirection == 1)
 	{
 		_celeste.sprite = ResourceManager::GetTexture("DashRight");
 	}
-	else if (_celeste.GetFacingDirection() == -1)
+	else if (_celeste.facingDirection == -1)
 	{
 		_celeste.sprite = ResourceManager::GetTexture("DashLeft");
 	}
