@@ -3,6 +3,7 @@
 #include "../Celeste.h"
 #include "../../Engine/IO/Keyboard.h"
 #include "../../Engine/ResourceManager.h"
+#include "StateDashing.h"
 
 CelesteState* StateInAir::HandleInput(Celeste& _celeste, GLfloat _dt)
 {
@@ -25,6 +26,10 @@ CelesteState* StateInAir::HandleInput(Celeste& _celeste, GLfloat _dt)
 		newDirection.y++;
 	}
 
+	//update direction
+	_celeste.direction.x = newDirection.x;
+	_celeste.direction.y = newDirection.y;
+
 	//change sprite according to new direction
 	if (_celeste.direction.x == 1 && _celeste.facingDirection == -1)
 	{
@@ -37,15 +42,30 @@ CelesteState* StateInAir::HandleInput(Celeste& _celeste, GLfloat _dt)
 		_celeste.facingDirection = -1;
 	}
 
-	//update direction
-	_celeste.direction.x = newDirection.x;
-	_celeste.direction.y = newDirection.y;
+	if (Keyboard::KeyDown(GLFW_KEY_M))
+	{
+		if (newDirection == glm::ivec2(0, 0))
+		{
+			_celeste.vel.y = 0.0f;
+			_celeste.vel.x = (GLfloat)_celeste.facingDirection * Celeste::DASH_FORCE;
+			return new StateDashing();
+		}
+		else if (newDirection.x != 0 && newDirection.y != 0)
+		{
+			_celeste.vel = (glm::vec2)newDirection * glm::sin(glm::quarter_pi<GLfloat>()) * Celeste::DASH_FORCE;
+			return new StateDashing();
+		}
+		else
+		{
+			_celeste.vel = (glm::vec2)newDirection * Celeste::DASH_FORCE;
+			return new StateDashing();
+		}
+	}
 
 	//apply friction
-	if (Keyboard::KeyUp(GLFW_KEY_D) || Keyboard::KeyUp(GLFW_KEY_A) || !(Keyboard::Key(GLFW_KEY_D) 
-		|| Keyboard::Key(GLFW_KEY_A)) || (Keyboard::Key(GLFW_KEY_D) && Keyboard::Key(GLFW_KEY_A)))
+	if (!(Keyboard::Key(GLFW_KEY_D) || Keyboard::Key(GLFW_KEY_A)) || (Keyboard::Key(GLFW_KEY_D) && Keyboard::Key(GLFW_KEY_A)))
 	{
-		_celeste.vel.x *= _celeste.FRICTION;
+		_celeste.vel.x *=  _celeste.FRICTION;
 	}
 	_celeste.vel.x += (GLfloat)newDirection.x * _celeste.ACCELERATION * _dt * .75f;
 
