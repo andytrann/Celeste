@@ -20,6 +20,9 @@ public:
 
 	LocationState& GetLocationState();
 
+	bool UseDash();
+	void ResetDash();
+
 	const static GLfloat MAX_SPEED;
 	const static GLfloat ACCELERATION;
 	const static GLfloat FRICTION;
@@ -31,6 +34,7 @@ public:
 	GLfloat dashTimer;
 	GLboolean isDashing;
 private:
+	int dashCount;
 	LocationState locState;
 	CelesteState* currentState;
 	PhysicsComponent physics;

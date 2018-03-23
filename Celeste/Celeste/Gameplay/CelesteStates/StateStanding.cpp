@@ -51,7 +51,7 @@ CelesteState* StateStanding::HandleInput(Celeste& _celeste, GLfloat _dt)
 		_celeste.vel.y = -_celeste.JUMP_FORCE;
 		return new StateInAir();
 	}
-	if (Keyboard::KeyDown(GLFW_KEY_M))
+	if (Keyboard::KeyDown(GLFW_KEY_M) && _celeste.UseDash())
 	{
 		if (newDirection == glm::ivec2(0, 0))
 		{
@@ -93,4 +93,5 @@ void StateStanding::Enter(Celeste& _celeste)
 		_celeste.sprite = ResourceManager::GetTexture("StandLeft");
 	}
 	_celeste.GetLocationState() = LocationState::ON_GROUND;
+	_celeste.ResetDash();
 }

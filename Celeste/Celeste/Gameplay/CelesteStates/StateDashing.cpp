@@ -14,7 +14,7 @@ CelesteState * StateDashing::HandleInput(Celeste & _celeste, GLfloat _dt)
 		_celeste.dashTimer = 0.0f;
 		_celeste.isDashing = false;
 		_celeste.vel.y *= .6f;
-		_celeste.vel.x *= .5f;
+		_celeste.vel.x *= .9f;
 		return new StateInAir();
 	}
 

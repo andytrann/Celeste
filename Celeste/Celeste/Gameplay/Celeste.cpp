@@ -19,7 +19,8 @@ Celeste::Celeste() :
 	direction(glm::ivec2(1,0)),
 	facingDirection(1),
 	dashTimer(0.0f),
-	isDashing(false)
+	isDashing(false),
+	dashCount(1)
 {
 	objectType = ObjectType::CELESTE;
 }
@@ -30,7 +31,8 @@ Celeste::Celeste(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, glm::vec3 _
 	direction(glm::ivec2(1,0)),
 	facingDirection(1),
 	dashTimer(0.0f),
-	isDashing(false)
+	isDashing(false),
+	dashCount(1)
 {
 	objectType = ObjectType::CELESTE;
 }
@@ -152,4 +154,22 @@ void Celeste::Render(SpriteRenderer & _renderer)
 LocationState& Celeste::GetLocationState()
 {
 	return locState;
+}
+
+bool Celeste::UseDash()
+{
+	if (dashCount > 0)
+	{
+		dashCount--;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void Celeste::ResetDash()
+{
+	dashCount = 1;
 }
