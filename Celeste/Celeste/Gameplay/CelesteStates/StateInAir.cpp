@@ -44,17 +44,20 @@ CelesteState* StateInAir::HandleInput(Celeste& _celeste, GLfloat _dt)
 
 	if (Keyboard::KeyDown(GLFW_KEY_M) && _celeste.UseDash())
 	{
+		//if not holding any direction, dash in current facing direction
 		if (newDirection == glm::ivec2(0, 0))
 		{
 			_celeste.vel.y = 0.0f;
 			_celeste.vel.x = (GLfloat)_celeste.facingDirection * Celeste::DASH_FORCE;
 			return new StateDashing();
 		}
+		//dash in 45 degree angle
 		else if (newDirection.x != 0 && newDirection.y != 0)
 		{
 			_celeste.vel = (glm::vec2)newDirection * glm::sin(glm::quarter_pi<GLfloat>()) * Celeste::DASH_FORCE;
 			return new StateDashing();
 		}
+		//dash in 90 degree angle
 		else
 		{
 			_celeste.vel = (glm::vec2)newDirection * Celeste::DASH_FORCE;
