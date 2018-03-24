@@ -68,9 +68,9 @@ CelesteState* StateInAir::HandleInput(Celeste& _celeste, GLfloat _dt)
 	//apply friction
 	if (!(Keyboard::Key(GLFW_KEY_D) || Keyboard::Key(GLFW_KEY_A)) || (Keyboard::Key(GLFW_KEY_D) && Keyboard::Key(GLFW_KEY_A)))
 	{
-		_celeste.vel.x *=  _celeste.FRICTION;
+		_celeste.vel.x *=  _celeste.FRICTION * 2;
 	}
-	_celeste.vel.x += (GLfloat)newDirection.x * _celeste.ACCELERATION * _dt * .75f;
+	_celeste.vel.x += (GLfloat)newDirection.x * _celeste.ACCELERATION * _dt ;
 
 	return nullptr;
 }

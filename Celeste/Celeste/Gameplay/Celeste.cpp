@@ -9,7 +9,7 @@
 
 const GLfloat Celeste::MAX_SPEED = 250.0f;
 const GLfloat Celeste::ACCELERATION = 1400.0f;
-const GLfloat Celeste::FRICTION = .4f;
+const GLfloat Celeste::FRICTION = .45f;
 const GLfloat Celeste::JUMP_FORCE = 600.0f;
 const GLfloat Celeste::DASH_FORCE = 500.0f;
 const GLfloat Celeste::DASH_CD = .2f;
