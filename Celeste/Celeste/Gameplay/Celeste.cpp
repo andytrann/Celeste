@@ -6,7 +6,6 @@
 
 #include <iostream>
 
-
 GLfloat Celeste::MAX_SPEED = 300.0f;
 const GLfloat Celeste::ACCELERATION = 1400.0f;
 const GLfloat Celeste::FRICTION = .45f;
