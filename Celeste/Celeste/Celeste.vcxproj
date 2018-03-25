@@ -70,16 +70,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\trand\Desktop\Projects\Celeste\Celeste\Dependencies\FreeType\include;C:\Users\trand\Desktop\Projects\Celeste\Celeste\Dependencies\irrKlang\include;C:\Users\trand\Desktop\Projects\Celeste\Celeste\Dependencies\OpenGL\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\trand\Desktop\Projects\Celeste\Celeste\Dependencies\FreeType\libs;C:\Users\trand\Desktop\Projects\Celeste\Celeste\Dependencies\irrKlang\libs;C:\Users\trand\Desktop\Projects\Celeste\Celeste\Dependencies\OpenGL\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\FreeType\include;C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\irrKlang\include;C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\OpenGL\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\FreeType\libs;C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\irrKlang\libs;C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\OpenGL\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\FreeType\include;C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\irrKlang\include;C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\OpenGL\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\FreeType\libs;C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\irrKlang\libs;C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\OpenGL\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\trand\Desktop\Projects\Celeste\Celeste\Dependencies\FreeType\include;C:\Users\trand\Desktop\Projects\Celeste\Celeste\Dependencies\irrKlang\include;C:\Users\trand\Desktop\Projects\Celeste\Celeste\Dependencies\OpenGL\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\trand\Desktop\Projects\Celeste\Celeste\Dependencies\FreeType\libs;C:\Users\trand\Desktop\Projects\Celeste\Celeste\Dependencies\irrKlang\libs;C:\Users\trand\Desktop\Projects\Celeste\Celeste\Dependencies\OpenGL\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\FreeType\include;C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\irrKlang\include;C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\OpenGL\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\FreeType\libs;C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\irrKlang\libs;C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\OpenGL\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\FreeType\include;C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\irrKlang\include;C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\OpenGL\include;$(IncludePath)</IncludePath>
@@ -93,7 +93,7 @@
       <PreprocessorDefinitions>GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Users\trand\Desktop\Projects\Celeste\Celeste\Dependencies\FreeType\libs;C:\Users\trand\Desktop\Projects\Celeste\Celeste\Dependencies\irrKlang\libs;C:\Users\trand\Desktop\Projects\Celeste\Celeste\Dependencies\OpenGL\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\FreeType\libs;C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\irrKlang\libs;C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\OpenGL\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>freetype28MT.lib;irrKlang.lib;SOIL.lib;glew32s.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -105,7 +105,7 @@
       <PreprocessorDefinitions>GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Users\trand\Desktop\Projects\Celeste\Celeste\Dependencies\FreeType\libs;C:\Users\trand\Desktop\Projects\Celeste\Celeste\Dependencies\irrKlang\libs;C:\Users\trand\Desktop\Projects\Celeste\Celeste\Dependencies\OpenGL\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\FreeType\libs;C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\irrKlang\libs;C:\Users\Andy\Desktop\Game Design School Stuff\Celeste\Celeste\Dependencies\OpenGL\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>freetype28MT.lib;irrKlang.lib;SOIL.lib;glew32s.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
