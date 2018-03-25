@@ -3,7 +3,7 @@
 #include "Celeste.h"
 
 float PhysicsComponent::GRAVITY = 1800.0f;
-float PhysicsComponent::MAX_FALL_SPEED = 700.0f;
+float PhysicsComponent::MAX_FALL_SPEED = 600.0f;
 
 void PhysicsComponent::Update(Celeste& _celeste, float _dt)
 {
@@ -13,6 +13,13 @@ void PhysicsComponent::Update(Celeste& _celeste, float _dt)
 		{
 			_celeste.vel.y += (GRAVITY * _dt);
 		}
+
+		//need to add wall sliding condition
+		/*
+		else if (_celeste.vel.y > 0 && _celeste.CanWallJump())
+		{
+			_celeste.vel.y = MAX_FALL_SPEED /10.0f;
+		}*/
 		else
 		{
 			_celeste.vel.y = MAX_FALL_SPEED;

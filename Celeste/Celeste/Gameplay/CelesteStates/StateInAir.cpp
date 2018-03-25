@@ -48,9 +48,17 @@ CelesteState* StateInAir::HandleInput(Celeste& _celeste, GLfloat _dt)
 		_celeste.MaxSpeedDown();
 	}
 
-	//wall jump
-	if (Keyboard::KeyDown(GLFW_KEY_N))
+	if (glm::abs<GLfloat>(_celeste.vel.x) < 50.0f)
 	{
+		_celeste.MaxSpeedDown();
+	}
+
+	//wall jump
+	if (Keyboard::KeyDown(GLFW_KEY_N) && _celeste.CanWallJump())
+	{
+		//_celeste.MaxSpeedUp();
+		_celeste.vel.y = -_celeste.JUMP_FORCE;
+		_celeste.vel.x = -(GLfloat)_celeste.facingDirection * _celeste.JUMP_FORCE;
 	}
 
 	//dash in air

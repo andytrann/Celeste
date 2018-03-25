@@ -7,7 +7,7 @@
 #include <iostream>
 
 
-GLfloat Celeste::MAX_SPEED = 250.0f;
+GLfloat Celeste::MAX_SPEED = 300.0f;
 const GLfloat Celeste::ACCELERATION = 1400.0f;
 const GLfloat Celeste::FRICTION = .45f;
 const GLfloat Celeste::JUMP_FORCE = 600.0f;
@@ -62,10 +62,10 @@ void Celeste::Update(GLfloat _dt)
 	switch (locState)
 	{
 	case LocationState::ON_GROUND:
-		//std::cout << "ON_GROUND" << std::endl;
+		std::cout << "ON_GROUND" << std::endl;
 		break;
 	case LocationState::IN_AIR:
-		//std::cout << "IN_AIR" << std::endl;
+		std::cout << "IN_AIR" << std::endl;
 		break;
 	default:
 		//std::cout << "None or CLIMBING" << std::endl;
@@ -149,16 +149,20 @@ void Celeste::DoCollision(std::vector<GameObject> _other)
 		currentState = new StateInAir();
 		currentState->Enter(*this);
 	}
+	else if (inAir && isDashing)
+	{
+		locState = LocationState::IN_AIR;
+	}
 
 	//check if player can wall jump or not
 	if (locState == LocationState::IN_AIR && !touchingSomethingLR || locState == LocationState::ON_GROUND)
 	{
-		std::cout << "Cannot wall Jump" << std::endl;
+		//std::cout << "Cannot wall Jump" << std::endl;
 		wallJump = false;
 	}
 	else if (locState == LocationState::IN_AIR && touchingSomethingLR )
 	{
-		std::cout << "Can wall Jump" << std::endl;
+		//std::cout << "Can wall Jump" << std::endl;
 		wallJump = true;
 	}
 }
@@ -198,7 +202,7 @@ void Celeste::MaxSpeedUp()
 
 void Celeste::MaxSpeedDown()
 {
-	MAX_SPEED = 250.0f;
+	MAX_SPEED = 300.0f;
 }
 
 GLfloat & Celeste::GetMaxSpeed() const
