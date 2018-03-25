@@ -38,7 +38,7 @@ CelesteState* StateInAir::HandleInput(Celeste& _celeste, GLfloat _dt)
 		_celeste.sprite = ResourceManager::GetTexture("JumpRight");
 		_celeste.facingDirection = 1;
 
-		//in case celeste dash jumps and changes facing direction (actual direction of jump isnt changed)
+		//in case celeste dash jumps and changes direction or wall jumps and changes facing direction (actual direction of jump isnt changed)
 		_celeste.MaxSpeedDown();
 	}
 	else if (_celeste.direction.x == -1 && _celeste.facingDirection == 1)
@@ -46,7 +46,7 @@ CelesteState* StateInAir::HandleInput(Celeste& _celeste, GLfloat _dt)
 		_celeste.sprite = ResourceManager::GetTexture("JumpLeft");
 		_celeste.facingDirection = -1;
 
-		//in case celeste dash jumps and changes facing direction (actual direction of jump isnt changed)
+		//in case celeste dash jumps and changes direction or wall jumps and changes facing direction (actual direction of jump isnt changed)
 		_celeste.MaxSpeedDown();
 	}
 
