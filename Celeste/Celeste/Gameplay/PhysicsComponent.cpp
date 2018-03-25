@@ -2,8 +2,14 @@
 
 #include "Celeste.h"
 
-float PhysicsComponent::GRAVITY = 1800.0f;
-float PhysicsComponent::MAX_FALL_SPEED = 600.0f;
+//float PhysicsComponent::GRAVITY = 1800.0f;
+//float PhysicsComponent::MAX_FALL_SPEED = 600.0f;
+
+PhysicsComponent::PhysicsComponent() : 
+	gravity(1800.0f),
+	maxFallSpeed(600.0f)
+{
+}
 
 void PhysicsComponent::Update(Celeste& _celeste, float _dt)
 {
@@ -19,13 +25,13 @@ void PhysicsComponent::Update(Celeste& _celeste, float _dt)
 
 	if (_celeste.GetLocationState() == LocationState::IN_AIR && !_celeste.isDashing)
 	{
-		if (_celeste.vel.y < MAX_FALL_SPEED)
+		if (_celeste.vel.y < maxFallSpeed)
 		{
-			_celeste.vel.y += (GRAVITY * _dt);
+			_celeste.vel.y += (gravity * _dt);
 		}
 		else
 		{
-			_celeste.vel.y = MAX_FALL_SPEED;
+			_celeste.vel.y = maxFallSpeed;
 		}
 
 		if (_celeste.vel.x > _celeste.GetMaxSpeed())
@@ -56,10 +62,10 @@ void PhysicsComponent::Update(Celeste& _celeste, float _dt)
 
 void PhysicsComponent::MaxFallSpeedDown()
 {
-	MAX_FALL_SPEED = 200.0f;
+	maxFallSpeed = 200.0f;
 }
 
 void PhysicsComponent::MaxFallSpeedUp()
 {
-	MAX_FALL_SPEED = 600.0f;
+	maxFallSpeed = 600.0f;
 }
