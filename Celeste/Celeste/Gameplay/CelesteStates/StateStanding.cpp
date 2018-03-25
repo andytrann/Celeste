@@ -47,11 +47,13 @@ CelesteState* StateStanding::HandleInput(Celeste& _celeste, GLfloat _dt)
 		_celeste.facingDirection = -1;
 	}
 
+	//jump
 	if (Keyboard::KeyDown(GLFW_KEY_N))
 	{
 		_celeste.vel.y -= _celeste.JUMP_FORCE;
 		return new StateInAir();
 	}
+	//dash
 	if (Keyboard::KeyDown(GLFW_KEY_M) && _celeste.UseDash())
 	{
 		//if not holding any direction, dash in current facing direction

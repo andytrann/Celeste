@@ -22,9 +22,12 @@ public:
 
 	bool UseDash();
 	void ResetDash();
+
 	void MaxSpeedUp();
 	void MaxSpeedDown();
 	GLfloat& GetMaxSpeed() const;
+
+	bool CanWallJump() const;
 	
 	const static GLfloat ACCELERATION;
 	const static GLfloat FRICTION;
@@ -39,6 +42,7 @@ private:
 	static GLfloat MAX_SPEED;
 
 	int dashCount;
+	bool wallJump;
 	LocationState locState;
 	CelesteState* currentState;
 	PhysicsComponent physics;

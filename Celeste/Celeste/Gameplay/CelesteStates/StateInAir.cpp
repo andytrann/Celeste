@@ -48,6 +48,12 @@ CelesteState* StateInAir::HandleInput(Celeste& _celeste, GLfloat _dt)
 		_celeste.MaxSpeedDown();
 	}
 
+	//wall jump
+	if (Keyboard::KeyDown(GLFW_KEY_N))
+	{
+	}
+
+	//dash in air
 	if (Keyboard::KeyDown(GLFW_KEY_M) && _celeste.UseDash())
 	{
 		//if not holding any direction, dash in current facing direction

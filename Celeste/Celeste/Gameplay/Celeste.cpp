@@ -20,7 +20,8 @@ Celeste::Celeste() :
 	facingDirection(1),
 	dashTimer(0.0f),
 	isDashing(false),
-	dashCount(1)
+	dashCount(1),
+	wallJump(false)
 {
 	objectType = ObjectType::CELESTE;
 }
@@ -32,7 +33,8 @@ Celeste::Celeste(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, glm::vec3 _
 	facingDirection(1),
 	dashTimer(0.0f),
 	isDashing(false),
-	dashCount(1)
+	dashCount(1),
+	wallJump(false)
 {
 	objectType = ObjectType::CELESTE;
 }
@@ -60,13 +62,13 @@ void Celeste::Update(GLfloat _dt)
 	switch (locState)
 	{
 	case LocationState::ON_GROUND:
-		std::cout << "ON_GROUND" << std::endl;
+		//std::cout << "ON_GROUND" << std::endl;
 		break;
 	case LocationState::IN_AIR:
-		std::cout << "IN_AIR" << std::endl;
+		//std::cout << "IN_AIR" << std::endl;
 		break;
 	default:
-		std::cout << "None or CLIMBING" << std::endl;
+		//std::cout << "None or CLIMBING" << std::endl;
 		break;
 	}
 	
@@ -76,6 +78,7 @@ void Celeste::Update(GLfloat _dt)
 void Celeste::DoCollision(std::vector<GameObject> _other)
 {
 	bool inAir = true;
+	bool touchingSomethingLR = false;
 	for (unsigned int i = 0; i < _other.size(); i++)
 	{
 		Collision col = GetCollision(_other[i]);
@@ -122,6 +125,7 @@ void Celeste::DoCollision(std::vector<GameObject> _other)
 				vel.x = 0.0f;
 				pos.x -= penetration;
 			}
+			touchingSomethingLR = true;
 			break;
 		case Direction::RIGHT:
 			if (_other[i].GetType() == ObjectType::PLATFORM)
@@ -131,6 +135,7 @@ void Celeste::DoCollision(std::vector<GameObject> _other)
 				vel.x = 0.0f;
 				pos.x += penetration;
 			}
+			touchingSomethingLR = true;
 			break;
 		case Direction::NONE:
 			break;
@@ -143,6 +148,18 @@ void Celeste::DoCollision(std::vector<GameObject> _other)
 		delete currentState;
 		currentState = new StateInAir();
 		currentState->Enter(*this);
+	}
+
+	//check if player can wall jump or not
+	if (locState == LocationState::IN_AIR && !touchingSomethingLR || locState == LocationState::ON_GROUND)
+	{
+		std::cout << "Cannot wall Jump" << std::endl;
+		wallJump = false;
+	}
+	else if (locState == LocationState::IN_AIR && touchingSomethingLR )
+	{
+		std::cout << "Can wall Jump" << std::endl;
+		wallJump = true;
 	}
 }
 
@@ -160,7 +177,7 @@ bool Celeste::UseDash()
 {
 	if (dashCount > 0)
 	{
-		dashCount--;
+		//dashCount--;
 		return true;
 	}
 	else
@@ -187,4 +204,9 @@ void Celeste::MaxSpeedDown()
 GLfloat & Celeste::GetMaxSpeed() const
 {
 	return MAX_SPEED;
+}
+
+bool Celeste::CanWallJump() const
+{
+	return wallJump;
 }

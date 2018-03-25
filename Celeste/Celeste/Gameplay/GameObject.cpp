@@ -38,8 +38,8 @@ ObjectType GameObject::GetType() const
 GLboolean GameObject::CheckCollision(GameObject& _other)
 {
 	// Collision x - axis ?
-	bool collisionX = pos.x + size.x > _other.pos.x &&
-		_other.pos.x + _other.size.x > pos.x;
+	bool collisionX = pos.x + size.x >= _other.pos.x &&
+		_other.pos.x + _other.size.x >= pos.x;
 	// Collision y-axis?
 	bool collisionY = pos.y + size.y >= _other.pos.y &&
 		_other.pos.y + _other.size.y >= pos.y;
