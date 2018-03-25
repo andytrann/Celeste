@@ -5,6 +5,8 @@
 #include "../../Engine/ResourceManager.h"
 #include "StateDashing.h"
 
+#include <iostream>
+
 CelesteState* StateInAir::HandleInput(Celeste& _celeste, GLfloat _dt)
 {
 	//calculate new direction
@@ -36,7 +38,7 @@ CelesteState* StateInAir::HandleInput(Celeste& _celeste, GLfloat _dt)
 		_celeste.sprite = ResourceManager::GetTexture("JumpRight");
 		_celeste.facingDirection = 1;
 
-		//in case celeste dash jumps and changes direction
+		//in case celeste dash jumps and changes facing direction (actual direction of jump isnt changed)
 		_celeste.MaxSpeedDown();
 	}
 	else if (_celeste.direction.x == -1 && _celeste.facingDirection == 1)
@@ -44,21 +46,23 @@ CelesteState* StateInAir::HandleInput(Celeste& _celeste, GLfloat _dt)
 		_celeste.sprite = ResourceManager::GetTexture("JumpLeft");
 		_celeste.facingDirection = -1;
 
-		//in case celeste dash jumps and changes direction
+		//in case celeste dash jumps and changes facing direction (actual direction of jump isnt changed)
 		_celeste.MaxSpeedDown();
 	}
 
-	if (glm::abs<GLfloat>(_celeste.vel.x) < 50.0f)
+	//if x vel goes below 30, max speed goes back to normal (so you can't hold same direction after wall jump and get increase in horizontal speed)
+	if (glm::abs<GLfloat>(_celeste.vel.x) < 30.0f)
 	{
+		std::cout << "dmwaiodmnkw" << std::endl;
 		_celeste.MaxSpeedDown();
 	}
 
 	//wall jump
 	if (Keyboard::KeyDown(GLFW_KEY_N) && _celeste.CanWallJump())
 	{
-		//_celeste.MaxSpeedUp();
+		_celeste.MaxSpeedUp();
 		_celeste.vel.y = -_celeste.JUMP_FORCE;
-		_celeste.vel.x = -(GLfloat)_celeste.facingDirection * _celeste.JUMP_FORCE;
+		_celeste.vel.x -= (GLfloat)_celeste.facingDirection * _celeste.JUMP_FORCE;
 	}
 
 	//dash in air
