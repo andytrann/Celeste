@@ -21,6 +21,22 @@ CelesteState * StateDashing::HandleInput(Celeste & _celeste, GLfloat _dt)
 		return new StateInAir();
 	}
 
+	if (Keyboard::KeyDown(GLFW_KEY_N) && _celeste.GetLocationState() == LocationState::ON_GROUND)
+	{
+		_celeste.dashTimer = 0.0f;
+		_celeste.isDashing = false;
+		//adjustment so when celeste dashes up, shes not as floaty after dash
+		if (_celeste.vel.y < 0)
+		{
+			_celeste.vel.y *= .8f;
+		}
+
+		//change max speed so dash carries you through air
+		_celeste.MaxSpeedUp();
+		_celeste.vel.y -= _celeste.JUMP_FORCE;
+		return new StateInAir();
+	}
+
 	_celeste.dashTimer += _dt;
 	return nullptr;
 }

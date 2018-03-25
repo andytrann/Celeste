@@ -22,8 +22,10 @@ public:
 
 	bool UseDash();
 	void ResetDash();
-
-	const static GLfloat MAX_SPEED;
+	void MaxSpeedUp();
+	void MaxSpeedDown();
+	GLfloat& GetMaxSpeed() const;
+	
 	const static GLfloat ACCELERATION;
 	const static GLfloat FRICTION;
 	const static GLfloat JUMP_FORCE;
@@ -34,6 +36,8 @@ public:
 	GLfloat dashTimer;
 	GLboolean isDashing;
 private:
+	static GLfloat MAX_SPEED;
+
 	int dashCount;
 	LocationState locState;
 	CelesteState* currentState;

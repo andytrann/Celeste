@@ -7,7 +7,7 @@
 #include <iostream>
 
 
-const GLfloat Celeste::MAX_SPEED = 250.0f;
+GLfloat Celeste::MAX_SPEED = 250.0f;
 const GLfloat Celeste::ACCELERATION = 1400.0f;
 const GLfloat Celeste::FRICTION = .45f;
 const GLfloat Celeste::JUMP_FORCE = 600.0f;
@@ -172,4 +172,19 @@ bool Celeste::UseDash()
 void Celeste::ResetDash()
 {
 	dashCount = 1;
+}
+
+void Celeste::MaxSpeedUp()
+{
+	MAX_SPEED = DASH_FORCE;
+}
+
+void Celeste::MaxSpeedDown()
+{
+	MAX_SPEED = 250.0f;
+}
+
+GLfloat & Celeste::GetMaxSpeed() const
+{
+	return MAX_SPEED;
 }

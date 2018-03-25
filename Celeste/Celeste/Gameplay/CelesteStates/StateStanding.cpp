@@ -49,7 +49,7 @@ CelesteState* StateStanding::HandleInput(Celeste& _celeste, GLfloat _dt)
 
 	if (Keyboard::KeyDown(GLFW_KEY_N))
 	{
-		_celeste.vel.y = -_celeste.JUMP_FORCE;
+		_celeste.vel.y -= _celeste.JUMP_FORCE;
 		return new StateInAir();
 	}
 	if (Keyboard::KeyDown(GLFW_KEY_M) && _celeste.UseDash())
@@ -98,4 +98,7 @@ void StateStanding::Enter(Celeste& _celeste)
 	}
 	_celeste.GetLocationState() = LocationState::ON_GROUND;
 	_celeste.ResetDash();
+
+	//change max speed to original value in case you dash jump
+	_celeste.MaxSpeedDown();
 }

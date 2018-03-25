@@ -18,26 +18,26 @@ void PhysicsComponent::Update(Celeste& _celeste, float _dt)
 			_celeste.vel.y = MAX_FALL_SPEED;
 		}
 
-		if (_celeste.vel.x > _celeste.MAX_SPEED)
+		if (_celeste.vel.x > _celeste.GetMaxSpeed())
 		{
-			_celeste.vel.x = _celeste.MAX_SPEED;
+			_celeste.vel.x = _celeste.GetMaxSpeed();
 		}
-		else if (_celeste.vel.x < -_celeste.MAX_SPEED)
+		else if (_celeste.vel.x < -_celeste.GetMaxSpeed())
 		{
-			_celeste.vel.x = -_celeste.MAX_SPEED;
+			_celeste.vel.x = -_celeste.GetMaxSpeed();
 		}
 	}
 	else if (_celeste.GetLocationState() == LocationState::ON_GROUND && !_celeste.isDashing)
 	{
 		_celeste.vel.y = 0;
 
-		if (_celeste.vel.x > _celeste.MAX_SPEED)
+		if (_celeste.vel.x > _celeste.GetMaxSpeed())
 		{
-			_celeste.vel.x = _celeste.MAX_SPEED;
+			_celeste.vel.x = _celeste.GetMaxSpeed();
 		}
-		else if (_celeste.vel.x < -_celeste.MAX_SPEED)
+		else if (_celeste.vel.x < -_celeste.GetMaxSpeed())
 		{
-			_celeste.vel.x = -_celeste.MAX_SPEED;
+			_celeste.vel.x = -_celeste.GetMaxSpeed();
 		}
 	}
 

@@ -35,11 +35,17 @@ CelesteState* StateInAir::HandleInput(Celeste& _celeste, GLfloat _dt)
 	{
 		_celeste.sprite = ResourceManager::GetTexture("JumpRight");
 		_celeste.facingDirection = 1;
+
+		//in case celeste dash jumps and changes direction
+		_celeste.MaxSpeedDown();
 	}
 	else if (_celeste.direction.x == -1 && _celeste.facingDirection == 1)
 	{
 		_celeste.sprite = ResourceManager::GetTexture("JumpLeft");
 		_celeste.facingDirection = -1;
+
+		//in case celeste dash jumps and changes direction
+		_celeste.MaxSpeedDown();
 	}
 
 	if (Keyboard::KeyDown(GLFW_KEY_M) && _celeste.UseDash())
