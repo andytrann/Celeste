@@ -157,12 +157,10 @@ void Celeste::DoCollision(std::vector<GameObject> _other)
 	//check if player can wall jump or not
 	if (locState == LocationState::IN_AIR && !touchingSomethingLR || locState == LocationState::ON_GROUND)
 	{
-		//std::cout << "Cannot wall Jump" << std::endl;
 		wallJump = false;
 	}
 	else if (locState == LocationState::IN_AIR && touchingSomethingLR )
 	{
-		std::cout << "Can wall Jump" << std::endl;
 		wallJump = true;
 	}
 }

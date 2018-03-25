@@ -34,6 +34,7 @@ public:
 	const static GLfloat JUMP_FORCE;
 	const static GLfloat DASH_FORCE;
 	const static GLfloat DASH_CD;
+
 	glm::ivec2 direction;
 	int facingDirection;
 	GLfloat dashTimer;

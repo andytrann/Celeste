@@ -53,7 +53,6 @@ CelesteState* StateInAir::HandleInput(Celeste& _celeste, GLfloat _dt)
 	//if x vel goes below 30, max speed goes back to normal (so you can't hold same direction after wall jump and get increase in horizontal speed)
 	if (glm::abs<GLfloat>(_celeste.vel.x) < 30.0f)
 	{
-		std::cout << "dmwaiodmnkw" << std::endl;
 		_celeste.MaxSpeedDown();
 	}
 
