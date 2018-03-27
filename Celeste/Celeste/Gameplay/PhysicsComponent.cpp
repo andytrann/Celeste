@@ -7,7 +7,9 @@
 
 PhysicsComponent::PhysicsComponent() : 
 	gravity(1800.0f),
-	maxFallSpeed(600.0f)
+	maxFallSpeed(600.0f),
+	climbUpSpeed(-200.0f),
+	climbDownSpeed(400.0f)
 {
 }
 
@@ -45,7 +47,7 @@ void PhysicsComponent::Update(Celeste& _celeste, float _dt)
 	}
 	else if (_celeste.GetLocationState() == LocationState::ON_GROUND && !_celeste.isDashing)
 	{
-		_celeste.vel.y = 0;
+		_celeste.vel.y = 0.0f;
 
 		if (_celeste.vel.x > _celeste.GetMaxSpeed())
 		{
@@ -54,6 +56,20 @@ void PhysicsComponent::Update(Celeste& _celeste, float _dt)
 		else if (_celeste.vel.x < -_celeste.GetMaxSpeed())
 		{
 			_celeste.vel.x = -_celeste.GetMaxSpeed();
+		}
+	}
+
+	else if (_celeste.GetLocationState() == LocationState::CLIMBING)
+	{
+		_celeste.vel.x = 0.0f;
+
+		if (_celeste.vel.y < climbUpSpeed)
+		{
+			_celeste.vel.y = climbUpSpeed;
+		}
+		else if (_celeste.vel.y > climbDownSpeed)
+		{
+			_celeste.vel.y = climbDownSpeed;
 		}
 	}
 

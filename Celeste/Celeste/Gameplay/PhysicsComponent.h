@@ -14,6 +14,8 @@ private:
 
 	float gravity;
 	float maxFallSpeed;
+	float climbUpSpeed;
+	float climbDownSpeed;
 };
 
 #endif

@@ -69,16 +69,17 @@ void Celeste::Update(GLfloat _dt)
 	switch (locState)
 	{
 	case LocationState::ON_GROUND:
-		//std::cout << "ON_GROUND" << std::endl;
+		std::cout << "ON_GROUND" << std::endl;
 		break;
 	case LocationState::IN_AIR:
-		//std::cout << "IN_AIR" << std::endl;
+		std::cout << "IN_AIR" << std::endl;
 		break;
+	case LocationState::CLIMBING:
+		std::cout << "CLIMBING" << std::endl;
 	default:
-		//std::cout << "None or CLIMBING" << std::endl;
+		//std::cout << "NONE" << std::endl;
 		break;
 	}
-	
 	physics.Update(*this, _dt);
 }
 
@@ -232,5 +233,5 @@ bool Celeste::CanWallJump() const
 
 bool Celeste::CanClimb() const
 {
-	return climb;
+	return climb && climbTimer < MAX_CLIMB_DURATION;
 }

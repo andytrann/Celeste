@@ -6,6 +6,7 @@
 #include "StateCrouching.h"
 #include "StateInAir.h"
 #include "StateDashing.h"
+#include "StateClimbing.h"
 
 CelesteState* StateStanding::HandleInput(Celeste& _celeste, GLfloat _dt)
 {
@@ -76,6 +77,13 @@ CelesteState* StateStanding::HandleInput(Celeste& _celeste, GLfloat _dt)
 		}
 	}
 
+	//climb
+	if (_celeste.CanClimb() && Keyboard::KeyDown(GLFW_KEY_COMMA))
+	{
+		_celeste.vel = glm::vec2(0.0f, 0.0f);
+		return new StateClimbing();
+	}
+
 	//apply friction
 	if (Keyboard::KeyUp(GLFW_KEY_D) || Keyboard::KeyUp(GLFW_KEY_A) || !(Keyboard::Key(GLFW_KEY_D) 
 		|| Keyboard::Key(GLFW_KEY_A)) || (Keyboard::Key(GLFW_KEY_D) && Keyboard::Key(GLFW_KEY_A)))
@@ -103,4 +111,7 @@ void StateStanding::Enter(Celeste& _celeste)
 
 	//change max speed to original value in case you dash jump
 	_celeste.MaxSpeedDown();
+
+	//reset climb timer
+	_celeste.climbTimer = 0.0f;
 }

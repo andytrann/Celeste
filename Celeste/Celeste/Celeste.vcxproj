@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Engine.cpp" />
+    <ClCompile Include="Gameplay\CelesteStates\StateClimbing.cpp" />
     <ClCompile Include="Gameplay\CelesteStates\StateCrouching.cpp" />
     <ClCompile Include="Gameplay\CelesteStates\StateDashing.cpp" />
     <ClCompile Include="Gameplay\CelesteStates\StateInAir.cpp" />
@@ -174,6 +175,7 @@
   <ItemGroup>
     <ClInclude Include="Engine\Engine.h" />
     <ClInclude Include="Gameplay\CelesteStates\CelesteState.h" />
+    <ClInclude Include="Gameplay\CelesteStates\StateClimbing.h" />
     <ClInclude Include="Gameplay\CelesteStates\StateCrouching.h" />
     <ClInclude Include="Gameplay\CelesteStates\StateDashing.h" />
     <ClInclude Include="Gameplay\CelesteStates\StateInAir.h" />
