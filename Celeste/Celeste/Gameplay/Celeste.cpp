@@ -80,6 +80,7 @@ void Celeste::Update(GLfloat _dt)
 		//std::cout << "NONE" << std::endl;
 		break;
 	}
+	std::cout << climbTimer << std::endl;
 	physics.Update(*this, _dt);
 }
 
@@ -114,10 +115,17 @@ void Celeste::DoCollision(std::vector<GameObject> _other)
 				currentState = new StateStanding();
 				currentState->Enter(*this);
 			}
+			//if climbing and on ground
+			if (_other[i].GetType() == ObjectType::PLATFORM && locState == LocationState::CLIMBING && vel.y >= 0)
+			{
+				GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
+				pos.y -= penetration;
+				climbTimer = 0.0f;
+			}
 			inAir = false;
 			break;
 		case Direction::DOWN:
-			if (_other[i].GetType() == ObjectType::PLATFORM && locState == LocationState::IN_AIR)
+			if (_other[i].GetType() == ObjectType::PLATFORM && (locState == LocationState::IN_AIR || locState == LocationState::CLIMBING))
 			{
 				//move celeste back down difference of penetration
 				GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
@@ -182,15 +190,6 @@ void Celeste::DoCollision(std::vector<GameObject> _other)
 	else
 	{
 		climb = false;
-	}
-
-	if (touchingSomethingLR)
-	{
-		std::cout << "nnnnnn" << std::endl;
-	}
-	else
-	{
-		std::cout << "........" << std::endl;
 	}
 }
 
