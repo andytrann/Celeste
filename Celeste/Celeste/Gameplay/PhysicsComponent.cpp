@@ -16,7 +16,7 @@ PhysicsComponent::PhysicsComponent() :
 void PhysicsComponent::Update(Celeste& _celeste, float _dt)
 {
 	//check for wall slide
-	if (_celeste.direction.x != 0 && _celeste.CanWallJump())
+	if (_celeste.direction.x != 0 && _celeste.CanWallJump() && _celeste.vel.y > 0.0f)
 	{
 		MaxFallSpeedDown();
 	}
@@ -29,6 +29,7 @@ void PhysicsComponent::Update(Celeste& _celeste, float _dt)
 	{
 		if (_celeste.vel.y < maxFallSpeed)
 		{
+
 			_celeste.vel.y += (gravity * _dt);
 		}
 		else

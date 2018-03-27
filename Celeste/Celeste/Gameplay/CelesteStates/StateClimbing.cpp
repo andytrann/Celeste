@@ -50,7 +50,7 @@ CelesteState* StateClimbing::HandleInput(Celeste& _celeste, GLfloat _dt)
 	//calculate timer increment
 	if (_celeste.direction.y == -1)
 	{
-		_celeste.climbTimer += _dt * 2.0f;
+		_celeste.climbTimer += _dt * 3.0f;
 	}
 	else
 	{
