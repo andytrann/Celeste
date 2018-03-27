@@ -9,7 +9,7 @@ PhysicsComponent::PhysicsComponent() :
 	gravity(1800.0f),
 	maxFallSpeed(600.0f),
 	climbUpSpeed(-200.0f),
-	climbDownSpeed(400.0f)
+	climbDownSpeed(300.0f)
 {
 }
 

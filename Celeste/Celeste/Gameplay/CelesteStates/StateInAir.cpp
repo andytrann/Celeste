@@ -4,6 +4,7 @@
 #include "../../Engine/IO/Keyboard.h"
 #include "../../Engine/ResourceManager.h"
 #include "StateDashing.h"
+#include "StateClimbing.h"
 
 #include <iostream>
 
@@ -86,6 +87,14 @@ CelesteState* StateInAir::HandleInput(Celeste& _celeste, GLfloat _dt)
 			_celeste.vel = (glm::vec2)newDirection * Celeste::DASH_FORCE;
 			return new StateDashing();
 		}
+	}
+
+
+	//climbing
+	if (_celeste.CanClimb() && Keyboard::KeyDown(GLFW_KEY_COMMA))
+	{
+		_celeste.vel = glm::vec2(0.0f, 0.0f);
+		return new StateClimbing();
 	}
 
 	//apply friction

@@ -69,13 +69,13 @@ void Celeste::Update(GLfloat _dt)
 	switch (locState)
 	{
 	case LocationState::ON_GROUND:
-		std::cout << "ON_GROUND" << std::endl;
+		//std::cout << "ON_GROUND" << std::endl;
 		break;
 	case LocationState::IN_AIR:
-		std::cout << "IN_AIR" << std::endl;
+		//std::cout << "IN_AIR" << std::endl;
 		break;
 	case LocationState::CLIMBING:
-		std::cout << "CLIMBING" << std::endl;
+		//std::cout << "CLIMBING" << std::endl;
 	default:
 		//std::cout << "NONE" << std::endl;
 		break;
@@ -151,7 +151,9 @@ void Celeste::DoCollision(std::vector<GameObject> _other)
 			break;
 		}
 	}
-	if (inAir && !isDashing)
+
+	//transition from end of dash to in air state
+	if (inAir && !isDashing && locState != LocationState::CLIMBING)
 	{
 		delete currentState;
 		currentState = new StateInAir();
@@ -180,6 +182,15 @@ void Celeste::DoCollision(std::vector<GameObject> _other)
 	else
 	{
 		climb = false;
+	}
+
+	if (touchingSomethingLR)
+	{
+		std::cout << "nnnnnn" << std::endl;
+	}
+	else
+	{
+		std::cout << "........" << std::endl;
 	}
 }
 
