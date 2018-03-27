@@ -28,22 +28,28 @@ public:
 	GLfloat& GetMaxSpeed() const;
 
 	bool CanWallJump() const;
+	bool CanClimb() const;
 	
 	const static GLfloat ACCELERATION;
 	const static GLfloat FRICTION;
 	const static GLfloat JUMP_FORCE;
 	const static GLfloat DASH_FORCE;
 	const static GLfloat DASH_CD;
+	const static GLfloat MAX_CLIMB_DURATION;
+	const static GLfloat MAX_CLIMB_SPEED;
 
 	glm::ivec2 direction;
 	int facingDirection;
 	GLfloat dashTimer;
 	GLboolean isDashing;
+	GLfloat climbTimer;
+	GLboolean isClimbing;
 private:
 	static GLfloat MAX_SPEED;
 
 	int dashCount;
 	bool wallJump;
+	bool climb;
 	LocationState locState;
 	CelesteState* currentState;
 	PhysicsComponent physics;

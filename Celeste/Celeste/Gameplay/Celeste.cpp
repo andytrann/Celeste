@@ -12,6 +12,8 @@ const GLfloat Celeste::FRICTION = .45f;
 const GLfloat Celeste::JUMP_FORCE = 600.0f;
 const GLfloat Celeste::DASH_FORCE = 500.0f;
 const GLfloat Celeste::DASH_CD = .2f;
+const GLfloat Celeste::MAX_CLIMB_DURATION = 10.0f;
+const GLfloat Celeste::MAX_CLIMB_SPEED = 150.0f;
 
 Celeste::Celeste() : 
 	GameObject(),
@@ -20,7 +22,10 @@ Celeste::Celeste() :
 	dashTimer(0.0f),
 	isDashing(false),
 	dashCount(1),
-	wallJump(false)
+	wallJump(false),
+	climb(false),
+	climbTimer(0.0f),
+	isClimbing(false)
 {
 	objectType = ObjectType::CELESTE;
 }
@@ -33,7 +38,10 @@ Celeste::Celeste(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, glm::vec3 _
 	dashTimer(0.0f),
 	isDashing(false),
 	dashCount(1),
-	wallJump(false)
+	wallJump(false),
+	climb(false),
+	climbTimer(0.0f),
+	isClimbing(false)
 {
 	objectType = ObjectType::CELESTE;
 }
@@ -162,6 +170,16 @@ void Celeste::DoCollision(std::vector<GameObject> _other)
 	{
 		wallJump = true;
 	}
+
+	//check if player can wall climb or not
+	if (touchingSomethingLR && climbTimer < MAX_CLIMB_DURATION)
+	{
+		climb = true;
+	}
+	else
+	{
+		climb = false;
+	}
 }
 
 void Celeste::Render(SpriteRenderer & _renderer)
@@ -210,4 +228,9 @@ GLfloat & Celeste::GetMaxSpeed() const
 bool Celeste::CanWallJump() const
 {
 	return wallJump;
+}
+
+bool Celeste::CanClimb() const
+{
+	return climb;
 }
