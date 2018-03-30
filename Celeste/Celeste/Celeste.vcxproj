@@ -158,9 +158,10 @@
     <ClCompile Include="Engine\ResourceManager.cpp" />
     <ClCompile Include="Gameplay\Celeste.cpp" />
     <ClCompile Include="Gameplay\Game.cpp" />
+    <ClCompile Include="Gameplay\LevelObjects\Gem.cpp" />
     <ClCompile Include="Gameplay\PhysicsComponent.cpp" />
-    <ClCompile Include="Gameplay\Platform.cpp" />
-    <ClCompile Include="Gameplay\Spikes.cpp" />
+    <ClCompile Include="Gameplay\LevelObjects\Platform.cpp" />
+    <ClCompile Include="Gameplay\LevelObjects\Spikes.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -191,9 +192,10 @@
     <ClInclude Include="Engine\ResourceManager.h" />
     <ClInclude Include="Gameplay\Celeste.h" />
     <ClInclude Include="Gameplay\Game.h" />
+    <ClInclude Include="Gameplay\LevelObjects\Gem.h" />
     <ClInclude Include="Gameplay\PhysicsComponent.h" />
-    <ClInclude Include="Gameplay\Platform.h" />
-    <ClInclude Include="Gameplay\Spikes.h" />
+    <ClInclude Include="Gameplay\LevelObjects\Platform.h" />
+    <ClInclude Include="Gameplay\LevelObjects\Spikes.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Textures\Background.png" />
@@ -203,6 +205,7 @@
     <Image Include="Assets\Textures\CrouchRight.png" />
     <Image Include="Assets\Textures\DashLeft.png" />
     <Image Include="Assets\Textures\DashRight.png" />
+    <Image Include="Assets\Textures\Gem.png" />
     <Image Include="Assets\Textures\Ground.png" />
     <Image Include="Assets\Textures\JumpLeft.png" />
     <Image Include="Assets\Textures\JumpRight.png" />

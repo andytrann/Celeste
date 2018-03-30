@@ -1,6 +1,6 @@
 #include "Spikes.h"
 
-#include "Celeste.h"
+#include "../Celeste.h"
 
 Spikes::Spikes() :
 	GameObject()

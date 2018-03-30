@@ -1,6 +1,6 @@
 #include "Platform.h"
 
-#include "Celeste.h"
+#include "../Celeste.h"
 
 Platform::Platform() : 
 	GameObject()

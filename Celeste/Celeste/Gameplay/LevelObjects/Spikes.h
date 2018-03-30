@@ -1,7 +1,7 @@
 #ifndef SPIKES_H
 #define SPIKES_H
 
-#include "GameObject.h"
+#include "../GameObject.h"
 
 class Spikes : public GameObject
 {
