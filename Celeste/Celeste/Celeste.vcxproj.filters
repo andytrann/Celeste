@@ -72,6 +72,9 @@
     <ClCompile Include="Gameplay\CelesteStates\StateClimbing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Gameplay\Spikes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Graphics\Shaders\PostProcessing.fs" />
@@ -141,6 +144,9 @@
     <ClInclude Include="Gameplay\CelesteStates\StateClimbing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Gameplay\Spikes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Textures\CrouchLeft.png">
@@ -177,6 +183,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Assets\Textures\ClimbRight.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Textures\Spikes.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

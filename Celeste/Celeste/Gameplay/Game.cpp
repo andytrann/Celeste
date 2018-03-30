@@ -8,6 +8,7 @@
 #include "../Engine/IO/Keyboard.h"
 #include "Celeste.h"
 #include "Platform.h"
+#include "Spikes.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -34,6 +35,7 @@ Celeste* celeste;
 Platform* ground;
 Platform* ground2;
 Platform* ground3;
+Spikes* spikes;
 
 std::vector<GameObject> platforms;
 
@@ -71,6 +73,9 @@ Game::~Game()
 
 	delete ground3;
 	ground3 = nullptr;
+
+	delete spikes;
+	spikes = nullptr;
 }
 
 void Game::Init()
@@ -88,6 +93,7 @@ void Game::Init()
 	//Load textures
 	ResourceManager::LoadTexture("Assets/Textures/Background.png", GL_TRUE, "Background");
 	ResourceManager::LoadTexture("Assets/Textures/Ground.png", GL_TRUE, "Ground");
+	ResourceManager::LoadTexture("Assets/Textures/Spikes.png", GL_TRUE, "Spikes");
 	ResourceManager::LoadTexture("Assets/Textures/StandLeft.png", GL_TRUE, "StandLeft");
 	ResourceManager::LoadTexture("Assets/Textures/StandRight.png", GL_TRUE, "StandRight");
 	ResourceManager::LoadTexture("Assets/Textures/CrouchLeft.png", GL_TRUE, "CrouchLeft");
@@ -115,9 +121,11 @@ void Game::Init()
 	ground = new Platform(glm::vec2(50.0f, Engine::SCREEN_HEIGHT * 7.0f / 8.0f), glm::vec2(300.0f, Engine::SCREEN_HEIGHT / 8.0f), ResourceManager::GetTexture("Ground"));
 	ground2 = new Platform(glm::vec2(350.0f, Engine::SCREEN_HEIGHT * 6.5f / 8.0f), glm::vec2(300.0f, Engine::SCREEN_HEIGHT / 8.0f), ResourceManager::GetTexture("Ground"));
 	ground3 = new Platform(glm::vec2(450.0f, Engine::SCREEN_HEIGHT * 2.0f/8.0f), glm::vec2(300.0f, Engine::SCREEN_HEIGHT / 8.0f), ResourceManager::GetTexture("Ground"));
+	spikes = new Spikes(glm::vec2(500.0f, Engine::SCREEN_HEIGHT / 2.0f), glm::vec2(45.0f, 30.0f), 0.0f, ResourceManager::GetTexture("Spikes"));
 	platforms.push_back(*ground);
 	platforms.push_back(*ground2);
 	platforms.push_back(*ground3);
+	platforms.push_back(*spikes);
 }
 
 void Game::ProcessInput()
@@ -134,9 +142,10 @@ void Game::ProcessInput()
 void Game::Update(GLfloat _dt)
 {
 	celeste->Update(_dt);
-	ground->Update(_dt);
-	ground2->Update(_dt);
-	ground3->Update(_dt);
+	for (unsigned int i = 0; i < platforms.size(); i++)
+	{
+		platforms[i].Update(_dt);
+	}
 	celeste->DoCollision(platforms);
 }
 
@@ -145,10 +154,11 @@ void Game::Render()
 	postProcessor->BeginRender();
 	
 	spriteRenderer->DrawSprite(ResourceManager::GetTexture("Background"), glm::vec2(0.0f, 0.0f), glm::vec2(width, height));
+	for (unsigned int i = 0; i < platforms.size(); i++)
+	{
+		platforms[i].Render(*spriteRenderer);
+	}
 	celeste->Render(*spriteRenderer);
-	ground->Render(*spriteRenderer);
-	ground2->Render(*spriteRenderer);
-	ground3->Render(*spriteRenderer);
 
 	postProcessor->EndRender();
 	postProcessor->Render();

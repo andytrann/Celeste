@@ -160,6 +160,7 @@
     <ClCompile Include="Gameplay\Game.cpp" />
     <ClCompile Include="Gameplay\PhysicsComponent.cpp" />
     <ClCompile Include="Gameplay\Platform.cpp" />
+    <ClCompile Include="Gameplay\Spikes.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -192,6 +193,7 @@
     <ClInclude Include="Gameplay\Game.h" />
     <ClInclude Include="Gameplay\PhysicsComponent.h" />
     <ClInclude Include="Gameplay\Platform.h" />
+    <ClInclude Include="Gameplay\Spikes.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Textures\Background.png" />
@@ -204,6 +206,7 @@
     <Image Include="Assets\Textures\Ground.png" />
     <Image Include="Assets\Textures\JumpLeft.png" />
     <Image Include="Assets\Textures\JumpRight.png" />
+    <Image Include="Assets\Textures\Spikes.png" />
     <Image Include="Assets\Textures\StandLeft.png" />
     <Image Include="Assets\Textures\StandRight.png" />
   </ItemGroup>
