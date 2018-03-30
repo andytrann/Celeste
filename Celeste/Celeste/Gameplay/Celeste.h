@@ -15,7 +15,7 @@ public:
 
 	void HandleInput();
 	void Update(GLfloat _dt);
-	void DoCollision(std::vector<GameObject> _other);
+	void DoCollision(std::vector<GameObject*> _other);
 	void Render(SpriteRenderer& _renderer);
 
 	LocationState& GetLocationState();

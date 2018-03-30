@@ -39,7 +39,7 @@ Platform* ground3;
 Spikes* spikes;
 Gem* gem;
 
-std::vector<GameObject> objects;
+std::vector<GameObject*> objects;
 
 Game::Game(GLuint _width, GLuint _height) :
 	state(GameState::GAME_MENU),
@@ -129,11 +129,11 @@ void Game::Init()
 	ground3 = new Platform(glm::vec2(450.0f, Engine::SCREEN_HEIGHT * 2.0f/8.0f), glm::vec2(300.0f, Engine::SCREEN_HEIGHT / 8.0f), ResourceManager::GetTexture("Ground"));
 	spikes = new Spikes(glm::vec2(500.0f, Engine::SCREEN_HEIGHT / 2.0f), glm::vec2(45.0f, 30.0f), 0.0f, ResourceManager::GetTexture("Spikes"));
 	gem = new Gem(glm::vec2(300.0f, Engine::SCREEN_HEIGHT / 2.0f), glm::vec2(30.0f, 30.0f), ResourceManager::GetTexture("Gem"));
-	objects.push_back(*ground);
-	objects.push_back(*ground2);
-	objects.push_back(*ground3);
-	objects.push_back(*spikes);
-	objects.push_back(*gem);
+	objects.push_back(ground);
+	objects.push_back(ground2);
+	objects.push_back(ground3);
+	objects.push_back(spikes);
+	objects.push_back(gem);
 }
 
 void Game::ProcessInput()
@@ -152,9 +152,14 @@ void Game::Update(GLfloat _dt)
 	celeste->Update(_dt);
 	for (unsigned int i = 0; i < objects.size(); i++)
 	{
-		objects[i].Update(_dt);
+		objects[i]->Update(_dt);
 	}
+
 	celeste->DoCollision(objects);
+	for (unsigned int i = 0; i < objects.size(); i++)
+	{
+		objects[i]->DoCollision(*celeste);
+	}
 }
 
 void Game::Render()
@@ -164,7 +169,7 @@ void Game::Render()
 	spriteRenderer->DrawSprite(ResourceManager::GetTexture("Background"), glm::vec2(0.0f, 0.0f), glm::vec2(width, height));
 	for (unsigned int i = 0; i < objects.size(); i++)
 	{
-		objects[i].Render(*spriteRenderer);
+		objects[i]->Render(*spriteRenderer);
 	}
 	celeste->Render(*spriteRenderer);
 

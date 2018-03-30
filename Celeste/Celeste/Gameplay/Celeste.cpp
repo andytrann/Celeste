@@ -82,19 +82,28 @@ void Celeste::Update(GLfloat _dt)
 		//std::cout << "NONE" << std::endl;
 		break;
 	}
-	std::cout << climbTimer << std::endl;
+	//std::cout << climbTimer << std::endl;
 	physics.Update(*this, _dt);
 }
 
-void Celeste::DoCollision(std::vector<GameObject> _other)
+void Celeste::DoCollision(std::vector<GameObject*> _other)
 {
 	bool inAir = true;
 	bool touchingSomethingLR = false;
 	for (unsigned int i = 0; i < _other.size(); i++)
 	{
-		Collision col = GetCollision(_other[i]);
-		switch (_other[i].GetType())
+		Collision col = GetCollision(*_other[i]);
+		switch (_other[i]->GetType())
 		{
+			case ObjectType::GEM:
+			{
+				if (std::get<0>(col) != Direction::NONE)
+				{
+					ResetDash();
+				}
+				break;
+			}
+
 			case ObjectType::SPIKES:
 			{
 				if (std::get<0>(col) != Direction::NONE)
@@ -103,6 +112,7 @@ void Celeste::DoCollision(std::vector<GameObject> _other)
 				}
 				break;
 			}
+
 			case ObjectType::PLATFORM:
 			{
 				switch (std::get<0>(col))
@@ -139,6 +149,7 @@ void Celeste::DoCollision(std::vector<GameObject> _other)
 						inAir = false;
 						break;
 					}
+
 					case Direction::DOWN:
 					{
 						if (locState == LocationState::IN_AIR || locState == LocationState::CLIMBING)
@@ -150,6 +161,7 @@ void Celeste::DoCollision(std::vector<GameObject> _other)
 						}
 						break;
 					}
+
 					case Direction::LEFT:
 					{
 						//move celeste back left difference of penetration
@@ -159,6 +171,7 @@ void Celeste::DoCollision(std::vector<GameObject> _other)
 						touchingSomethingLR = true;
 						break;
 					}
+
 					case Direction::RIGHT:
 					{
 						//move celeste back right difference of penetration
@@ -168,10 +181,12 @@ void Celeste::DoCollision(std::vector<GameObject> _other)
 						touchingSomethingLR = true;
 						break;
 					}
+
 					case Direction::NONE:
 					{
 						break;
 					}
+
 					default:
 					{
 						break;
@@ -233,7 +248,7 @@ bool Celeste::UseDash()
 {
 	if (dashCount > 0)
 	{
-		//dashCount--;
+		dashCount--;
 		return true;
 	}
 	else
