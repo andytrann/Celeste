@@ -15,10 +15,11 @@ const GLfloat Celeste::DASH_CD = .2f;
 const GLfloat Celeste::MAX_CLIMB_DURATION = 10.0f;
 const GLfloat Celeste::MAX_CLIMB_SPEED = 150.0f;
 
-Celeste::Celeste() : 
+Celeste::Celeste() :
 	GameObject(),
-	direction(glm::ivec2(1,0)),
+	direction(glm::ivec2(1, 0)),
 	facingDirection(1),
+	spawnLoc(glm::vec2(0.0f, 0.0f)),
 	dashTimer(0.0f),
 	isDashing(false),
 	dashCount(1),
@@ -35,6 +36,7 @@ Celeste::Celeste(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, glm::vec3 _
 	currentState(new StateStanding()),
 	direction(glm::ivec2(1,0)),
 	facingDirection(1),
+	spawnLoc(_pos),
 	dashTimer(0.0f),
 	isDashing(false),
 	dashCount(1),
@@ -91,71 +93,81 @@ void Celeste::DoCollision(std::vector<GameObject> _other)
 	for (unsigned int i = 0; i < _other.size(); i++)
 	{
 		Collision col = GetCollision(_other[i]);
-
-		switch (std::get<0>(col))
+		switch (_other[i].GetType())
 		{
-		case Direction::UP:
-			//if dashing and collides with ground from top
-			if (_other[i].GetType() == ObjectType::PLATFORM && isDashing && vel.y > 0)
+		case ObjectType::SPIKES:
+			if (std::get<0>(col) != Direction::NONE)
 			{
-				GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
-				pos.y -= penetration;
-				vel.y = 0.0f;
-				locState = LocationState::ON_GROUND;
+				Respawn();
 			}
-			//if collides with ground normally 
-			if (_other[i].GetType() == ObjectType::PLATFORM && locState == LocationState::IN_AIR && vel.y > 0)
+			break;
+		case ObjectType::PLATFORM:
+			switch (std::get<0>(col))
 			{
-				//move celeste back up difference of penetration
-				GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
-				pos.y -= penetration;
+			case Direction::UP:
+				//if dashing and collides with ground from top
+				if (_other[i].GetType() == ObjectType::PLATFORM && isDashing && vel.y > 0)
+				{
+					GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
+					pos.y -= penetration;
+					vel.y = 0.0f;
+					locState = LocationState::ON_GROUND;
+				}
+				//if collides with ground normally 
+				if (_other[i].GetType() == ObjectType::PLATFORM && locState == LocationState::IN_AIR && vel.y > 0)
+				{
+					//move celeste back up difference of penetration
+					GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
+					pos.y -= penetration;
 
-				//change state
-				delete currentState;
-				currentState = new StateStanding();
-				currentState->Enter(*this);
+					//change state
+					delete currentState;
+					currentState = new StateStanding();
+					currentState->Enter(*this);
+				}
+				//if climbing and on ground
+				if (_other[i].GetType() == ObjectType::PLATFORM && locState == LocationState::CLIMBING && vel.y >= 0)
+				{
+					GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
+					pos.y -= penetration;
+					climbTimer = 0.0f;
+				}
+				inAir = false;
+				break;
+			case Direction::DOWN:
+				if (_other[i].GetType() == ObjectType::PLATFORM && (locState == LocationState::IN_AIR || locState == LocationState::CLIMBING))
+				{
+					//move celeste back down difference of penetration
+					GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
+					vel.y = 0.0f;
+					pos.y += penetration;
+				}
+				break;
+			case Direction::LEFT:
+				if (_other[i].GetType() == ObjectType::PLATFORM)
+				{
+					//move celeste back left difference of penetration
+					GLfloat penetration = size.x / 2.0f - abs(std::get<1>(col).x);
+					vel.x = 0.0f;
+					pos.x -= penetration;
+				}
+				touchingSomethingLR = true;
+				break;
+			case Direction::RIGHT:
+				if (_other[i].GetType() == ObjectType::PLATFORM)
+				{
+					//move celeste back right difference of penetration
+					GLfloat penetration = size.x / 2.0f - abs(std::get<1>(col).x);
+					vel.x = 0.0f;
+					pos.x += penetration;
+				}
+				touchingSomethingLR = true;
+				break;
+			case Direction::NONE:
+				break;
+			default:
+				break;
 			}
-			//if climbing and on ground
-			if (_other[i].GetType() == ObjectType::PLATFORM && locState == LocationState::CLIMBING && vel.y >= 0)
-			{
-				GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
-				pos.y -= penetration;
-				climbTimer = 0.0f;
-			}
-			inAir = false;
-			break;
-		case Direction::DOWN:
-			if (_other[i].GetType() == ObjectType::PLATFORM && (locState == LocationState::IN_AIR || locState == LocationState::CLIMBING))
-			{
-				//move celeste back down difference of penetration
-				GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
-				vel.y = 0.0f;
-				pos.y += penetration;
-			}
-			break;
-		case Direction::LEFT:
-			if (_other[i].GetType() == ObjectType::PLATFORM)
-			{
-				//move celeste back left difference of penetration
-				GLfloat penetration = size.x / 2.0f - abs(std::get<1>(col).x);
-				vel.x = 0.0f;
-				pos.x -= penetration;
-			}
-			touchingSomethingLR = true;
-			break;
-		case Direction::RIGHT:
-			if (_other[i].GetType() == ObjectType::PLATFORM)
-			{
-				//move celeste back right difference of penetration
-				GLfloat penetration = size.x / 2.0f - abs(std::get<1>(col).x);
-				vel.x = 0.0f;
-				pos.x += penetration;
-			}
-			touchingSomethingLR = true;
-			break;
-		case Direction::NONE:
-			break;
-		default:
 			break;
 		}
 	}
@@ -244,4 +256,23 @@ bool Celeste::CanWallJump() const
 bool Celeste::CanClimb() const
 {
 	return climb && climbTimer < MAX_CLIMB_DURATION;
+}
+
+void Celeste::Respawn()
+{
+	pos = spawnLoc;
+	vel = glm::vec2(0.0f, 0.0f);
+	direction = glm::ivec2(1, 0);
+	facingDirection = 1;
+	dashTimer = 0.0f;
+	isDashing = false;
+	dashCount = 1;
+	wallJump = false;
+	climb = false;
+	climbTimer = 0.0f;
+	isClimbing = false;
+
+	delete currentState;
+	currentState = new StateInAir();
+	currentState->Enter(*this);
 }

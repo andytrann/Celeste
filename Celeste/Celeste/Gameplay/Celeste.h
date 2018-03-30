@@ -29,6 +29,8 @@ public:
 
 	bool CanWallJump() const;
 	bool CanClimb() const;
+
+	void Respawn();
 	
 	const static GLfloat ACCELERATION;
 	const static GLfloat FRICTION;
@@ -47,6 +49,7 @@ public:
 private:
 	static GLfloat MAX_SPEED;
 
+	glm::vec2 spawnLoc;
 	int dashCount;
 	bool wallJump;
 	bool climb;
