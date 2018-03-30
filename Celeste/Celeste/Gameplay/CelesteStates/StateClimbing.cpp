@@ -62,6 +62,14 @@ CelesteState* StateClimbing::HandleInput(Celeste& _celeste, GLfloat _dt)
 
 void StateClimbing::Enter(Celeste & _celeste)
 {
+	if (_celeste.facingDirection == 1)
+	{
+		_celeste.sprite = ResourceManager::GetTexture("ClimbRight");
+	}
+	else if (_celeste.facingDirection == -1)
+	{
+		_celeste.sprite = ResourceManager::GetTexture("ClimbLeft");
+	}
 	_celeste.GetLocationState() = LocationState::CLIMBING;
 }
 

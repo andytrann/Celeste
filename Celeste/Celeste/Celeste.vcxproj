@@ -195,6 +195,8 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Textures\Background.png" />
+    <Image Include="Assets\Textures\ClimbLeft.png" />
+    <Image Include="Assets\Textures\ClimbRight.png" />
     <Image Include="Assets\Textures\CrouchLeft.png" />
     <Image Include="Assets\Textures\CrouchRight.png" />
     <Image Include="Assets\Textures\DashLeft.png" />

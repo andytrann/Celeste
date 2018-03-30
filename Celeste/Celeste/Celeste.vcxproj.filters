@@ -173,6 +173,12 @@
     <Image Include="Assets\Textures\DashRight.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Assets\Textures\ClimbLeft.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Textures\ClimbRight.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Assets\Fonts\arialbd.ttf" />
