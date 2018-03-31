@@ -8,10 +8,11 @@ Platform::Platform() :
 	objectType = ObjectType::PLATFORM;
 }
 
-Platform::Platform(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, glm::vec3 _color) : 
+Platform::Platform(glm::vec2 _pos, glm::vec2 _size, GLfloat _rot, Texture2D _sprite, glm::vec3 _color) : 
 	GameObject(_pos, _size, _sprite, _color)
 {
 	objectType = ObjectType::PLATFORM;
+	rot = _rot;
 }
 
 Platform::~Platform()
