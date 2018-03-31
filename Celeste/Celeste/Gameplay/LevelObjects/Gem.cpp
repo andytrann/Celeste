@@ -3,7 +3,7 @@
 #include "../Celeste.h"
 #include "../../Engine/ResourceManager.h"
 
-const GLfloat Gem::COOLDOWN = 5.0f;
+const GLfloat Gem::COOLDOWN = 3.0f;
 
 Gem::Gem() :
 	GameObject(),
