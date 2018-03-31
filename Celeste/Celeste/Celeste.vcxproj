@@ -216,6 +216,7 @@
     <Image Include="Assets\Textures\Spikes.png" />
     <Image Include="Assets\Textures\StandLeft.png" />
     <Image Include="Assets\Textures\StandRight.png" />
+    <Image Include="Assets\Textures\VerticalGround.png" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Assets\Fonts\arialbd.ttf" />

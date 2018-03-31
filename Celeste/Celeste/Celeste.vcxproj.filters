@@ -209,6 +209,9 @@
     <Image Include="Assets\Textures\PassablePlatform.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Assets\Textures\VerticalGround.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Assets\Fonts\arialbd.ttf" />
