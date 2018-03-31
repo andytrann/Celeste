@@ -284,7 +284,7 @@ bool Celeste::UseDash()
 {
 	if (dashCount > 0)
 	{
-		//dashCount--;
+		dashCount--;
 		return true;
 	}
 	else
