@@ -113,6 +113,42 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 				break;
 			}
 
+			case ObjectType::PASSABLE_PLATFORM:
+			{
+				if (std::get<0>(col) == Direction::UP && pos.y + size.y <= _other[i]->pos.y + (_other[i]->size.y / 2))
+				{
+					//if dashing and collides with ground from top
+					if (isDashing && vel.y > 0)
+					{
+						GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
+						pos.y -= penetration;
+						vel.y = 0.0f;
+						locState = LocationState::ON_GROUND;
+					}
+					//if collides with ground normally 
+					if (locState == LocationState::IN_AIR && vel.y > 0)
+					{
+						//move celeste back up difference of penetration
+						GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
+						pos.y -= penetration;
+
+						//change state
+						delete currentState;
+						currentState = new StateStanding();
+						currentState->Enter(*this);
+					}
+					//if climbing and on ground
+					if (locState == LocationState::CLIMBING && vel.y >= 0)
+					{
+						GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
+						pos.y -= penetration;
+						climbTimer = 0.0f;
+					}
+					inAir = false;
+					break;
+				}
+				break;
+			}
 			case ObjectType::PLATFORM:
 			{
 				switch (std::get<0>(col))
@@ -248,7 +284,7 @@ bool Celeste::UseDash()
 {
 	if (dashCount > 0)
 	{
-		dashCount--;
+		//dashCount--;
 		return true;
 	}
 	else

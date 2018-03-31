@@ -78,6 +78,9 @@
     <ClCompile Include="Gameplay\LevelObjects\Spikes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Gameplay\LevelObjects\PassablePlatform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Graphics\Shaders\PostProcessing.fs" />
@@ -153,6 +156,9 @@
     <ClInclude Include="Gameplay\LevelObjects\Spikes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Gameplay\LevelObjects\PassablePlatform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Textures\CrouchLeft.png">
@@ -198,6 +204,12 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Assets\Textures\Gem Outline.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Textures\GemOutline.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Assets\Textures\PassablePlatform.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

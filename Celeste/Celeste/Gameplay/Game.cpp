@@ -8,6 +8,7 @@
 #include "../Engine/IO/Keyboard.h"
 #include "Celeste.h"
 #include "LevelObjects/Platform.h"
+#include "LevelObjects/PassablePlatform.h"
 #include "LevelObjects/Spikes.h"
 #include "LevelObjects/Gem.h"
 
@@ -36,6 +37,7 @@ Celeste* celeste;
 Platform* ground;
 Platform* ground2;
 Platform* ground3;
+PassablePlatform* passPlat;
 Spikes* spikes;
 Gem* gem;
 
@@ -76,6 +78,9 @@ Game::~Game()
 	delete ground3;
 	ground3 = nullptr;
 
+	delete passPlat;
+	passPlat = nullptr;
+
 	delete spikes;
 	spikes = nullptr;
 
@@ -98,6 +103,7 @@ void Game::Init()
 	//Load textures
 	ResourceManager::LoadTexture("Assets/Textures/Background.png", GL_TRUE, "Background");
 	ResourceManager::LoadTexture("Assets/Textures/Ground.png", GL_TRUE, "Ground");
+	ResourceManager::LoadTexture("Assets/Textures/PassablePlatform.png", GL_TRUE, "PassablePlatform");
 	ResourceManager::LoadTexture("Assets/Textures/Spikes.png", GL_TRUE, "Spikes");
 	ResourceManager::LoadTexture("Assets/Textures/Gem.png", GL_TRUE, "Gem");
 	ResourceManager::LoadTexture("Assets/Textures/GemOutline.png", GL_TRUE, "GemOutline");
@@ -128,11 +134,13 @@ void Game::Init()
 	ground = new Platform(glm::vec2(50.0f, Engine::SCREEN_HEIGHT * 7.0f / 8.0f), glm::vec2(300.0f, Engine::SCREEN_HEIGHT / 8.0f), ResourceManager::GetTexture("Ground"));
 	ground2 = new Platform(glm::vec2(350.0f, Engine::SCREEN_HEIGHT * 6.5f / 8.0f), glm::vec2(300.0f, Engine::SCREEN_HEIGHT / 8.0f), ResourceManager::GetTexture("Ground"));
 	ground3 = new Platform(glm::vec2(450.0f, Engine::SCREEN_HEIGHT * 2.0f/8.0f), glm::vec2(300.0f, Engine::SCREEN_HEIGHT / 8.0f), ResourceManager::GetTexture("Ground"));
-	spikes = new Spikes(glm::vec2(500.0f, Engine::SCREEN_HEIGHT / 2.0f), glm::vec2(45.0f, 30.0f), 0.0f, ResourceManager::GetTexture("Spikes"));
+	passPlat = new PassablePlatform(glm::vec2(600.0f, 500.0f), glm::vec2(150.0f, 20.0f), ResourceManager::GetTexture("PassablePlatform"));
+	spikes = new Spikes(glm::vec2(500.0f, Engine::SCREEN_HEIGHT / 2.0f), glm::vec2(40.0f, 20.0f), 0.0f, ResourceManager::GetTexture("Spikes"));
 	gem = new Gem(glm::vec2(300.0f, Engine::SCREEN_HEIGHT / 2.0f), glm::vec2(30.0f, 30.0f), ResourceManager::GetTexture("Gem"));
 	objects.push_back(ground);
 	objects.push_back(ground2);
 	objects.push_back(ground3);
+	objects.push_back(passPlat);
 	objects.push_back(spikes);
 	objects.push_back(gem);
 }

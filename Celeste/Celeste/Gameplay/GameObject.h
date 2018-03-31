@@ -12,6 +12,7 @@ enum class ObjectType
 {
 	CELESTE,
 	PLATFORM,
+	PASSABLE_PLATFORM,
 	SPIKES,
 	STRAWBERRY,
 	GEM,

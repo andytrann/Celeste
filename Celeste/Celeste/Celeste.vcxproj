@@ -159,6 +159,7 @@
     <ClCompile Include="Gameplay\Celeste.cpp" />
     <ClCompile Include="Gameplay\Game.cpp" />
     <ClCompile Include="Gameplay\LevelObjects\Gem.cpp" />
+    <ClCompile Include="Gameplay\LevelObjects\PassablePlatform.cpp" />
     <ClCompile Include="Gameplay\PhysicsComponent.cpp" />
     <ClCompile Include="Gameplay\LevelObjects\Platform.cpp" />
     <ClCompile Include="Gameplay\LevelObjects\Spikes.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="Gameplay\Celeste.h" />
     <ClInclude Include="Gameplay\Game.h" />
     <ClInclude Include="Gameplay\LevelObjects\Gem.h" />
+    <ClInclude Include="Gameplay\LevelObjects\PassablePlatform.h" />
     <ClInclude Include="Gameplay\PhysicsComponent.h" />
     <ClInclude Include="Gameplay\LevelObjects\Platform.h" />
     <ClInclude Include="Gameplay\LevelObjects\Spikes.h" />
@@ -207,9 +209,11 @@
     <Image Include="Assets\Textures\DashRight.png" />
     <Image Include="Assets\Textures\Gem Outline.png" />
     <Image Include="Assets\Textures\Gem.png" />
+    <Image Include="Assets\Textures\GemOutline.png" />
     <Image Include="Assets\Textures\Ground.png" />
     <Image Include="Assets\Textures\JumpLeft.png" />
     <Image Include="Assets\Textures\JumpRight.png" />
+    <Image Include="Assets\Textures\PassablePlatform.png" />
     <Image Include="Assets\Textures\Spikes.png" />
     <Image Include="Assets\Textures\StandLeft.png" />
     <Image Include="Assets\Textures\StandRight.png" />
