@@ -203,9 +203,6 @@
     <Image Include="Assets\Textures\Gem.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Assets\Textures\Gem Outline.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="Assets\Textures\GemOutline.png">
       <Filter>Resource Files</Filter>
     </Image>

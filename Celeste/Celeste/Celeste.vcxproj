@@ -207,7 +207,6 @@
     <Image Include="Assets\Textures\CrouchRight.png" />
     <Image Include="Assets\Textures\DashLeft.png" />
     <Image Include="Assets\Textures\DashRight.png" />
-    <Image Include="Assets\Textures\Gem Outline.png" />
     <Image Include="Assets\Textures\Gem.png" />
     <Image Include="Assets\Textures\GemOutline.png" />
     <Image Include="Assets\Textures\Ground.png" />
