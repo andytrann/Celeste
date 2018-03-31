@@ -97,7 +97,7 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 		{
 			case ObjectType::GEM:
 			{
-				if (std::get<0>(col) != Direction::NONE)
+				if (std::get<0>(col) != Direction::NONE && !_other[i]->destroyed)
 				{
 					ResetDash();
 				}

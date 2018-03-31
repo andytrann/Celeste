@@ -17,9 +17,8 @@ public:
 
 private:
 	const static GLfloat COOLDOWN;
-
+	Texture2D spriteOutline;
 	GLfloat timer;
-	bool active;
 };
 
 #endif

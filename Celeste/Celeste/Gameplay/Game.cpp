@@ -100,6 +100,7 @@ void Game::Init()
 	ResourceManager::LoadTexture("Assets/Textures/Ground.png", GL_TRUE, "Ground");
 	ResourceManager::LoadTexture("Assets/Textures/Spikes.png", GL_TRUE, "Spikes");
 	ResourceManager::LoadTexture("Assets/Textures/Gem.png", GL_TRUE, "Gem");
+	ResourceManager::LoadTexture("Assets/Textures/GemOutline.png", GL_TRUE, "GemOutline");
 	ResourceManager::LoadTexture("Assets/Textures/StandLeft.png", GL_TRUE, "StandLeft");
 	ResourceManager::LoadTexture("Assets/Textures/StandRight.png", GL_TRUE, "StandRight");
 	ResourceManager::LoadTexture("Assets/Textures/CrouchLeft.png", GL_TRUE, "CrouchLeft");
