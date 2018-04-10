@@ -19,11 +19,18 @@ int main()
 	Game celesteGame(Engine::SCREEN_WIDTH, Engine::SCREEN_HEIGHT);
 	celesteGame.Init();
 
+	double lag = 0.0;
+
 	while (!celesteGame.IsGameClosed())
 	{
 		celesteGame.ProcessInput();
 		engine.Update();
-		celesteGame.Update(engine.GetDT());
+		lag += engine.GetDT();
+		while (lag >= (double)Engine::MS_PER_UPDATE)
+		{
+			celesteGame.Update(Engine::MS_PER_UPDATE);
+			lag -= (double)Engine::MS_PER_UPDATE;
+		}
 		celesteGame.Render();
 
 		glfwSwapBuffers(engine.GetWindow());

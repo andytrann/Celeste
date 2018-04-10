@@ -8,9 +8,10 @@ using namespace std;
 
 GLuint Engine::SCREEN_WIDTH = 1024;
 GLuint Engine::SCREEN_HEIGHT = 768;
+const GLfloat Engine::MS_PER_UPDATE = .016f;
 
 GLFWwindow* Engine::window = nullptr;
-GLfloat Engine::dt = 0.0f;
+double Engine::dt = 0.0;
 
 Engine::Engine()
 {
@@ -60,13 +61,13 @@ bool Engine::Init(char* _windowTitle)
 
 void Engine::Update()
 {
-	GLfloat now = (GLfloat)glfwGetTime();
+	double now = glfwGetTime();
 	dt = now - lastTime;
 	lastTime = now;
 	glfwPollEvents();
 }
 
-GLfloat Engine::GetDT()
+double Engine::GetDT()
 {
 	return dt;
 }

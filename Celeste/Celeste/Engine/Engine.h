@@ -10,6 +10,7 @@ class Engine
 public:
 	static GLuint SCREEN_WIDTH;
 	static GLuint SCREEN_HEIGHT;
+	const static GLfloat MS_PER_UPDATE;
 
 	Engine();
 	~Engine();
@@ -18,14 +19,14 @@ public:
 
 	void Update();
 
-	static GLfloat GetDT();
+	static double GetDT();
 	//temp function
 	GLFWwindow* GetWindow();
 
 private:
 	static GLFWwindow* window;
-	static GLfloat dt;
-	GLfloat lastTime;
+	static double dt;
+	double lastTime;
 	
 };
 

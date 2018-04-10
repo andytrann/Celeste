@@ -56,7 +56,7 @@ Celeste::~Celeste()
 
 void Celeste::HandleInput()
 {
-	CelesteState* state = currentState->HandleInput(*this, Engine::GetDT());
+	CelesteState* state = currentState->HandleInput(*this, Engine::MS_PER_UPDATE);
 	if (state != nullptr)
 	{
 		delete currentState;
