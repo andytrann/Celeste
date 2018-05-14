@@ -56,7 +56,7 @@ Celeste::~Celeste()
 
 void Celeste::HandleInput()
 {
-	CelesteState* state = currentState->HandleInput(*this, Engine::MS_PER_UPDATE);
+	CelesteState* state = currentState->HandleInput(*this);
 	if (state != nullptr)
 	{
 		delete currentState;
@@ -68,6 +68,7 @@ void Celeste::HandleInput()
 
 void Celeste::Update(GLfloat _dt)
 {
+	currentState->Update(*this, _dt);
 	switch (locState)
 	{
 	case LocationState::ON_GROUND:

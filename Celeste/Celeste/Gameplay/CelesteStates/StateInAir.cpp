@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-CelesteState* StateInAir::HandleInput(Celeste& _celeste, GLfloat _dt)
+CelesteState* StateInAir::HandleInput(Celeste& _celeste)
 {
 	//calculate new direction
 	glm::ivec2 newDirection(0, 0);
@@ -97,14 +97,17 @@ CelesteState* StateInAir::HandleInput(Celeste& _celeste, GLfloat _dt)
 		return new StateClimbing();
 	}
 
+	return nullptr;
+}
+
+void StateInAir::Update(Celeste & _celeste, GLfloat _dt)
+{
 	//apply friction
 	if (!(Keyboard::Key(GLFW_KEY_D) || Keyboard::Key(GLFW_KEY_A)) || (Keyboard::Key(GLFW_KEY_D) && Keyboard::Key(GLFW_KEY_A)))
 	{
-		_celeste.vel.x *=  _celeste.FRICTION * 2;
+	_celeste.vel.x *=  _celeste.FRICTION * 2;
 	}
-	_celeste.vel.x += (GLfloat)newDirection.x * _celeste.ACCELERATION * _dt ;
-
-	return nullptr;
+	_celeste.vel.x += (GLfloat)_celeste.direction.x * _celeste.ACCELERATION * _dt ;
 }
 
 void StateInAir::Enter(Celeste& _celeste)

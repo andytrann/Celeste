@@ -7,7 +7,7 @@
 #include "StateInAir.h"
 #include "StateDashing.h"
 
-CelesteState * StateCrouching::HandleInput(Celeste & _celeste, GLfloat _dt)
+CelesteState * StateCrouching::HandleInput(Celeste & _celeste)
 {
 	//calculate new direction
 	glm::ivec2 newDirection(0, 0);
@@ -64,6 +64,10 @@ CelesteState * StateCrouching::HandleInput(Celeste & _celeste, GLfloat _dt)
 	}
 
 	return nullptr;
+}
+
+void StateCrouching::Update(Celeste & _celeste, GLfloat _dt)
+{
 }
 
 void StateCrouching::Enter(Celeste & _celeste)

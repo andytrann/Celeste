@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-CelesteState* StateClimbing::HandleInput(Celeste& _celeste, GLfloat _dt)
+CelesteState* StateClimbing::HandleInput(Celeste& _celeste)
 {
 	if (Keyboard::KeyUp(GLFW_KEY_COMMA) || !_celeste.CanClimb())
 	{
@@ -38,6 +38,11 @@ CelesteState* StateClimbing::HandleInput(Celeste& _celeste, GLfloat _dt)
 	_celeste.direction.x = newDirection.x;
 	_celeste.direction.y = newDirection.y;
 
+	return nullptr;
+}
+
+void StateClimbing::Update(Celeste & _celeste, GLfloat _dt)
+{
 	//apply friction
 	if (Keyboard::KeyUp(GLFW_KEY_W) || Keyboard::KeyUp(GLFW_KEY_S) || !(Keyboard::Key(GLFW_KEY_W)
 		|| Keyboard::Key(GLFW_KEY_S)) || (Keyboard::Key(GLFW_KEY_W) && Keyboard::Key(GLFW_KEY_S)))
@@ -45,7 +50,7 @@ CelesteState* StateClimbing::HandleInput(Celeste& _celeste, GLfloat _dt)
 		_celeste.vel.y *= _celeste.FRICTION;
 	}
 
-	_celeste.vel.y += (GLfloat)newDirection.y * _celeste.ACCELERATION * _dt;
+	_celeste.vel.y += (GLfloat)_celeste.direction.y * _celeste.ACCELERATION * _dt;
 
 	//calculate timer increment
 	if (_celeste.direction.y == -1)
@@ -56,8 +61,6 @@ CelesteState* StateClimbing::HandleInput(Celeste& _celeste, GLfloat _dt)
 	{
 		_celeste.climbTimer += _dt;
 	}
-
-	return nullptr;
 }
 
 void StateClimbing::Enter(Celeste & _celeste)

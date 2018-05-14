@@ -23,12 +23,11 @@ int main()
 
 	while (!celesteGame.IsGameClosed())
 	{
-		//celesteGame.ProcessInput();
+		celesteGame.ProcessInput();
 		engine.Update();
 		lag += engine.GetDT();
 		while (lag >= (double)Engine::MS_PER_UPDATE)
 		{
-			celesteGame.ProcessInput();
 			celesteGame.Update(Engine::MS_PER_UPDATE);
 			lag -= (double)Engine::MS_PER_UPDATE;
 		}

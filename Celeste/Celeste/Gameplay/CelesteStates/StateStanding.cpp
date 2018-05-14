@@ -8,7 +8,7 @@
 #include "StateDashing.h"
 #include "StateClimbing.h"
 
-CelesteState* StateStanding::HandleInput(Celeste& _celeste, GLfloat _dt)
+CelesteState* StateStanding::HandleInput(Celeste& _celeste)
 {
 	//calculate new direction
 	glm::ivec2 newDirection(0,0);
@@ -84,16 +84,19 @@ CelesteState* StateStanding::HandleInput(Celeste& _celeste, GLfloat _dt)
 		return new StateClimbing();
 	}
 
+	return nullptr;
+}
+
+void StateStanding::Update(Celeste& _celeste, GLfloat _dt)
+{
 	//apply friction
-	if (Keyboard::KeyUp(GLFW_KEY_D) || Keyboard::KeyUp(GLFW_KEY_A) || !(Keyboard::Key(GLFW_KEY_D) 
+	if (Keyboard::KeyUp(GLFW_KEY_D) || Keyboard::KeyUp(GLFW_KEY_A) || !(Keyboard::Key(GLFW_KEY_D)
 		|| Keyboard::Key(GLFW_KEY_A)) || (Keyboard::Key(GLFW_KEY_D) && Keyboard::Key(GLFW_KEY_A)))
 	{
 		_celeste.vel.x *= _celeste.FRICTION;
 	}
 
-	_celeste.vel.x += (GLfloat)newDirection.x * _celeste.ACCELERATION * _dt;
-
-	return nullptr;
+	_celeste.vel.x += (GLfloat)_celeste.direction.x * _celeste.ACCELERATION * _dt;
 }
 
 void StateStanding::Enter(Celeste& _celeste)
