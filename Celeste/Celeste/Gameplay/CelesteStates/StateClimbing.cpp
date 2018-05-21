@@ -14,6 +14,14 @@ CelesteState* StateClimbing::HandleInput(Celeste& _celeste)
 	{
 		return new StateInAir();
 	}
+
+	if (Keyboard::KeyDown(GLFW_KEY_N) && _celeste.CanWallJump())
+	{
+		_celeste.MaxSpeedUp();
+		_celeste.vel.y = -_celeste.JUMP_FORCE;
+		_celeste.vel.x -= (GLfloat)_celeste.facingDirection * _celeste.JUMP_FORCE;
+		return new StateInAir();
+	}
 	
 	//calculate new direction
 	glm::ivec2 newDirection(0, 0);
