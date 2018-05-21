@@ -69,16 +69,19 @@
     <ClCompile Include="Gameplay\CelesteStates\StateClimbing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Gameplay\LevelObjects\Gem.cpp">
+    <ClCompile Include="Gameplay\RoomObjects\Gem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Gameplay\LevelObjects\Platform.cpp">
+    <ClCompile Include="Gameplay\RoomObjects\PassablePlatform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Gameplay\LevelObjects\Spikes.cpp">
+    <ClCompile Include="Gameplay\RoomObjects\Platform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Gameplay\LevelObjects\PassablePlatform.cpp">
+    <ClCompile Include="Gameplay\RoomObjects\Spikes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Gameplay\Room.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -147,16 +150,19 @@
     <ClInclude Include="Gameplay\CelesteStates\StateClimbing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Gameplay\LevelObjects\Gem.h">
+    <ClInclude Include="Gameplay\RoomObjects\Gem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Gameplay\LevelObjects\Platform.h">
+    <ClInclude Include="Gameplay\RoomObjects\PassablePlatform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Gameplay\LevelObjects\Spikes.h">
+    <ClInclude Include="Gameplay\RoomObjects\Platform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Gameplay\LevelObjects\PassablePlatform.h">
+    <ClInclude Include="Gameplay\RoomObjects\Spikes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Gameplay\Room.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -215,5 +221,8 @@
   </ItemGroup>
   <ItemGroup>
     <Font Include="Assets\Fonts\arialbd.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="text.txt" />
   </ItemGroup>
 </Project>

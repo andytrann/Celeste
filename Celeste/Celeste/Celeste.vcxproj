@@ -158,11 +158,12 @@
     <ClCompile Include="Engine\ResourceManager.cpp" />
     <ClCompile Include="Gameplay\Celeste.cpp" />
     <ClCompile Include="Gameplay\Game.cpp" />
-    <ClCompile Include="Gameplay\LevelObjects\Gem.cpp" />
-    <ClCompile Include="Gameplay\LevelObjects\PassablePlatform.cpp" />
+    <ClCompile Include="Gameplay\Room.cpp" />
+    <ClCompile Include="Gameplay\RoomObjects\Gem.cpp" />
+    <ClCompile Include="Gameplay\RoomObjects\PassablePlatform.cpp" />
     <ClCompile Include="Gameplay\PhysicsComponent.cpp" />
-    <ClCompile Include="Gameplay\LevelObjects\Platform.cpp" />
-    <ClCompile Include="Gameplay\LevelObjects\Spikes.cpp" />
+    <ClCompile Include="Gameplay\RoomObjects\Platform.cpp" />
+    <ClCompile Include="Gameplay\RoomObjects\Spikes.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -193,11 +194,12 @@
     <ClInclude Include="Engine\ResourceManager.h" />
     <ClInclude Include="Gameplay\Celeste.h" />
     <ClInclude Include="Gameplay\Game.h" />
-    <ClInclude Include="Gameplay\LevelObjects\Gem.h" />
-    <ClInclude Include="Gameplay\LevelObjects\PassablePlatform.h" />
+    <ClInclude Include="Gameplay\Room.h" />
+    <ClInclude Include="Gameplay\RoomObjects\Gem.h" />
+    <ClInclude Include="Gameplay\RoomObjects\PassablePlatform.h" />
     <ClInclude Include="Gameplay\PhysicsComponent.h" />
-    <ClInclude Include="Gameplay\LevelObjects\Platform.h" />
-    <ClInclude Include="Gameplay\LevelObjects\Spikes.h" />
+    <ClInclude Include="Gameplay\RoomObjects\Platform.h" />
+    <ClInclude Include="Gameplay\RoomObjects\Spikes.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Textures\Background.png" />
@@ -220,6 +222,9 @@
   </ItemGroup>
   <ItemGroup>
     <Font Include="Assets\Fonts\arialbd.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="text.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
