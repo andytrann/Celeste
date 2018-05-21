@@ -89,7 +89,7 @@ void Room::AddObject(std::string line)
 	if (tokens[0] == "HGround" || tokens[0] == "VGround")
 	{
 		roomObjects.push_back(new Platform(glm::vec2(std::stof(tokens[1]), std::stof(tokens[2])),
-			glm::vec2(std::stof(tokens[3]), std::stof(tokens[4])), std::stof(tokens[5]), ResourceManager::GetTexture(tokens[0])));
+			glm::vec2(std::stof(tokens[3]), std::stof(tokens[4])), ResourceManager::GetTexture(tokens[0])));
 	}
 	else if (tokens[0] == "PassablePlatform")
 	{
