@@ -52,25 +52,15 @@ void Room::DoCollisions(Celeste & _celeste)
 	}
 }
 
-void Room::Init(std::string filePath)
+void Room::Init(std::string _filePath)
 {
 	std::string line;
 	std::ifstream infile;
-	infile.open(filePath);
+	infile.open(_filePath);
 
 	//set id of room
 	std::getline(infile, line);
 	id = std::stoi(line);
-
-	//set neighbors of room
-	std::getline(infile, line);
-	std::istringstream ss(line);
-	std::istream_iterator<std::string> begin(ss), end;
-	std::vector<std::string> neighborsString(begin, end);
-	for (auto neighbor : neighborsString)
-	{
-		neighbors.push_back(std::stoi(neighbor));
-	}
 
 	//add room objects
 	while (!infile.eof())
@@ -81,9 +71,9 @@ void Room::Init(std::string filePath)
 	infile.close();
 }
 
-void Room::AddObject(std::string line)
+void Room::AddObject(std::string _line)
 {
-	std::istringstream ss(line);
+	std::istringstream ss(_line);
 	std::istream_iterator<std::string> begin(ss), end;
 	std::vector<std::string> tokens(begin, end);
 	if (tokens[0] == "HGround" || tokens[0] == "VGround")

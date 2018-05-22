@@ -7,11 +7,8 @@
 #include "../Engine/Graphics/TextRenderer.h"
 #include "../Engine/IO/Keyboard.h"
 #include "Celeste.h"
+#include "RoomManager.h"
 #include "Room.h"
-#include "RoomObjects/Platform.h"
-#include "RoomObjects/PassablePlatform.h"
-#include "RoomObjects/Spikes.h"
-#include "RoomObjects/Gem.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -35,7 +32,7 @@ TextRenderer* textRenderer;
 ISoundEngine* soundEngine = createIrrKlangDevice();
 
 Celeste* celeste;
-Room* room;
+RoomManager* rm;
 
 Game::Game(GLuint _width, GLuint _height) :
 	state(GameState::GAME_MENU),
@@ -59,8 +56,8 @@ Game::~Game()
 
 	delete celeste;
 	celeste = nullptr;
-	delete room;
-	room = nullptr;
+	delete rm;
+	rm = nullptr;
 }
 
 void Game::Init()
@@ -108,8 +105,8 @@ void Game::Init()
 	celeste = new Celeste(playerPos, glm::vec2(30.0f, 60.0f), ResourceManager::GetTexture("StandRight"));
 
 	//Load Room Objects
-	room = new Room();
-	room->Init("text.txt");
+	rm = new RoomManager();
+	rm->Init(2);
 }
 
 void Game::ProcessInput()
@@ -125,19 +122,21 @@ void Game::ProcessInput()
 
 void Game::Update(GLfloat _dt)
 {
+	Room* currentRoom = rm->GetCurrentRoom();
 	celeste->Update(_dt);
-	room->Update(_dt);
+	currentRoom->Update(_dt);
 
-	celeste->DoCollision(room->GetRoomObjects());
-	room->DoCollisions(*celeste);
+	celeste->DoCollision(currentRoom->GetRoomObjects());
+	currentRoom->DoCollisions(*celeste);
 }
 
 void Game::Render()
 {
+	Room* currentRoom = rm->GetCurrentRoom();
 	postProcessor->BeginRender();
 	
 	spriteRenderer->DrawSprite(ResourceManager::GetTexture("Background"), glm::vec2(0.0f, 0.0f), glm::vec2(width, height));
-	room->Render(*spriteRenderer);
+	currentRoom->Render(*spriteRenderer);
 	celeste->Render(*spriteRenderer);
 
 	postProcessor->EndRender();

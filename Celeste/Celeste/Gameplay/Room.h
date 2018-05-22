@@ -20,13 +20,12 @@ public:
 	void Update(GLfloat _dt);
 	void Render(SpriteRenderer& _renderer);
 	void DoCollisions(Celeste& _celeste);
-	void Init(std::string filePath);
-	void AddObject(std::string line);
+	void Init(std::string _filePath);
+	void AddObject(std::string _line);
 
 	std::vector<GameObject*> GetRoomObjects() const;
 private:
 	int id;
-	std::vector<int> neighbors;
 	std::vector<GameObject*> roomObjects;
 };
 

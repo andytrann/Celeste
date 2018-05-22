@@ -84,6 +84,9 @@
     <ClCompile Include="Gameplay\Room.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Gameplay\RoomManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Graphics\Shaders\PostProcessing.fs" />
@@ -165,6 +168,9 @@
     <ClInclude Include="Gameplay\Room.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Gameplay\RoomManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Textures\CrouchLeft.png">
@@ -223,6 +229,7 @@
     <Font Include="Assets\Fonts\arialbd.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="text.txt" />
+    <Text Include="Assets\Rooms\room0.txt" />
+    <Text Include="Assets\Rooms\room1.txt" />
   </ItemGroup>
 </Project>
