@@ -13,9 +13,9 @@ public:
 
 	void Init(int _numRooms);
 	Room* GetCurrentRoom();
-	void SetCurrentRoom(int _id);
+	static void SetCurrentRoom(int _id);
 private:
-	int currentRoom;
+	static int currentRoom;
 	std::vector<Room*> rooms;
 };
 

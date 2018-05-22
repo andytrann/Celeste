@@ -16,6 +16,7 @@ enum class ObjectType
 	SPIKES,
 	STRAWBERRY,
 	GEM,
+	EXIT,
 	NONE
 };
 

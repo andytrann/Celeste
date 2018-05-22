@@ -4,8 +4,9 @@
 
 #include <string>
 
-RoomManager::RoomManager() : 
-	currentRoom(0)
+int RoomManager::currentRoom = 0;
+
+RoomManager::RoomManager()
 {
 }
 

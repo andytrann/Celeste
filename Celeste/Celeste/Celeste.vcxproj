@@ -160,6 +160,7 @@
     <ClCompile Include="Gameplay\Game.cpp" />
     <ClCompile Include="Gameplay\Room.cpp" />
     <ClCompile Include="Gameplay\RoomManager.cpp" />
+    <ClCompile Include="Gameplay\RoomObjects\Exit.cpp" />
     <ClCompile Include="Gameplay\RoomObjects\Gem.cpp" />
     <ClCompile Include="Gameplay\RoomObjects\PassablePlatform.cpp" />
     <ClCompile Include="Gameplay\PhysicsComponent.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="Gameplay\Game.h" />
     <ClInclude Include="Gameplay\Room.h" />
     <ClInclude Include="Gameplay\RoomManager.h" />
+    <ClInclude Include="Gameplay\RoomObjects\Exit.h" />
     <ClInclude Include="Gameplay\RoomObjects\Gem.h" />
     <ClInclude Include="Gameplay\RoomObjects\PassablePlatform.h" />
     <ClInclude Include="Gameplay\PhysicsComponent.h" />
@@ -216,6 +218,7 @@
     <Image Include="Assets\Textures\Ground.png" />
     <Image Include="Assets\Textures\JumpLeft.png" />
     <Image Include="Assets\Textures\JumpRight.png" />
+    <Image Include="Assets\Textures\Outline.png" />
     <Image Include="Assets\Textures\PassablePlatform.png" />
     <Image Include="Assets\Textures\Spikes.png" />
     <Image Include="Assets\Textures\StandLeft.png" />

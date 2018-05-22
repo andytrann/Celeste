@@ -13,8 +13,8 @@ Gem::Gem() :
 	objectType = ObjectType::GEM;
 }
 
-Gem::Gem(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, glm::vec3 _color) :
-	GameObject(_pos, _size, _sprite, _color),
+Gem::Gem(glm::vec2 _pos, Texture2D _sprite, glm::vec3 _color) :
+	GameObject(_pos, glm::vec2(30.0f, 30.0f), _sprite, _color),
 	timer(0.0f),
 	spriteOutline(ResourceManager::GetTexture("GemOutline"))
 {

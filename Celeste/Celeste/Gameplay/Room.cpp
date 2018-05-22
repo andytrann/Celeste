@@ -7,6 +7,7 @@
 #include "RoomObjects/PassablePlatform.h"
 #include "RoomObjects/Spikes.h"
 #include "RoomObjects/Gem.h"
+#include "RoomObjects/Exit.h"
 
 #include <fstream>
 #include <iostream>
@@ -93,8 +94,12 @@ void Room::AddObject(std::string _line)
 	}
 	else if (tokens[0] == "Gem")
 	{
-		roomObjects.push_back(new Gem(glm::vec2(std::stof(tokens[1]), std::stof(tokens[2])),
-			glm::vec2(std::stof(tokens[3]), std::stof(tokens[4])), ResourceManager::GetTexture(tokens[0])));
+		roomObjects.push_back(new Gem(glm::vec2(std::stof(tokens[1]), std::stof(tokens[2])), ResourceManager::GetTexture(tokens[0])));
+	}
+	else if (tokens[0] == "Exit")
+	{
+		roomObjects.push_back(new Exit(glm::vec2(std::stof(tokens[1]), std::stof(tokens[2])), glm::vec2(std::stof(tokens[3]), std::stof(tokens[4])),
+			std::stoi(tokens[5]), ResourceManager::GetTexture(tokens[0])));
 	}
 	else
 	{

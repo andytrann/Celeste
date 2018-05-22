@@ -74,6 +74,7 @@ void Game::Init()
 
 	//Load textures
 	ResourceManager::LoadTexture("Assets/Textures/Background.png", GL_TRUE, "Background");
+	ResourceManager::LoadTexture("Assets/Textures/Outline.png", GL_TRUE, "Exit");
 	ResourceManager::LoadTexture("Assets/Textures/Ground.png", GL_TRUE, "Ground");
 	ResourceManager::LoadTexture("Assets/Textures/VerticalGround.png", GL_TRUE, "VGround");
 	ResourceManager::LoadTexture("Assets/Textures/HorizontalGround.png", GL_TRUE, "HGround");
