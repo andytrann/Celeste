@@ -55,7 +55,7 @@ void StateClimbing::Update(Celeste & _celeste, GLfloat _dt)
 	if (Keyboard::KeyUp(GLFW_KEY_W) || Keyboard::KeyUp(GLFW_KEY_S) || !(Keyboard::Key(GLFW_KEY_W)
 		|| Keyboard::Key(GLFW_KEY_S)) || (Keyboard::Key(GLFW_KEY_W) && Keyboard::Key(GLFW_KEY_S)))
 	{
-		_celeste.vel.y *= _celeste.FRICTION;
+		_celeste.GetPhysicsComponent().ApplyGroundFriction(glm::vec2(0.0f, 1.0f));
 	}
 
 	_celeste.vel.y += (GLfloat)_celeste.direction.y * _celeste.ACCELERATION * _dt;

@@ -7,7 +7,8 @@
 
 PhysicsComponent::PhysicsComponent() :
 	vel(glm::vec2(0.0f, 0.0f)),
-	friction(.45f),
+	groundFriction(.45f),
+	airFriction(.9f),
 	gravity(1800.0f)
 {
 }
@@ -102,7 +103,12 @@ void PhysicsComponent::ResetVelX()
 	vel.x = 0.0f;
 }
 
-void PhysicsComponent::ApplyFriction()
+void PhysicsComponent::ApplyGroundFriction(glm::vec2 _dir)
 {
-	vel.x *= friction;
+	vel *= (_dir * groundFriction);
+}
+
+void PhysicsComponent::ApplyAirFriction()
+{
+	vel.x *= airFriction;
 }

@@ -18,11 +18,13 @@ public:
 	void ResetVelY();
 	void ResetVelX();
 
-	void ApplyFriction();
+	void ApplyGroundFriction(glm::vec2 _dir);
+	void ApplyAirFriction();
 
 private:
 	glm::vec2 vel;
-	GLfloat friction;
+	GLfloat groundFriction;
+	GLfloat airFriction;
 	float gravity;
 };
 

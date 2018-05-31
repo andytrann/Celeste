@@ -93,7 +93,7 @@ void StateStanding::Update(Celeste& _celeste, GLfloat _dt)
 	if (Keyboard::KeyUp(GLFW_KEY_D) || Keyboard::KeyUp(GLFW_KEY_A) || !(Keyboard::Key(GLFW_KEY_D)
 		|| Keyboard::Key(GLFW_KEY_A)) || (Keyboard::Key(GLFW_KEY_D) && Keyboard::Key(GLFW_KEY_A)))
 	{
-		_celeste.vel.x *= _celeste.FRICTION;
+		_celeste.GetPhysicsComponent().ApplyGroundFriction(glm::vec2(1.0f, 0.0f));
 	}
 
 	_celeste.vel.x += (GLfloat)_celeste.direction.x * _celeste.ACCELERATION * _dt;
