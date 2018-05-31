@@ -5,8 +5,9 @@
 //float PhysicsComponent::GRAVITY = 1800.0f;
 //float PhysicsComponent::MAX_FALL_SPEED = 600.0f;
 
-PhysicsComponent::PhysicsComponent() : 
+PhysicsComponent::PhysicsComponent() :
 	vel(glm::vec2(0.0f, 0.0f)),
+	friction(.45f),
 	gravity(1800.0f)
 {
 }
@@ -84,4 +85,24 @@ void PhysicsComponent::Update(GameObject & _object, GLfloat _dt)
 void PhysicsComponent::Accelerate(glm::vec2 _amt, GLfloat _dt)
 {
 	vel += (_amt * _dt);
+}
+
+glm::vec2 PhysicsComponent::GetVelocity() const
+{
+	return vel;
+}
+
+void PhysicsComponent::ResetVelY()
+{
+	vel.y = 0.0f;
+}
+
+void PhysicsComponent::ResetVelX()
+{
+	vel.x = 0.0f;
+}
+
+void PhysicsComponent::ApplyFriction()
+{
+	vel.x *= friction;
 }

@@ -121,15 +121,15 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 				if (std::get<0>(col) == Direction::UP && pos.y + size.y <= _other[i]->pos.y + (_other[i]->size.y / 2))
 				{
 					//if dashing and collides with ground from top
-					if (isDashing && physics.vel.y > 0)
+					if (isDashing && physics.GetVelocity().y > 0)
 					{
 						GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
 						pos.y -= penetration;
-						physics.vel.y = 0.0f;
+						physics.ResetVelY();
 						locState = LocationState::ON_GROUND;
 					}
 					//if collides with ground normally 
-					if (locState == LocationState::IN_AIR && physics.vel.y > 0)
+					if (locState == LocationState::IN_AIR && physics.GetVelocity().y > 0)
 					{
 						//move celeste back up difference of penetration
 						GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
@@ -141,7 +141,7 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 						currentState->Enter(*this);
 					}
 					//if climbing and on ground
-					if (locState == LocationState::CLIMBING && physics.vel.y >= 0)
+					if (locState == LocationState::CLIMBING && physics.GetVelocity().y >= 0)
 					{
 						GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
 						pos.y -= penetration;
@@ -159,15 +159,15 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 					case Direction::UP:
 					{
 						//if dashing and collides with ground from top
-						if (isDashing && physics.vel.y > 0)
+						if (isDashing && physics.GetVelocity().y > 0)
 						{
 							GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
 							pos.y -= penetration;
-							physics.vel.y = 0.0f;
+							physics.ResetVelY();
 							locState = LocationState::ON_GROUND;
 						}
 						//if collides with ground normally 
-						if (locState == LocationState::IN_AIR && physics.vel.y > 0)
+						if (locState == LocationState::IN_AIR && physics.GetVelocity().y > 0)
 						{
 							//move celeste back up difference of penetration
 							GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
@@ -179,7 +179,7 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 							currentState->Enter(*this);
 						}
 						//if climbing and on ground
-						if (locState == LocationState::CLIMBING && physics.vel.y >= 0)
+						if (locState == LocationState::CLIMBING && physics.GetVelocity().y >= 0)
 						{
 							GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
 							pos.y -= penetration;
@@ -195,7 +195,7 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 						{
 							//move celeste back down difference of penetration
 							GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
-							physics.vel.y = 0.0f;
+							physics.ResetVelY();
 							pos.y += penetration;
 						}
 						break;
@@ -205,7 +205,7 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 					{
 						//move celeste back left difference of penetration
 						GLfloat penetration = size.x / 2.0f - abs(std::get<1>(col).x);
-						physics.vel.x = 0.0f;
+						physics.ResetVelX();
 						pos.x -= penetration;
 						touchingSomethingLR = true;
 						break;
@@ -215,7 +215,7 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 					{
 						//move celeste back right difference of penetration
 						GLfloat penetration = size.x / 2.0f - abs(std::get<1>(col).x);
-						physics.vel.x = 0.0f;
+						physics.ResetVelX();
 						pos.x += penetration;
 						touchingSomethingLR = true;
 						break;
@@ -334,7 +334,8 @@ bool Celeste::CanClimb() const
 void Celeste::Respawn()
 {
 	pos = spawnLoc;
-	physics.vel = glm::vec2(0.0f, 0.0f);
+	physics.ResetVelY();
+	physics.ResetVelX();
 	direction = glm::ivec2(1, 0);
 	facingDirection = 1;
 	dashTimer = 0.0f;
