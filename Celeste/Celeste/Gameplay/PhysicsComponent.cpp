@@ -6,6 +6,7 @@
 //float PhysicsComponent::MAX_FALL_SPEED = 600.0f;
 
 PhysicsComponent::PhysicsComponent() : 
+	vel(glm::vec2(0.0f, 0.0f)),
 	gravity(1800.0f),
 	maxFallSpeed(600.0f),
 	climbUpSpeed(-200.0f),
@@ -13,6 +14,7 @@ PhysicsComponent::PhysicsComponent() :
 {
 }
 
+/*
 void PhysicsComponent::Update(Celeste& _celeste, float _dt)
 {
 	//check for wall slide
@@ -75,6 +77,16 @@ void PhysicsComponent::Update(Celeste& _celeste, float _dt)
 	}
 
 	_celeste.pos += (_celeste.vel * _dt);
+}*/
+
+void PhysicsComponent::Update(GameObject & _object, GLfloat _dt)
+{
+	_object.pos += (vel * _dt);
+}
+
+void PhysicsComponent::Accelerate(glm::vec2 _amt, GLfloat _dt)
+{
+	vel += (_amt * _dt);
 }
 
 void PhysicsComponent::MaxFallSpeedDown()

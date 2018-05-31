@@ -26,6 +26,7 @@ public:
 	void MaxSpeedUp();
 	void MaxSpeedDown();
 	GLfloat& GetMaxSpeed() const;
+	PhysicsComponent GetPhysicsComponent();
 
 	bool CanWallJump() const;
 	bool CanClimb() const;
@@ -37,8 +38,10 @@ public:
 	const static GLfloat JUMP_FORCE;
 	const static GLfloat DASH_FORCE;
 	const static GLfloat DASH_CD;
+	const static GLfloat MAX_FALL_SPEED;
 	const static GLfloat MAX_CLIMB_DURATION;
-	const static GLfloat MAX_CLIMB_SPEED;
+	const static GLfloat MAX_CLIMB_SPEED_UP;
+	const static GLfloat MAX_CLIMB_SPEED_DOWN;
 
 	glm::ivec2 direction;
 	int facingDirection;

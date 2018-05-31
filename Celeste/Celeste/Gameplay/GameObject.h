@@ -42,7 +42,7 @@ public:
 	virtual void Render(SpriteRenderer& _renderer);
 	ObjectType GetType() const;
 
-	glm::vec2 pos, size, vel;
+	glm::vec2 pos, size;
 	glm::vec3 color;
 	GLfloat rot;
 	GLboolean destroyed;
