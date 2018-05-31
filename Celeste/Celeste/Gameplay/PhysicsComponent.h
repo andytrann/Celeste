@@ -16,14 +16,7 @@ public:
 	
 	glm::vec2 vel;
 private:
-	void MaxFallSpeedDown();
-	void MaxFallSpeedUp();
-
-	
 	float gravity;
-	float maxFallSpeed;
-	float climbUpSpeed;
-	float climbDownSpeed;
 };
 
 #endif

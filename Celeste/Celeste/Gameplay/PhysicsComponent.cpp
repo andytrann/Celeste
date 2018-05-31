@@ -7,10 +7,7 @@
 
 PhysicsComponent::PhysicsComponent() : 
 	vel(glm::vec2(0.0f, 0.0f)),
-	gravity(1800.0f),
-	maxFallSpeed(600.0f),
-	climbUpSpeed(-200.0f),
-	climbDownSpeed(300.0f)
+	gravity(1800.0f)
 {
 }
 
@@ -87,14 +84,4 @@ void PhysicsComponent::Update(GameObject & _object, GLfloat _dt)
 void PhysicsComponent::Accelerate(glm::vec2 _amt, GLfloat _dt)
 {
 	vel += (_amt * _dt);
-}
-
-void PhysicsComponent::MaxFallSpeedDown()
-{
-	maxFallSpeed = 200.0f;
-}
-
-void PhysicsComponent::MaxFallSpeedUp()
-{
-	maxFallSpeed = 600.0f;
 }
