@@ -9,7 +9,7 @@
 #include <iostream>
 
 CelesteState* StateClimbing::HandleInput(Celeste& _celeste)
-{
+{/*
 	if (Keyboard::KeyUp(GLFW_KEY_COMMA) || !_celeste.CanClimb())
 	{
 		return new StateInAir();
@@ -45,12 +45,12 @@ CelesteState* StateClimbing::HandleInput(Celeste& _celeste)
 	//update direction
 	_celeste.direction.x = newDirection.x;
 	_celeste.direction.y = newDirection.y;
-
+	*/
 	return nullptr;
 }
 
 void StateClimbing::Update(Celeste & _celeste, GLfloat _dt)
-{
+{/*
 	//apply friction
 	if (Keyboard::KeyUp(GLFW_KEY_W) || Keyboard::KeyUp(GLFW_KEY_S) || !(Keyboard::Key(GLFW_KEY_W)
 		|| Keyboard::Key(GLFW_KEY_S)) || (Keyboard::Key(GLFW_KEY_W) && Keyboard::Key(GLFW_KEY_S)))
@@ -68,7 +68,7 @@ void StateClimbing::Update(Celeste & _celeste, GLfloat _dt)
 	else
 	{
 		_celeste.climbTimer += _dt;
-	}
+	}*/
 }
 
 void StateClimbing::Enter(Celeste & _celeste)

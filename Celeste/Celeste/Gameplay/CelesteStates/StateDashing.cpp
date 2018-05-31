@@ -8,7 +8,7 @@
 #include "StateStanding.h"
 
 CelesteState * StateDashing::HandleInput(Celeste & _celeste)
-{
+{/*
 	if (_celeste.dashTimer >= Celeste::DASH_CD)
 	{
 		_celeste.dashTimer = 0.0f;
@@ -32,7 +32,7 @@ CelesteState * StateDashing::HandleInput(Celeste & _celeste)
 		_celeste.vel.y -= _celeste.JUMP_FORCE;
 		return new StateInAir();
 	}
-
+	*/
 	return nullptr;
 }
 

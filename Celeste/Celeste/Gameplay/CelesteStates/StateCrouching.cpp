@@ -8,7 +8,7 @@
 #include "StateDashing.h"
 
 CelesteState * StateCrouching::HandleInput(Celeste & _celeste)
-{
+{/*
 	//calculate new direction
 	glm::ivec2 newDirection(0, 0);
 	if (Keyboard::Key(GLFW_KEY_A))
@@ -62,7 +62,7 @@ CelesteState * StateCrouching::HandleInput(Celeste & _celeste)
 			return new StateDashing();
 		}
 	}
-
+	*/
 	return nullptr;
 }
 
@@ -71,7 +71,7 @@ void StateCrouching::Update(Celeste & _celeste, GLfloat _dt)
 }
 
 void StateCrouching::Enter(Celeste & _celeste)
-{
+{/*
 	_celeste.vel.x = 0.0f;
 
 	if (_celeste.facingDirection == 1)
@@ -82,6 +82,6 @@ void StateCrouching::Enter(Celeste & _celeste)
 	{
 		_celeste.sprite = ResourceManager::GetTexture("CrouchLeft");
 	}
-	_celeste.GetLocationState() = LocationState::ON_GROUND;
+	_celeste.GetLocationState() = LocationState::ON_GROUND;*/
 }
 

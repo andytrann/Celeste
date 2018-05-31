@@ -9,7 +9,7 @@
 #include <iostream>
 
 CelesteState* StateInAir::HandleInput(Celeste& _celeste)
-{
+{/*
 	//calculate new direction
 	glm::ivec2 newDirection(0, 0);
 	if (Keyboard::Key(GLFW_KEY_A))
@@ -96,18 +96,24 @@ CelesteState* StateInAir::HandleInput(Celeste& _celeste)
 		_celeste.vel = glm::vec2(0.0f, 0.0f);
 		return new StateClimbing();
 	}
-
+	*/
 	return nullptr;
 }
 
 void StateInAir::Update(Celeste & _celeste, GLfloat _dt)
 {
+	PhysicsComponent& cPhys = _celeste.GetPhysicsComponent();
 	//apply friction
 	if (!(Keyboard::Key(GLFW_KEY_D) || Keyboard::Key(GLFW_KEY_A)) || (Keyboard::Key(GLFW_KEY_D) && Keyboard::Key(GLFW_KEY_A)))
 	{
-		_celeste.GetPhysicsComponent().ApplyAirFriction();
+		cPhys.ApplyAirFriction();
 	}
-	_celeste.vel.x += (GLfloat)_celeste.direction.x * _celeste.ACCELERATION * _dt ;
+
+	//_celeste.vel.x += (GLfloat)_celeste.direction.x * _celeste.ACCELERATION * _dt ;
+	if (abs(cPhys.GetVelocity().x) < Celeste::MAX_SPEED)
+	{
+		cPhys.Accelerate(glm::vec2((GLfloat)_celeste.direction.x * Celeste::ACCELERATION, 0.0f), _dt);
+	}
 }
 
 void StateInAir::Enter(Celeste& _celeste)

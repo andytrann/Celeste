@@ -8,7 +8,7 @@
 PhysicsComponent::PhysicsComponent() :
 	vel(glm::vec2(0.0f, 0.0f)),
 	groundFriction(.45f),
-	airFriction(.9f),
+	airFriction(groundFriction * 2.0f),
 	gravity(1800.0f)
 {
 }
@@ -78,9 +78,16 @@ void PhysicsComponent::Update(Celeste& _celeste, float _dt)
 	_celeste.pos += (_celeste.vel * _dt);
 }*/
 
-void PhysicsComponent::Update(GameObject & _object, GLfloat _dt)
+void PhysicsComponent::Update(Celeste & _celeste, GLfloat _dt)
 {
-	_object.pos += (vel * _dt);
+	if (_celeste.GetLocationState() == LocationState::IN_AIR && !_celeste.isDashing)
+	{
+		if (vel.y < Celeste::MAX_FALL_SPEED)
+		{
+			Accelerate(glm::vec2(0.0f, gravity), _dt);
+		}
+	}
+	_celeste.pos += (vel * _dt);
 }
 
 void PhysicsComponent::Accelerate(glm::vec2 _amt, GLfloat _dt)
@@ -91,6 +98,16 @@ void PhysicsComponent::Accelerate(glm::vec2 _amt, GLfloat _dt)
 glm::vec2 PhysicsComponent::GetVelocity() const
 {
 	return vel;
+}
+
+void PhysicsComponent::SetVelX(GLfloat _amt)
+{
+	vel.x = _amt;
+}
+
+void PhysicsComponent::SetVelY(GLfloat _amt)
+{
+	vel.y = _amt;
 }
 
 void PhysicsComponent::ResetVelY()

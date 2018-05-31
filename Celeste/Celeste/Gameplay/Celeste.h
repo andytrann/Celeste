@@ -23,16 +23,14 @@ public:
 	bool UseDash();
 	void ResetDash();
 
-	void MaxSpeedUp();
-	void MaxSpeedDown();
-	GLfloat& GetMaxSpeed() const;
-	PhysicsComponent GetPhysicsComponent();
+	PhysicsComponent& GetPhysicsComponent();
 
 	bool CanWallJump() const;
 	bool CanClimb() const;
 
 	void Respawn();
 	
+	const static GLfloat MAX_SPEED;
 	const static GLfloat ACCELERATION;
 	const static GLfloat FRICTION;
 	const static GLfloat JUMP_FORCE;
@@ -50,7 +48,7 @@ public:
 	GLfloat climbTimer;
 	GLboolean isClimbing;
 private:
-	static GLfloat MAX_SPEED;
+	//static GLfloat MAX_SPEED;
 
 	glm::vec2 spawnLoc;
 	int dashCount;
