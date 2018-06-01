@@ -108,7 +108,8 @@ void StateStanding::Update(Celeste& _celeste, GLfloat _dt)
 	}
 
 	//_celeste.vel.x += (GLfloat)_celeste.direction.x * _celeste.ACCELERATION * _dt;
-	if (abs(cPhys.GetVelocity().x) < Celeste::MAX_SPEED)
+	if (abs(cPhys.GetVelocity().x) < Celeste::MAX_SPEED || 
+		(abs(cPhys.GetVelocity().x) >= Celeste::MAX_SPEED && (cPhys.GetVelocity().x / _celeste.direction.x) < 0.0f))
 	{
 		cPhys.Accelerate(glm::vec2((GLfloat)_celeste.direction.x * Celeste::ACCELERATION, 0.0f), _dt);
 	}

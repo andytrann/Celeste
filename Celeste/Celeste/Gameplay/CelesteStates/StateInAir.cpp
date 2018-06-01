@@ -65,7 +65,8 @@ CelesteState* StateInAir::HandleInput(Celeste& _celeste)
 		_celeste.vel.y = -_celeste.JUMP_FORCE;
 		_celeste.vel.x -= (GLfloat)_celeste.facingDirection * _celeste.JUMP_FORCE;*/
 		cPhys.SetVelY(-Celeste::JUMP_FORCE);
-		cPhys.SetVelX(-(GLfloat)_celeste.facingDirection * Celeste::JUMP_FORCE);
+		//need to eventually change xvel to maxspeed and add an input lockout to make horizontal speed consistent
+		cPhys.SetVelX(-(GLfloat)_celeste.direction.x * Celeste::JUMP_FORCE * 5.0f / 6.0f);
 	}
 
 	//dash in air
@@ -120,7 +121,8 @@ void StateInAir::Update(Celeste & _celeste, GLfloat _dt)
 	}
 
 	//_celeste.vel.x += (GLfloat)_celeste.direction.x * _celeste.ACCELERATION * _dt ;
-	if (abs(cPhys.GetVelocity().x) < Celeste::MAX_SPEED)
+	if (abs(cPhys.GetVelocity().x) < Celeste::MAX_SPEED || 
+		(abs(cPhys.GetVelocity().x) >= Celeste::MAX_SPEED && (cPhys.GetVelocity().x / _celeste.direction.x ) < 0.0f))
 	{
 		cPhys.Accelerate(glm::vec2((GLfloat)_celeste.direction.x * Celeste::ACCELERATION, 0.0f), _dt);
 	}

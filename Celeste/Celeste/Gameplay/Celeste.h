@@ -47,9 +47,8 @@ public:
 	GLboolean isDashing;
 	GLfloat climbTimer;
 	GLboolean isClimbing;
-private:
-	//static GLfloat MAX_SPEED;
 
+private:
 	glm::vec2 spawnLoc;
 	int dashCount;
 	bool wallJump;
