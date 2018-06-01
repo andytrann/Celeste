@@ -120,11 +120,6 @@ void StateInAir::Update(Celeste & _celeste, GLfloat _dt)
 		cPhys.ApplyAirFriction();
 	}
 
-	/*if (_celeste.direction.x != 0 && _celeste.CanWallJump() && _celeste.vel.y > 0.0f)
-	{
-		MaxFallSpeedDown();
-	}*/
-
 	//_celeste.vel.x += (GLfloat)_celeste.direction.x * _celeste.ACCELERATION * _dt ;
 	if (abs(cPhys.GetVelocity().x) < Celeste::MAX_SPEED || 
 		(abs(cPhys.GetVelocity().x) >= Celeste::MAX_SPEED && (cPhys.GetVelocity().x / _celeste.direction.x ) < 0.0f))

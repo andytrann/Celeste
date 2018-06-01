@@ -13,6 +13,7 @@ const GLfloat Celeste::JUMP_FORCE = 600.0f;
 const GLfloat Celeste::DASH_FORCE = 500.0f;
 const GLfloat Celeste::DASH_CD = .2f;
 const GLfloat Celeste::MAX_FALL_SPEED = 600.0f;
+const GLfloat Celeste::MAX_WALL_SLIDE_SPEED = 200.0f;
 const GLfloat Celeste::MAX_CLIMB_DURATION = 10.0f;
 const GLfloat Celeste::MAX_CLIMB_SPEED_UP = -200.0f;
 const GLfloat Celeste::MAX_CLIMB_SPEED_DOWN = 300.0f;

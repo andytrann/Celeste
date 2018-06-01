@@ -37,6 +37,7 @@ public:
 	const static GLfloat DASH_FORCE;
 	const static GLfloat DASH_CD;
 	const static GLfloat MAX_FALL_SPEED;
+	const static GLfloat MAX_WALL_SLIDE_SPEED;
 	const static GLfloat MAX_CLIMB_DURATION;
 	const static GLfloat MAX_CLIMB_SPEED_UP;
 	const static GLfloat MAX_CLIMB_SPEED_DOWN;
