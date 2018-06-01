@@ -87,6 +87,7 @@ void Celeste::Update(GLfloat _dt)
 	}
 	//std::cout << climbTimer << std::endl;
 	physics.Update(*this, _dt);
+	std::cout << physics.GetVelocity().x << std::endl;
 }
 
 void Celeste::DoCollision(std::vector<GameObject*> _other)
