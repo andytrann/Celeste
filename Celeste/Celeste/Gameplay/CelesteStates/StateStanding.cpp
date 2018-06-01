@@ -108,6 +108,7 @@ void StateStanding::Update(Celeste& _celeste, GLfloat _dt)
 	}
 
 	//_celeste.vel.x += (GLfloat)_celeste.direction.x * _celeste.ACCELERATION * _dt;
+	//add horizontal velocity if below max speed
 	if (abs(cPhys.GetVelocity().x) < Celeste::MAX_SPEED || 
 		(abs(cPhys.GetVelocity().x) >= Celeste::MAX_SPEED && (cPhys.GetVelocity().x / _celeste.direction.x) < 0.0f))
 	{
