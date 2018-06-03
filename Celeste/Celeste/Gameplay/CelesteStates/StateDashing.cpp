@@ -17,7 +17,6 @@ CelesteState * StateDashing::HandleInput(Celeste & _celeste)
 		//adjustment so when celeste dashes up, shes not as floaty after dash (only called one frame)
 		if(cPhys.GetVelocity().y < 0)
 		{
-			//_celeste.vel.y *= .8f;
 			cPhys.SetVelY(cPhys.GetVelocity().y * .8f);
 		}
 		return new StateInAir();
@@ -28,10 +27,6 @@ CelesteState * StateDashing::HandleInput(Celeste & _celeste)
 	{
 		_celeste.dashTimer = 0.0f;
 		_celeste.isDashing = false;
-
-		//change max speed so dash carries you through air
-		//_celeste.MaxSpeedUp();
-		//_celeste.vel.y -= _celeste.JUMP_FORCE;
 		cPhys.Accelerate(glm::vec2(0.0f, -Celeste::JUMP_FORCE), 1.0f);
 		return new StateInAir();
 	}

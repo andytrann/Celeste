@@ -14,19 +14,6 @@ CelesteState* StateClimbing::HandleInput(Celeste& _celeste)
 	{
 		return new StateInAir();
 	}
-
-	PhysicsComponent& cPhys = _celeste.GetPhysicsComponent();
-	if (Keyboard::KeyDown(GLFW_KEY_N) && _celeste.CanWallJump())
-	{
-		/*_celeste.MaxSpeedUp();
-		_celeste.vel.y = -_celeste.JUMP_FORCE;
-		_celeste.vel.x -= (GLfloat)_celeste.facingDirection * _celeste.JUMP_FORCE;
-		*/
-		cPhys.SetVelY(-Celeste::JUMP_FORCE);
-		//need to eventually change xvel to maxspeed and add an input lockout to make horizontal speed consistent
-		cPhys.SetVelX(-(GLfloat)_celeste.direction.x * Celeste::JUMP_FORCE * 5.0f / 6.0f);
-		return new StateInAir();
-	}
 	
 	//calculate new direction
 	glm::ivec2 newDirection(0, 0);
@@ -50,6 +37,25 @@ CelesteState* StateClimbing::HandleInput(Celeste& _celeste)
 	//update direction
 	_celeste.direction.x = newDirection.x;
 	_celeste.direction.y = newDirection.y;
+
+	PhysicsComponent& cPhys = _celeste.GetPhysicsComponent();
+	//jump while climbing
+	if (Keyboard::KeyDown(GLFW_KEY_N) && _celeste.CanWallJump())
+	{
+		//vertical jump
+		if (_celeste.direction.x == 0)
+		{
+			cPhys.SetVelY(-Celeste::JUMP_FORCE * .8f);
+		}
+		//diagonal jump
+		else
+		{
+			cPhys.SetVelY(-Celeste::JUMP_FORCE);
+			//need to eventually change xvel to maxspeed and add an input lockout to make horizontal speed consistent
+			cPhys.SetVelX(-(GLfloat)_celeste.facingDirection * Celeste::JUMP_FORCE * 5.0f / 6.0f);
+		}
+		return new StateInAir();
+	}
 	
 	return nullptr;
 }
@@ -64,7 +70,6 @@ void StateClimbing::Update(Celeste & _celeste, GLfloat _dt)
 		cPhys.ApplyGroundFriction(glm::vec2(0.0f, 1.0f));
 	}
 
-	//_celeste.vel.y += (GLfloat)_celeste.direction.y * _celeste.ACCELERATION * _dt;
 	//add vertical velocity if between max speeds
 	if (cPhys.GetVelocity().y < Celeste::MAX_CLIMB_SPEED_DOWN && cPhys.GetVelocity().y > Celeste::MAX_CLIMB_SPEED_UP)
 	{

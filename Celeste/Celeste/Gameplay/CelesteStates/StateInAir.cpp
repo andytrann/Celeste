@@ -38,32 +38,17 @@ CelesteState* StateInAir::HandleInput(Celeste& _celeste)
 	{
 		_celeste.sprite = ResourceManager::GetTexture("JumpRight");
 		_celeste.facingDirection = 1;
-
-		//in case celeste dash jumps and changes direction or wall jumps and changes facing direction (actual direction of jump isnt changed)
-		//_celeste.MaxSpeedDown();
 	}
 	else if (_celeste.direction.x == -1 && _celeste.facingDirection == 1)
 	{
 		_celeste.sprite = ResourceManager::GetTexture("JumpLeft");
 		_celeste.facingDirection = -1;
-
-		//in case celeste dash jumps and changes direction or wall jumps and changes facing direction (actual direction of jump isnt changed)
-		//_celeste.MaxSpeedDown();
 	}
-
-	//if x vel goes below 30, max speed goes back to normal (so you can't hold same direction after wall jump and get increase in horizontal speed)
-	/*if (glm::abs<GLfloat>(_celeste.vel.x) < 30.0f)
-	{
-		_celeste.MaxSpeedDown();
-	}*/
 
 	PhysicsComponent& cPhys = _celeste.GetPhysicsComponent();
 	//wall jump
-	if (Keyboard::KeyDown(GLFW_KEY_N) && _celeste.CanWallJump())
+	if (Keyboard::KeyDown(GLFW_KEY_N) && _celeste.CanWallJump() && _celeste.direction.x != 0)
 	{
-		/*_celeste.MaxSpeedUp();
-		_celeste.vel.y = -_celeste.JUMP_FORCE;
-		_celeste.vel.x -= (GLfloat)_celeste.facingDirection * _celeste.JUMP_FORCE;*/
 		cPhys.SetVelY(-Celeste::JUMP_FORCE);
 		//need to eventually change xvel to maxspeed and add an input lockout to make horizontal speed consistent
 		cPhys.SetVelX(-(GLfloat)_celeste.direction.x * Celeste::JUMP_FORCE * 5.0f / 6.0f);
@@ -77,32 +62,26 @@ CelesteState* StateInAir::HandleInput(Celeste& _celeste)
 		//if not holding any direction, dash in current facing direction
 		if (newDirection == glm::ivec2(0, 0))
 		{
-			/*_celeste.vel.y = 0.0f;
-			_celeste.vel.x = (GLfloat)_celeste.facingDirection * Celeste::DASH_FORCE;*/
-			cPhys.Accelerate(glm::vec2((GLfloat)_celeste.facingDirection * Celeste::DASH_FORCE), 1.0f);
+			cPhys.Accelerate(glm::vec2((GLfloat)_celeste.facingDirection * Celeste::DASH_FORCE, 0.0f), 1.0f);
 			return new StateDashing();
 		}
 		//dash in 45 degree angle
 		else if (newDirection.x != 0 && newDirection.y != 0)
 		{
-			//_celeste.vel = (glm::vec2)newDirection * glm::sin(glm::quarter_pi<GLfloat>()) * Celeste::DASH_FORCE;
 			cPhys.Accelerate((glm::vec2)newDirection * glm::sin(glm::quarter_pi<GLfloat>()) * Celeste::DASH_FORCE, 1.0f);
 			return new StateDashing();
 		}
 		//dash in 90 degree angle
 		else
 		{
-			//_celeste.vel = (glm::vec2)newDirection * Celeste::DASH_FORCE;
 			cPhys.Accelerate((glm::vec2)newDirection * Celeste::DASH_FORCE, 1.0f);
 			return new StateDashing();
 		}
 	}
 
-
 	//climbing
 	if (_celeste.CanClimb() && Keyboard::KeyDown(GLFW_KEY_COMMA))
 	{
-		//_celeste.vel = glm::vec2(0.0f, 0.0f);
 		cPhys.ResetVelX();
 		cPhys.ResetVelY();
 		return new StateClimbing();
@@ -120,7 +99,6 @@ void StateInAir::Update(Celeste & _celeste, GLfloat _dt)
 		cPhys.ApplyAirFriction();
 	}
 
-	//_celeste.vel.x += (GLfloat)_celeste.direction.x * _celeste.ACCELERATION * _dt ;
 	//add horizontal velocity if below max speed
 	if (abs(cPhys.GetVelocity().x) < Celeste::MAX_SPEED || 
 		(abs(cPhys.GetVelocity().x) >= Celeste::MAX_SPEED && (cPhys.GetVelocity().x / _celeste.direction.x ) < 0.0f))

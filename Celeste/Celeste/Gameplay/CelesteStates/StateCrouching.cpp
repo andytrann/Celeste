@@ -40,14 +40,16 @@ CelesteState * StateCrouching::HandleInput(Celeste & _celeste)
 		_celeste.sprite = ResourceManager::GetTexture("CrouchLeft");
 		_celeste.facingDirection = -1;
 	}
+
 	PhysicsComponent& cPhys = _celeste.GetPhysicsComponent();
+	//jump
 	if (Keyboard::KeyDown(GLFW_KEY_N))
 	{
-		//_celeste.vel.y = -_celeste.JUMP_FORCE;
 		cPhys.ResetVelY();
 		cPhys.Accelerate(glm::vec2(0.0f, -Celeste::JUMP_FORCE), 1.0f);
 		return new StateInAir();
 	}
+	//dash
 	if (Keyboard::KeyDown(GLFW_KEY_M) && _celeste.UseDash())
 	{
 		cPhys.ResetVelX();
@@ -55,14 +57,12 @@ CelesteState * StateCrouching::HandleInput(Celeste & _celeste)
 		//if holding down and left/right
 		if (newDirection.x != 0 && newDirection.y != 0)
 		{
-			//_celeste.vel = (glm::vec2)newDirection * glm::sin(glm::quarter_pi<GLfloat>()) * Celeste::DASH_FORCE;
 			cPhys.Accelerate((glm::vec2)newDirection * glm::sin(glm::quarter_pi<GLfloat>()) * Celeste::DASH_FORCE, 1.0f);
 			return new StateDashing();
 		}
 		//if only holding down
 		else
 		{
-			//_celeste.vel.y = (GLfloat)newDirection.y * Celeste::DASH_FORCE;
 			cPhys.Accelerate((glm::vec2)newDirection * Celeste::DASH_FORCE, 1.0f);
 			return new StateDashing();
 		}
@@ -73,14 +73,11 @@ CelesteState * StateCrouching::HandleInput(Celeste & _celeste)
 
 void StateCrouching::Update(Celeste & _celeste, GLfloat _dt)
 {
-
 	_celeste.GetPhysicsComponent().ApplyGroundFriction(glm::vec2(1.0f, 0.0f));
 }
 
 void StateCrouching::Enter(Celeste & _celeste)
 {
-	//_celeste.GetPhysicsComponent().ResetVelX();
-
 	if (_celeste.facingDirection == 1)
 	{
 		_celeste.sprite = ResourceManager::GetTexture("CrouchRight");

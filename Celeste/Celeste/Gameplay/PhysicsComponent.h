@@ -11,7 +11,6 @@ class PhysicsComponent
 {
 public:
 	PhysicsComponent();
-	//void Update(Celeste& _celeste, float _dt);
 	void Update(Celeste& _celeste, GLfloat _dt);
 	void Accelerate(glm::vec2 _amt, GLfloat _dt);
 	

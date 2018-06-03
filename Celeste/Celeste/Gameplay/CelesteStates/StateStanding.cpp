@@ -52,7 +52,6 @@ CelesteState* StateStanding::HandleInput(Celeste& _celeste)
 	//jump
 	if (Keyboard::KeyDown(GLFW_KEY_N))
 	{
-		//_celeste.vel.y -= _celeste.JUMP_FORCE;
 		cPhys.ResetVelY();
 		cPhys.Accelerate(glm::vec2(0.0f, -Celeste::JUMP_FORCE), 1.0f);
 		return new StateInAir();
@@ -65,21 +64,18 @@ CelesteState* StateStanding::HandleInput(Celeste& _celeste)
 		//if not holding any direction, dash in current facing direction
 		if (newDirection == glm::ivec2(0, 0))
 		{
-			//_celeste.vel.x = (GLfloat)_celeste.facingDirection * Celeste::DASH_FORCE;
-			cPhys.Accelerate(glm::vec2((GLfloat)_celeste.facingDirection * Celeste::DASH_FORCE), 1.0f);
+			cPhys.Accelerate(glm::vec2((GLfloat)_celeste.facingDirection * Celeste::DASH_FORCE, 0.0f), 1.0f);
 			return new StateDashing();
 		}
 		//dash at 45 degree angle
 		else if (newDirection.x != 0 && newDirection.y != 0)
 		{
-			//_celeste.vel = (glm::vec2)newDirection * glm::sin(glm::quarter_pi<GLfloat>()) * Celeste::DASH_FORCE;
 			cPhys.Accelerate((glm::vec2)newDirection * glm::sin(glm::quarter_pi<GLfloat>()) * Celeste::DASH_FORCE, 1.0f);
 			return new StateDashing();
 		}
 		//dash at 90 degree angle
 		else
 		{
-			//_celeste.vel = (glm::vec2)newDirection * Celeste::DASH_FORCE;
 			cPhys.Accelerate((glm::vec2)newDirection * Celeste::DASH_FORCE, 1.0f);
 			return new StateDashing();
 		}
@@ -88,7 +84,6 @@ CelesteState* StateStanding::HandleInput(Celeste& _celeste)
 	//climb
 	if (_celeste.CanClimb() && Keyboard::KeyDown(GLFW_KEY_COMMA))
 	{
-		//_celeste.vel = glm::vec2(0.0f, 0.0f);
 		cPhys.ResetVelX();
 		cPhys.ResetVelY();
 		return new StateClimbing();
@@ -107,7 +102,6 @@ void StateStanding::Update(Celeste& _celeste, GLfloat _dt)
 		cPhys.ApplyGroundFriction(glm::vec2(1.0f, 0.0f));
 	}
 
-	//_celeste.vel.x += (GLfloat)_celeste.direction.x * _celeste.ACCELERATION * _dt;
 	//add horizontal velocity if below max speed
 	if (abs(cPhys.GetVelocity().x) < Celeste::MAX_SPEED || 
 		(abs(cPhys.GetVelocity().x) >= Celeste::MAX_SPEED && (cPhys.GetVelocity().x / _celeste.direction.x) < 0.0f))
@@ -131,8 +125,6 @@ void StateStanding::Enter(Celeste& _celeste)
 	_celeste.ResetDash();
 	_celeste.GetPhysicsComponent().ResetVelY();
 
-	//change max speed to original value in case you dash jump
-	//_celeste.MaxSpeedDown();
 	if (abs(_celeste.GetPhysicsComponent().GetVelocity().x) > Celeste::MAX_SPEED)
 	{
 		GLfloat dir = _celeste.GetPhysicsComponent().GetVelocity().x / abs(_celeste.GetPhysicsComponent().GetVelocity().x);
