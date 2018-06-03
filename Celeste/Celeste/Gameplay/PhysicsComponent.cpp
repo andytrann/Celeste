@@ -2,9 +2,6 @@
 
 #include "Celeste.h"
 
-//float PhysicsComponent::GRAVITY = 1800.0f;
-//float PhysicsComponent::MAX_FALL_SPEED = 600.0f;
-
 PhysicsComponent::PhysicsComponent() :
 	vel(glm::vec2(0.0f, 0.0f)),
 	groundFriction(.45f),
