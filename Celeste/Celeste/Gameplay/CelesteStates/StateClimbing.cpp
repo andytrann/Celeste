@@ -47,6 +47,7 @@ CelesteState* StateClimbing::HandleInput(Celeste& _celeste)
 		{
 			cPhys.SetVelY(-Celeste::JUMP_FORCE * .8f);
 			_celeste.StartInputLock(50.0f);
+			_celeste.climbTimer += 3.0f;
 		}
 		//diagonal jump
 		else
