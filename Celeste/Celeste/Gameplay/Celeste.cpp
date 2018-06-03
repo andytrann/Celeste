@@ -29,7 +29,9 @@ Celeste::Celeste() :
 	wallJump(false),
 	climb(false),
 	climbTimer(0.0f),
-	isClimbing(false)
+	isClimbing(false),
+	inputLocked(false),
+	minYVelLockout(300.0f)
 {
 	objectType = ObjectType::CELESTE;
 }
@@ -46,7 +48,9 @@ Celeste::Celeste(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, glm::vec3 _
 	wallJump(false),
 	climb(false),
 	climbTimer(0.0f),
-	isClimbing(false)
+	isClimbing(false),
+	inputLocked(false),
+	minYVelLockout(300.0f)
 {
 	objectType = ObjectType::CELESTE;
 }
@@ -88,6 +92,7 @@ void Celeste::Update(GLfloat _dt)
 	}
 	//std::cout << climbTimer << std::endl;
 	physics.Update(*this, _dt);
+	
 	std::cout << physics.GetVelocity().x << std::endl;
 }
 
@@ -316,6 +321,33 @@ bool Celeste::CanWallJump() const
 bool Celeste::CanClimb() const
 {
 	return climb && climbTimer < MAX_CLIMB_DURATION;
+}
+
+//used for wall jumps
+bool Celeste::InputLockout()
+{
+	if (inputLocked)
+	{
+		if (glm::abs(physics.GetVelocity().y) > minYVelLockout)
+		{
+			return true;
+		}
+		else
+		{
+			inputLocked = false;
+			return false;
+		}
+	}
+
+	return false;
+}
+
+//used to prevent any input when walljumping. inputlocked will become false when celeste's y velocity is less than the min.
+//so far, only stateinair checks for the lockout b/c of walljumping
+void Celeste::StartInputLock(GLfloat _minYVel)
+{
+	minYVelLockout = _minYVel;
+	inputLocked = true;
 }
 
 void Celeste::Respawn()

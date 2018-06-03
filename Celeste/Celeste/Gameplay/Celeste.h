@@ -28,6 +28,9 @@ public:
 	bool CanWallJump() const;
 	bool CanClimb() const;
 
+	bool InputLockout();
+	void StartInputLock(GLfloat _minYVel);
+
 	void Respawn();
 	
 	const static GLfloat MAX_SPEED;
@@ -54,6 +57,8 @@ private:
 	int dashCount;
 	bool wallJump;
 	bool climb;
+	bool inputLocked;
+	GLfloat minYVelLockout;
 	LocationState locState;
 	CelesteState* currentState;
 	PhysicsComponent physics;

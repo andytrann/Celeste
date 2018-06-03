@@ -10,81 +10,85 @@
 
 CelesteState* StateInAir::HandleInput(Celeste& _celeste)
 {
-	//calculate new direction
-	glm::ivec2 newDirection(0, 0);
-	if (Keyboard::Key(GLFW_KEY_A))
+	if (!_celeste.InputLockout())
 	{
-		newDirection.x--;
-	}
-	if (Keyboard::Key(GLFW_KEY_D))
-	{
-		newDirection.x++;
-	}
-	if (Keyboard::Key(GLFW_KEY_W))
-	{
-		newDirection.y--;
-	}
-	if (Keyboard::Key(GLFW_KEY_S))
-	{
-		newDirection.y++;
-	}
-
-	//update direction
-	_celeste.direction.x = newDirection.x;
-	_celeste.direction.y = newDirection.y;
-
-	//change sprite according to new direction
-	if (_celeste.direction.x == 1 && _celeste.facingDirection == -1)
-	{
-		_celeste.sprite = ResourceManager::GetTexture("JumpRight");
-		_celeste.facingDirection = 1;
-	}
-	else if (_celeste.direction.x == -1 && _celeste.facingDirection == 1)
-	{
-		_celeste.sprite = ResourceManager::GetTexture("JumpLeft");
-		_celeste.facingDirection = -1;
-	}
-
-	PhysicsComponent& cPhys = _celeste.GetPhysicsComponent();
-	//wall jump
-	if (Keyboard::KeyDown(GLFW_KEY_N) && _celeste.CanWallJump() && _celeste.direction.x != 0)
-	{
-		cPhys.SetVelY(-Celeste::JUMP_FORCE);
-		//need to eventually change xvel to maxspeed and add an input lockout to make horizontal speed consistent
-		cPhys.SetVelX(-(GLfloat)_celeste.direction.x * Celeste::JUMP_FORCE * 5.0f / 6.0f);
-	}
-
-	//dash in air
-	if (Keyboard::KeyDown(GLFW_KEY_M) && _celeste.UseDash())
-	{
-		cPhys.ResetVelX();
-		cPhys.ResetVelY();
-		//if not holding any direction, dash in current facing direction
-		if (newDirection == glm::ivec2(0, 0))
+		//calculate new direction
+		glm::ivec2 newDirection(0, 0);
+		if (Keyboard::Key(GLFW_KEY_A))
 		{
-			cPhys.Accelerate(glm::vec2((GLfloat)_celeste.facingDirection * Celeste::DASH_FORCE, 0.0f), 1.0f);
-			return new StateDashing();
+			newDirection.x--;
 		}
-		//dash in 45 degree angle
-		else if (newDirection.x != 0 && newDirection.y != 0)
+		if (Keyboard::Key(GLFW_KEY_D))
 		{
-			cPhys.Accelerate((glm::vec2)newDirection * glm::sin(glm::quarter_pi<GLfloat>()) * Celeste::DASH_FORCE, 1.0f);
-			return new StateDashing();
+			newDirection.x++;
 		}
-		//dash in 90 degree angle
-		else
+		if (Keyboard::Key(GLFW_KEY_W))
 		{
-			cPhys.Accelerate((glm::vec2)newDirection * Celeste::DASH_FORCE, 1.0f);
-			return new StateDashing();
+			newDirection.y--;
 		}
-	}
+		if (Keyboard::Key(GLFW_KEY_S))
+		{
+			newDirection.y++;
+		}
 
-	//climbing
-	if (_celeste.CanClimb() && Keyboard::KeyDown(GLFW_KEY_COMMA))
-	{
-		cPhys.ResetVelX();
-		cPhys.ResetVelY();
-		return new StateClimbing();
+		//update direction
+		_celeste.direction.x = newDirection.x;
+		_celeste.direction.y = newDirection.y;
+
+		//change sprite according to new direction
+		if (_celeste.direction.x == 1 && _celeste.facingDirection == -1)
+		{
+			_celeste.sprite = ResourceManager::GetTexture("JumpRight");
+			_celeste.facingDirection = 1;
+		}
+		else if (_celeste.direction.x == -1 && _celeste.facingDirection == 1)
+		{
+			_celeste.sprite = ResourceManager::GetTexture("JumpLeft");
+			_celeste.facingDirection = -1;
+		}
+
+		PhysicsComponent& cPhys = _celeste.GetPhysicsComponent();
+		//wall jump
+		if (Keyboard::KeyDown(GLFW_KEY_N) && _celeste.CanWallJump() && _celeste.direction.x != 0)
+		{
+			cPhys.SetVelY(-Celeste::JUMP_FORCE);
+			cPhys.SetVelX(-(GLfloat)_celeste.direction.x * _celeste.MAX_SPEED);
+			_celeste.direction.x *= -1;
+			_celeste.StartInputLock(300.0f);
+		}
+
+		//dash in air
+		if (Keyboard::KeyDown(GLFW_KEY_M) && _celeste.UseDash())
+		{
+			cPhys.ResetVelX();
+			cPhys.ResetVelY();
+			//if not holding any direction, dash in current facing direction
+			if (newDirection == glm::ivec2(0, 0))
+			{
+				cPhys.Accelerate(glm::vec2((GLfloat)_celeste.facingDirection * Celeste::DASH_FORCE, 0.0f), 1.0f);
+				return new StateDashing();
+			}
+			//dash in 45 degree angle
+			else if (newDirection.x != 0 && newDirection.y != 0)
+			{
+				cPhys.Accelerate((glm::vec2)newDirection * glm::sin(glm::quarter_pi<GLfloat>()) * Celeste::DASH_FORCE, 1.0f);
+				return new StateDashing();
+			}
+			//dash in 90 degree angle
+			else
+			{
+				cPhys.Accelerate((glm::vec2)newDirection * Celeste::DASH_FORCE, 1.0f);
+				return new StateDashing();
+			}
+		}
+
+		//climbing
+		if (_celeste.CanClimb() && Keyboard::Key(GLFW_KEY_COMMA))
+		{
+			cPhys.ResetVelX();
+			cPhys.ResetVelY();
+			return new StateClimbing();
+		}
 	}
 	
 	return nullptr;
