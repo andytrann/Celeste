@@ -240,5 +240,6 @@
   <ItemGroup>
     <Text Include="Assets\Rooms\room0.txt" />
     <Text Include="Assets\Rooms\room1.txt" />
+    <Text Include="Assets\Rooms\room2.txt" />
   </ItemGroup>
 </Project>

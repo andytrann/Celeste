@@ -107,7 +107,7 @@ void Game::Init()
 
 	//Load Room Objects
 	rm = new RoomManager();
-	rm->Init(2);
+	rm->Init(3);
 }
 
 void Game::ProcessInput()
