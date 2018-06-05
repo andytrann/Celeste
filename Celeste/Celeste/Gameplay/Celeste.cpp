@@ -76,24 +76,7 @@ void Celeste::HandleInput()
 void Celeste::Update(GLfloat _dt)
 {
 	currentState->Update(*this, _dt);
-	switch (locState)
-	{
-	case LocationState::ON_GROUND:
-		//std::cout << "ON_GROUND" << std::endl;
-		break;
-	case LocationState::IN_AIR:
-		//std::cout << "IN_AIR" << std::endl;
-		break;
-	case LocationState::CLIMBING:
-		//std::cout << "CLIMBING" << std::endl;
-	default:
-		//std::cout << "NONE" << std::endl;
-		break;
-	}
-	//std::cout << climbTimer << std::endl;
 	physics.Update(*this, _dt);
-	
-	std::cout << physics.GetVelocity().x << std::endl;
 }
 
 void Celeste::DoCollision(std::vector<GameObject*> _other)

@@ -198,6 +198,7 @@
     <ClInclude Include="Gameplay\Game.h" />
     <ClInclude Include="Gameplay\Room.h" />
     <ClInclude Include="Gameplay\RoomManager.h" />
+    <ClInclude Include="Gameplay\RoomObjects\AcceleratorPlatform.h" />
     <ClInclude Include="Gameplay\RoomObjects\Exit.h" />
     <ClInclude Include="Gameplay\RoomObjects\Gem.h" />
     <ClInclude Include="Gameplay\RoomObjects\PassablePlatform.h" />
