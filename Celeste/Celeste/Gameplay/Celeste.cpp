@@ -76,6 +76,15 @@ void Celeste::HandleInput()
 void Celeste::Update(GLfloat _dt)
 {
 	currentState->Update(*this, _dt);
+	//check if not dashing and is in air
+	if (!isDashing && GetLocationState() == LocationState::IN_AIR)
+	{
+		//apply wall slide
+		if (direction.x != 0 && CanWallJump() && physics.GetVelocity().y > MAX_WALL_SLIDE_SPEED)
+		{
+				physics.Accelerate(glm::vec2(0.0f, -4000.0f), _dt);
+		}
+	}
 	physics.Update(*this, _dt);
 }
 

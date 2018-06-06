@@ -13,6 +13,8 @@ public:
 	void Update(GLfloat _dt);
 	void Render(SpriteRenderer & _renderer);
 
+	void Start();
+
 	const static GLfloat MAX_SPEED;
 	const static GLfloat ACCELERATION;
 	const static GLfloat MAX_REVERSE_SPEED;
@@ -21,6 +23,8 @@ public:
 private:
 	glm::vec2 endPos;
 	glm::vec2 dir;
+	glm::vec2 vel;
+	GLboolean start;
 
 };
 
