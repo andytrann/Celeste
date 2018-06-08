@@ -42,7 +42,7 @@ ObjectType GameObject::GetType() const
 	return objectType;
 }
 
-void GameObject::CreatePhysicsComponent(GLfloat _TLOffset, GLfloat _size, GLfloat _gravity, GLfloat _maxSpeed, GLfloat _gFric, GLfloat _aFric)
+void GameObject::CreatePhysicsComponent(glm::vec2 _TLOffset, glm::vec2 _size, GLfloat _gravity, GLfloat _maxSpeed, GLfloat _gFric, GLfloat _aFric)
 {
 	if (physics == nullptr)
 	{
@@ -50,7 +50,7 @@ void GameObject::CreatePhysicsComponent(GLfloat _TLOffset, GLfloat _size, GLfloa
 	}
 }
 
-PhysicsComponent & GameObject::GetPhysics() const
+PhysicsComponent & GameObject::GetPhysicsComponent()
 {
 	return *physics;
 }

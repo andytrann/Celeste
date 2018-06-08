@@ -46,8 +46,8 @@ public:
 	virtual void DoCollision(GameObject& _other) {}
 	virtual void Render(SpriteRenderer& _renderer);
 	ObjectType GetType() const;
-	void CreatePhysicsComponent(GLfloat _TLOffset, GLfloat _size, GLfloat _gravity, GLfloat _maxSpeed, GLfloat _gFric, GLfloat _aFric);
-	PhysicsComponent& GetPhysics() const;
+	void CreatePhysicsComponent(glm::vec2 _TLOffset, glm::vec2 _size, GLfloat _gravity, GLfloat _maxSpeed, GLfloat _gFric, GLfloat _aFric);
+	PhysicsComponent& GetPhysicsComponent();
 
 	glm::vec2 pos, size;
 	glm::vec3 color;

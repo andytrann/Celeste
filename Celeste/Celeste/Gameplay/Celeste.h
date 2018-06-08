@@ -22,8 +22,6 @@ public:
 	bool UseDash();
 	void ResetDash();
 
-	PhysicsComponent& GetPhysicsComponent();
-
 	bool CanWallJump() const;
 	bool CanClimb() const;
 

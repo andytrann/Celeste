@@ -3,6 +3,7 @@
 #include "../Engine/Engine.h"
 #include "CelesteStates/StateStanding.h"
 #include "CelesteStates/StateInAir.h"
+#include "PhysicsComponent.h"
 
 #include <iostream>
 
@@ -34,7 +35,7 @@ Celeste::Celeste() :
 	minYVelLockout(300.0f)
 {
 	objectType = ObjectType::CELESTE;
-	CreatePhysicsComponent(0.0f, 0.0f, 1800.0f, MAX_FALL_SPEED, FRICTION, FRICTION * 2.0f);
+	CreatePhysicsComponent(glm::vec2(0.0f, 0.0f), size, 1800.0f, MAX_FALL_SPEED, FRICTION, FRICTION * 2.0f);
 }
 
 Celeste::Celeste(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, glm::vec3 _color, glm::vec2 _vel) :
@@ -54,6 +55,7 @@ Celeste::Celeste(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, glm::vec3 _
 	minYVelLockout(300.0f)
 {
 	objectType = ObjectType::CELESTE;
+	CreatePhysicsComponent(glm::vec2(0.0f, 0.0f), size, 1800.0f, MAX_FALL_SPEED, FRICTION, FRICTION * 2.0f);
 }
 
 Celeste::~Celeste()
@@ -81,12 +83,19 @@ void Celeste::Update(GLfloat _dt)
 	if (!isDashing && GetLocationState() == LocationState::IN_AIR)
 	{
 		//apply wall slide
-		if (direction.x != 0 && CanWallJump() && physics.GetVelocity().y > MAX_WALL_SLIDE_SPEED)
+		if (direction.x != 0 && CanWallJump() && physics->GetVelocity().y > MAX_WALL_SLIDE_SPEED)
 		{
-				physics.Accelerate(glm::vec2(0.0f, -4000.0f), _dt);
+				physics->Accelerate(glm::vec2(0.0f, -4000.0f), _dt);
 		}
+		//update with gravity
+		physics->Update(true, _dt);
 	}
-	physics.Update(*this, _dt);
+	else
+	{
+		//update without gravity
+		physics->Update(false, _dt);
+	}
+	
 }
 
 void Celeste::DoCollision(std::vector<GameObject*> _other)
@@ -121,15 +130,15 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 				if (std::get<0>(col) == Direction::UP && pos.y + size.y <= _other[i]->pos.y + (_other[i]->size.y / 2))
 				{
 					//if dashing and collides with ground from top
-					if (isDashing && physics.GetVelocity().y > 0)
+					if (isDashing && physics->GetVelocity().y > 0)
 					{
 						GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
 						pos.y -= penetration;
-						physics.ResetVelY();
+						physics->ResetVelY();
 						locState = LocationState::ON_GROUND;
 					}
 					//if collides with ground normally 
-					if (locState == LocationState::IN_AIR && physics.GetVelocity().y > 0)
+					if (locState == LocationState::IN_AIR && physics->GetVelocity().y > 0)
 					{
 						//move celeste back up difference of penetration
 						GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
@@ -141,7 +150,7 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 						currentState->Enter(*this);
 					}
 					//if climbing and on ground
-					if (locState == LocationState::CLIMBING && physics.GetVelocity().y >= 0)
+					if (locState == LocationState::CLIMBING && physics->GetVelocity().y >= 0)
 					{
 						GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
 						pos.y -= penetration;
@@ -159,15 +168,15 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 					case Direction::UP:
 					{
 						//if dashing and collides with ground from top
-						if (isDashing && physics.GetVelocity().y > 0)
+						if (isDashing && physics->GetVelocity().y > 0)
 						{
 							GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
 							pos.y -= penetration;
-							physics.ResetVelY();
+							physics->ResetVelY();
 							locState = LocationState::ON_GROUND;
 						}
 						//if collides with ground normally 
-						if (locState == LocationState::IN_AIR && physics.GetVelocity().y > 0)
+						if (locState == LocationState::IN_AIR && physics->GetVelocity().y > 0)
 						{
 							//move celeste back up difference of penetration
 							GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
@@ -179,7 +188,7 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 							currentState->Enter(*this);
 						}
 						//if climbing and on ground
-						if (locState == LocationState::CLIMBING && physics.GetVelocity().y >= 0)
+						if (locState == LocationState::CLIMBING && physics->GetVelocity().y >= 0)
 						{
 							GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
 							pos.y -= penetration;
@@ -195,7 +204,7 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 						{
 							//move celeste back down difference of penetration
 							GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
-							physics.ResetVelY();
+							physics->ResetVelY();
 							pos.y += penetration;
 						}
 						break;
@@ -205,7 +214,7 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 					{
 						//move celeste back left difference of penetration
 						GLfloat penetration = size.x / 2.0f - abs(std::get<1>(col).x);
-						physics.ResetVelX();
+						physics->ResetVelX();
 						pos.x -= penetration;
 						touchingSomethingLR = true;
 						break;
@@ -215,7 +224,7 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 					{
 						//move celeste back right difference of penetration
 						GLfloat penetration = size.x / 2.0f - abs(std::get<1>(col).x);
-						physics.ResetVelX();
+						physics->ResetVelX();
 						pos.x += penetration;
 						touchingSomethingLR = true;
 						break;
@@ -276,6 +285,7 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 void Celeste::Render(SpriteRenderer & _renderer)
 {
 	_renderer.DrawSprite(sprite, pos, size, rot, color);
+	//physics->Render(_renderer);
 }
 
 LocationState& Celeste::GetLocationState()
@@ -301,11 +311,6 @@ void Celeste::ResetDash()
 	dashCount = 1;
 }
 
-PhysicsComponent& Celeste::GetPhysicsComponent()
-{
-	return physics;
-}
-
 bool Celeste::CanWallJump() const
 {
 	return wallJump;
@@ -321,7 +326,7 @@ bool Celeste::InputLockout()
 {
 	if (inputLocked)
 	{
-		if (glm::abs(physics.GetVelocity().y) > minYVelLockout)
+		if (glm::abs(physics->GetVelocity().y) > minYVelLockout)
 		{
 			return true;
 		}
@@ -346,8 +351,8 @@ void Celeste::StartInputLock(GLfloat _minYVel)
 void Celeste::Respawn()
 {
 	pos = spawnLoc;
-	physics.ResetVelY();
-	physics.ResetVelX();
+	physics->ResetVelY();
+	physics->ResetVelX();
 	direction = glm::ivec2(1, 0);
 	facingDirection = 1;
 	dashTimer = 0.0f;

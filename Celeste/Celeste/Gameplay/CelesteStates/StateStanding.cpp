@@ -3,6 +3,7 @@
 #include "../Celeste.h"
 #include "../../Engine/IO/Keyboard.h"
 #include "../../Engine/ResourceManager.h"
+#include "../PhysicsComponent.h"
 #include "StateCrouching.h"
 #include "StateInAir.h"
 #include "StateDashing.h"

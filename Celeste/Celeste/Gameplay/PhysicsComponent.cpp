@@ -1,10 +1,11 @@
 #include "PhysicsComponent.h"
 
 #include "Celeste.h"
+#include "../Engine/ResourceManager.h"
 
-PhysicsComponent::PhysicsComponent(GameObject & _object, GLfloat _TLOffset, GLfloat _size, GLfloat _gravity, GLfloat _maxSpeed, GLfloat _gFric, GLfloat _aFric) : 
+PhysicsComponent::PhysicsComponent(GameObject & _object, glm::vec2 _TLOffset, glm::vec2 _size, GLfloat _gravity, GLfloat _maxSpeed, GLfloat _gFric, GLfloat _aFric) : 
 	gameObject(_object),
-	pos(_object.pos + _TLOffset),
+	TLOffset(_TLOffset),
 	vel(glm::vec2(0.0f, 0.0f)),
 	size(_size),
 	gravity(_gravity),
@@ -12,19 +13,21 @@ PhysicsComponent::PhysicsComponent(GameObject & _object, GLfloat _TLOffset, GLfl
 	groundFriction(_gFric),
 	airFriction(_aFric)
 {
+	sprite = ResourceManager::GetTexture("Exit");
 }
 
-void PhysicsComponent::Update(Celeste & _celeste, GLfloat _dt)
+void PhysicsComponent::Update(GLboolean _affByGrav, GLfloat _dt)
 {
-	//check if not dashing and is in air
-	if (!_celeste.isDashing && _celeste.GetLocationState() == LocationState::IN_AIR)
+	if (vel.y < maxSpeed && _affByGrav)
 	{
-		if (vel.y < Celeste::MAX_FALL_SPEED)
-		{
-			Accelerate(glm::vec2(0.0f, gravity), _dt);
-		}
+		Accelerate(glm::vec2(0.0f, gravity), _dt);
 	}
-	_celeste.pos += (vel * _dt);
+	gameObject.pos += (vel * _dt);
+}
+
+void PhysicsComponent::Render(SpriteRenderer & _renderer)
+{
+	_renderer.DrawSprite(sprite, gameObject.pos + TLOffset, size, gameObject.rot);
 }
 
 void PhysicsComponent::Accelerate(glm::vec2 _amt, GLfloat _dt)
