@@ -2,11 +2,15 @@
 
 #include "Celeste.h"
 
-PhysicsComponent::PhysicsComponent() :
+PhysicsComponent::PhysicsComponent(GameObject & _object, GLfloat _TLOffset, GLfloat _size, GLfloat _gravity, GLfloat _maxSpeed, GLfloat _gFric, GLfloat _aFric) : 
+	gameObject(_object),
+	pos(_object.pos + _TLOffset),
 	vel(glm::vec2(0.0f, 0.0f)),
-	groundFriction(.45f),
-	airFriction(groundFriction * 2.0f),
-	gravity(1800.0f)
+	size(_size),
+	gravity(_gravity),
+	maxSpeed(_maxSpeed),
+	groundFriction(_gFric),
+	airFriction(_aFric)
 {
 }
 

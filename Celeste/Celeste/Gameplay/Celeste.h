@@ -2,7 +2,6 @@
 #define CELESTE_H
 
 #include "GameObject.h"
-#include "PhysicsComponent.h"
 #include "CelesteStates/CelesteState.h"
 #include <vector>
 
@@ -61,6 +60,6 @@ private:
 	GLfloat minYVelLockout;
 	LocationState locState;
 	CelesteState* currentState;
-	PhysicsComponent physics;
+	
 };
 #endif

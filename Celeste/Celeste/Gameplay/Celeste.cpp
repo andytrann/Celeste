@@ -34,6 +34,7 @@ Celeste::Celeste() :
 	minYVelLockout(300.0f)
 {
 	objectType = ObjectType::CELESTE;
+	CreatePhysicsComponent(0.0f, 0.0f, 1800.0f, MAX_FALL_SPEED, FRICTION, FRICTION * 2.0f);
 }
 
 Celeste::Celeste(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, glm::vec3 _color, glm::vec2 _vel) :

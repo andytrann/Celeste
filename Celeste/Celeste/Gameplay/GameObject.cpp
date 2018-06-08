@@ -1,5 +1,7 @@
 #include "GameObject.h"
 
+#include "PhysicsComponent.h"
+
 GameObject::GameObject() : 
 	pos(0, 0),
 	size(1, 1),
@@ -9,6 +11,7 @@ GameObject::GameObject() :
 	destroyed(false),
 	objectType(ObjectType::NONE)
 {
+	physics = nullptr;
 }
 
 GameObject::GameObject(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, glm::vec3 _color, glm::vec2 _vel) : 
@@ -20,6 +23,13 @@ GameObject::GameObject(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, glm::
 	destroyed(false),
 	objectType(ObjectType::NONE)
 {
+	physics = nullptr;
+}
+
+GameObject::~GameObject()
+{
+	delete physics;
+	physics = nullptr;
 }
 
 void GameObject::Render(SpriteRenderer & _renderer)
@@ -30,6 +40,19 @@ void GameObject::Render(SpriteRenderer & _renderer)
 ObjectType GameObject::GetType() const
 {
 	return objectType;
+}
+
+void GameObject::CreatePhysicsComponent(GLfloat _TLOffset, GLfloat _size, GLfloat _gravity, GLfloat _maxSpeed, GLfloat _gFric, GLfloat _aFric)
+{
+	if (physics == nullptr)
+	{
+		physics = new PhysicsComponent(*this, _TLOffset, _size, _gravity, _maxSpeed, _gFric, _aFric);
+	}
+}
+
+PhysicsComponent & GameObject::GetPhysics() const
+{
+	return *physics;
 }
 
 //helper function for GetCollision
@@ -48,6 +71,7 @@ GLboolean GameObject::CheckCollision(GameObject& _other)
 
 Collision GameObject::GetCollision(GameObject& _other) // AABB collision
 {
+	//need to fix how direction is calculated. will need to keep track of previous position to get correct direction.
 	if (CheckCollision(_other))
 	{
 		// Get center point of celeste first 
@@ -70,24 +94,25 @@ Collision GameObject::GetCollision(GameObject& _other) // AABB collision
 		//grab direction of collision relative to _other
 		//if (difference.x <= size.x / 2.0f && difference.y <= size.y / 2.0f)
 		//{
-			glm::vec2 compass[] = {
-				glm::vec2(0.0f, .5f),	// up
-				glm::vec2(-1.0f, 0.0f),	// left
-				glm::vec2(0.0f, -.5f),	// down
-				glm::vec2(1.f, 0.0f)	// right
-			};
-			GLfloat max = 0.0f;
-			GLuint best_match = -1;
-			for (GLuint i = 0; i < 4; i++)
+		glm::vec2 sizeNormalized(glm::normalize(size));
+		glm::vec2 compass[] = {
+			glm::vec2(0.0f, sizeNormalized.y),	// up
+			glm::vec2(-sizeNormalized.x, 0.0f),	// left
+			glm::vec2(0.0f, -sizeNormalized.y),	// down
+			glm::vec2(sizeNormalized.x, 0.0f)	// right
+		};
+		GLfloat max = 0.0f;
+		GLuint best_match = -1;
+		for (GLuint i = 0; i < 4; i++)
+		{
+			GLfloat dot_product = glm::dot(glm::normalize(difference), compass[i]);
+			if (dot_product > max)
 			{
-				GLfloat dot_product = glm::dot(glm::normalize(difference), compass[i]);
-				if (dot_product > max)
-				{
-					max = dot_product;
-					best_match = i;
-				}
+				max = dot_product;
+				best_match = i;
 			}
-			return std::make_tuple((Direction)best_match, difference);
+		}
+		return std::make_tuple((Direction)best_match, difference);
 		//}
 	}
 	else
