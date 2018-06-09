@@ -11,6 +11,7 @@ public:
 	~Platform();
 
 	void Update(GLfloat _dt);
+	void ResolveCollision(GameObject& _other);
 	void Render(SpriteRenderer & _renderer);
 
 private:
