@@ -85,10 +85,11 @@ GLboolean PhysicsComponent::CheckCollision(PhysicsComponent& _other)
 {
 	glm::vec2 rbPos = GetPos();
 	glm::vec2 otherRbPos = _other.GetPos();
+	//collisions arent supposed to use =, but will fix later
 	// Collision x - axis ?
-	bool collisionX = rbPos.x + size.x > otherRbPos.x &&
-		otherRbPos.x + _other.GetSize().x > rbPos.x;
-	// Collision y-axis? not supposed to use =, but will fix later
+	bool collisionX = rbPos.x + size.x >= otherRbPos.x &&
+		otherRbPos.x + _other.GetSize().x >= rbPos.x;
+	// Collision y-axis?
 	bool collisionY = rbPos.y + size.y >= otherRbPos.y &&
 		otherRbPos.y + _other.GetSize().y >= rbPos.y;
 
