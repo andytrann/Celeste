@@ -4,6 +4,7 @@
 #include "../RoomManager.h"
 #include "../../Engine/ResourceManager.h"
 #include "../../Engine/Engine.h"
+#include "../PhysicsComponent.h"
 
 Exit::Exit() : 
 	GameObject(),
@@ -11,6 +12,7 @@ Exit::Exit() :
 	translation(glm::vec2(Engine::SCREEN_WIDTH, Engine::SCREEN_HEIGHT))
 {
 	objectType = ObjectType::EXIT;
+	CreatePhysicsComponent(glm::vec2(0.0f, 0.0f), size, 0.0f, 0.0f, 0.0f, 0.0f);
 }
 
 Exit::Exit(glm::vec2 _pos, glm::vec2 _translation, int _roomID, Texture2D _sprite, glm::vec3 _color) : 
@@ -19,6 +21,7 @@ Exit::Exit(glm::vec2 _pos, glm::vec2 _translation, int _roomID, Texture2D _sprit
 	translation(_translation)
 {
 	objectType = ObjectType::EXIT;
+	CreatePhysicsComponent(glm::vec2(0.0f, 0.0f), size, 0.0f, 0.0f, 0.0f, 0.0f);
 }
 
 Exit::~Exit()
@@ -34,9 +37,9 @@ void Exit::Render(SpriteRenderer & _renderer)
 	_renderer.DrawSprite(sprite, pos, size, rot, color);
 }
 
-void Exit::DoCollision(GameObject & _other)
+void Exit::ResolveCollision(GameObject & _other)
 {
-	if (CheckCollision(_other) && _other.GetType() == ObjectType::CELESTE)
+	if (physics->CheckCollision(_other.GetPhysicsComponent()) && _other.GetType() == ObjectType::CELESTE)
 	{
 		RoomManager::SetCurrentRoom(roomID);
 		_other.pos += translation;

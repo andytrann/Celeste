@@ -13,7 +13,7 @@ const GLfloat Celeste::FRICTION = .45f;
 const GLfloat Celeste::JUMP_FORCE = 600.0f;
 const GLfloat Celeste::DASH_FORCE = 500.0f;
 const GLfloat Celeste::DASH_CD = .2f;
-const GLfloat Celeste::MAX_FALL_SPEED = 600.0f;
+const GLfloat Celeste::MAX_FALL_SPEED = 100.0f;
 const GLfloat Celeste::MAX_WALL_SLIDE_SPEED = 200.0f;
 const GLfloat Celeste::MAX_CLIMB_DURATION = 10.0f;
 const GLfloat Celeste::MAX_CLIMB_SPEED_UP = -200.0f;
@@ -55,7 +55,7 @@ Celeste::Celeste(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, glm::vec3 _
 	minYVelLockout(300.0f)
 {
 	objectType = ObjectType::CELESTE;
-	CreatePhysicsComponent(glm::vec2(0.0f, 0.0f), size, 1800.0f, MAX_FALL_SPEED, FRICTION, FRICTION * 2.0f);
+	CreatePhysicsComponent(glm::vec2(0.0f, 0), size, 1800.0f, MAX_FALL_SPEED, FRICTION, FRICTION * 2.0f);
 }
 
 Celeste::~Celeste()
@@ -98,13 +98,13 @@ void Celeste::Update(GLfloat _dt)
 	
 }
 
-void Celeste::DoCollision(std::vector<GameObject*> _other)
+void Celeste::ResolveCollision(std::vector<GameObject*> _other)
 {
 	bool inAir = true;
 	bool touchingSomethingLR = false;
 	for (unsigned int i = 0; i < _other.size(); i++)
 	{
-		Collision col = GetCollision(*_other[i]);
+		Collision col = physics->GetCollision(_other[i]->GetPhysicsComponent());
 		switch (_other[i]->GetType())
 		{
 			case ObjectType::GEM:
@@ -127,12 +127,12 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 
 			case ObjectType::PASSABLE_PLATFORM:
 			{
-				if (std::get<0>(col) == Direction::UP && pos.y + size.y <= _other[i]->pos.y + (_other[i]->size.y / 2))
+				if (std::get<0>(col) == Direction::UP && pos.y + physics->GetSize().y <= _other[i]->pos.y + (_other[i]->GetPhysicsComponent().GetSize().y / 2))
 				{
 					//if dashing and collides with ground from top
 					if (isDashing && physics->GetVelocity().y > 0)
 					{
-						GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
+						GLfloat penetration = physics->GetSize().y / 2.0f - abs(std::get<1>(col).y);
 						pos.y -= penetration;
 						physics->ResetVelY();
 						locState = LocationState::ON_GROUND;
@@ -141,7 +141,7 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 					if (locState == LocationState::IN_AIR && physics->GetVelocity().y > 0)
 					{
 						//move celeste back up difference of penetration
-						GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
+						GLfloat penetration = physics->GetSize().y / 2.0f - abs(std::get<1>(col).y);
 						pos.y -= penetration;
 
 						//change state
@@ -152,7 +152,7 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 					//if climbing and on ground
 					if (locState == LocationState::CLIMBING && physics->GetVelocity().y >= 0)
 					{
-						GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
+						GLfloat penetration = physics->GetSize().y / 2.0f - abs(std::get<1>(col).y);
 						pos.y -= penetration;
 						climbTimer = 0.0f;
 					}
@@ -170,7 +170,7 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 						//if dashing and collides with ground from top
 						if (isDashing && physics->GetVelocity().y > 0)
 						{
-							GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
+							GLfloat penetration = physics->GetSize().y / 2.0f - abs(std::get<1>(col).y);
 							pos.y -= penetration;
 							physics->ResetVelY();
 							locState = LocationState::ON_GROUND;
@@ -179,7 +179,7 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 						if (locState == LocationState::IN_AIR && physics->GetVelocity().y > 0)
 						{
 							//move celeste back up difference of penetration
-							GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
+							GLfloat penetration = physics->GetSize().y / 2.0f - abs(std::get<1>(col).y);
 							pos.y -= penetration;
 
 							//change state
@@ -190,7 +190,7 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 						//if climbing and on ground
 						if (locState == LocationState::CLIMBING && physics->GetVelocity().y >= 0)
 						{
-							GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
+							GLfloat penetration = physics->GetSize().y / 2.0f - abs(std::get<1>(col).y);
 							pos.y -= penetration;
 							climbTimer = 0.0f;
 						}
@@ -203,7 +203,7 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 						if (locState == LocationState::IN_AIR || locState == LocationState::CLIMBING)
 						{
 							//move celeste back down difference of penetration
-							GLfloat penetration = size.y / 2.0f - abs(std::get<1>(col).y);
+							GLfloat penetration = physics->GetSize().y / 2.0f - abs(std::get<1>(col).y);
 							physics->ResetVelY();
 							pos.y += penetration;
 						}
@@ -213,7 +213,7 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 					case Direction::LEFT:
 					{
 						//move celeste back left difference of penetration
-						GLfloat penetration = size.x / 2.0f - abs(std::get<1>(col).x);
+						GLfloat penetration = physics->GetSize().x / 2.0f - abs(std::get<1>(col).x);
 						physics->ResetVelX();
 						pos.x -= penetration;
 						touchingSomethingLR = true;
@@ -223,7 +223,7 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 					case Direction::RIGHT:
 					{
 						//move celeste back right difference of penetration
-						GLfloat penetration = size.x / 2.0f - abs(std::get<1>(col).x);
+						GLfloat penetration = physics->GetSize().x / 2.0f - abs(std::get<1>(col).x);
 						physics->ResetVelX();
 						pos.x += penetration;
 						touchingSomethingLR = true;
@@ -285,7 +285,7 @@ void Celeste::DoCollision(std::vector<GameObject*> _other)
 void Celeste::Render(SpriteRenderer & _renderer)
 {
 	_renderer.DrawSprite(sprite, pos, size, rot, color);
-	//physics->Render(_renderer);
+	physics->Render(_renderer);
 }
 
 LocationState& Celeste::GetLocationState()

@@ -13,7 +13,7 @@ public:
 	void Update(GLfloat _dt);
 	void Render(SpriteRenderer & _renderer);
 
-	void DoCollision(GameObject& _other);
+	void ResolveCollision(GameObject& _other);
 
 private:
 	const static GLfloat COOLDOWN;

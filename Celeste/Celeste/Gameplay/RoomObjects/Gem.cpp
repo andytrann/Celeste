@@ -2,6 +2,7 @@
 
 #include "../Celeste.h"
 #include "../../Engine/ResourceManager.h"
+#include "../PhysicsComponent.h"
 
 const GLfloat Gem::COOLDOWN = 3.0f;
 
@@ -11,6 +12,7 @@ Gem::Gem() :
 	spriteOutline(ResourceManager::GetTexture("GemOutline"))
 {
 	objectType = ObjectType::GEM;
+	CreatePhysicsComponent(glm::vec2(0.0f, 0.0f), size, 0.0f, 0.0f, 0.0f, 0.0f);
 }
 
 Gem::Gem(glm::vec2 _pos, Texture2D _sprite, glm::vec3 _color) :
@@ -19,6 +21,7 @@ Gem::Gem(glm::vec2 _pos, Texture2D _sprite, glm::vec3 _color) :
 	spriteOutline(ResourceManager::GetTexture("GemOutline"))
 {
 	objectType = ObjectType::GEM;
+	CreatePhysicsComponent(glm::vec2(0.0f, 0.0f), size, 0.0f, 0.0f, 0.0f, 0.0f);
 }
 
 Gem::~Gem()
@@ -54,9 +57,9 @@ void Gem::Render(SpriteRenderer & _renderer)
 	}
 }
 
-void Gem::DoCollision(GameObject & _other)
+void Gem::ResolveCollision(GameObject & _other)
 {
-	if (CheckCollision(_other) && _other.GetType() == ObjectType::CELESTE)
+	if (physics->CheckCollision(_other.GetPhysicsComponent()) && _other.GetType() == ObjectType::CELESTE)
 	{
 		destroyed = true;
 	}

@@ -127,8 +127,8 @@ void Game::Update(GLfloat _dt)
 	celeste->Update(_dt);
 	currentRoom->Update(_dt);
 
-	celeste->DoCollision(currentRoom->GetRoomObjects());
-	currentRoom->DoCollisions(*celeste);
+	celeste->ResolveCollision(currentRoom->GetRoomObjects());
+	currentRoom->ResolveCollisions(*celeste);
 }
 
 void Game::Render()

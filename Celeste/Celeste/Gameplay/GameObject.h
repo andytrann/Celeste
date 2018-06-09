@@ -24,17 +24,6 @@ enum class ObjectType
 	NONE
 };
 
-enum class Direction
-{
-	UP,
-	RIGHT,
-	DOWN,
-	LEFT,
-	NONE
-};
-
-typedef std::tuple<Direction, glm::vec2> Collision;
-
 class GameObject
 {
 public:
@@ -43,7 +32,7 @@ public:
 	~GameObject();
 
 	virtual void Update(GLfloat _dt) {}
-	virtual void DoCollision(GameObject& _other) {}
+	virtual void ResolveCollision(GameObject& _other) {}
 	virtual void Render(SpriteRenderer& _renderer);
 	ObjectType GetType() const;
 	void CreatePhysicsComponent(glm::vec2 _TLOffset, glm::vec2 _size, GLfloat _gravity, GLfloat _maxSpeed, GLfloat _gFric, GLfloat _aFric);
@@ -56,8 +45,7 @@ public:
 	Texture2D sprite;
 
 protected:
-	GLboolean CheckCollision(GameObject& _other);
-	Collision GetCollision(GameObject& _other);
+	
 	ObjectType objectType;
 	PhysicsComponent* physics;
 };

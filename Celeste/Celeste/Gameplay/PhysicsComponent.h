@@ -5,9 +5,21 @@
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+#include <tuple>
 
 class GameObject;
 class Celeste;
+
+enum class Direction
+{
+	UP,
+	RIGHT,
+	DOWN,
+	LEFT,
+	NONE
+};
+
+typedef std::tuple<Direction, glm::vec2> Collision;
 
 class PhysicsComponent
 {
@@ -17,6 +29,9 @@ public:
 	void Render(SpriteRenderer& _renderer);
 	void Accelerate(glm::vec2 _amt, GLfloat _dt);
 	
+	glm::vec2 GetPos() const;
+	glm::vec2 GetSize() const;
+
 	glm::vec2 GetVelocity() const;
 	void SetVelX(GLfloat _amt);
 	void SetVelY(GLfloat _amt);
@@ -25,6 +40,9 @@ public:
 
 	void ApplyGroundFriction(glm::vec2 _dir);
 	void ApplyAirFriction();
+
+	GLboolean CheckCollision(PhysicsComponent& _other);
+	Collision GetCollision(PhysicsComponent& _other);
 
 private:
 	Texture2D sprite;

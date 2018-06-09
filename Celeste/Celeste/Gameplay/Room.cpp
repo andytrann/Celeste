@@ -45,11 +45,11 @@ void Room::Render(SpriteRenderer & _renderer)
 	}
 }
 
-void Room::DoCollisions(Celeste & _celeste)
+void Room::ResolveCollisions(Celeste & _celeste)
 {
 	for (auto object : roomObjects)
 	{
-		object->DoCollision(_celeste);
+		object->ResolveCollision(_celeste);
 	}
 }
 

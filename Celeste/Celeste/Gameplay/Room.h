@@ -19,7 +19,7 @@ public:
 
 	void Update(GLfloat _dt);
 	void Render(SpriteRenderer& _renderer);
-	void DoCollisions(Celeste& _celeste);
+	void ResolveCollisions(Celeste& _celeste);
 	void Init(std::string _filePath);
 	void AddObject(std::string _line);
 
