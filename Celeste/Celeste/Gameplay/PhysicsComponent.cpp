@@ -126,10 +126,10 @@ Collision PhysicsComponent::GetCollision(PhysicsComponent& _other) // AABB colli
 		//{
 		glm::vec2 sizeNormalized(glm::normalize(size));
 		glm::vec2 compass[] = {
-			glm::vec2(0.0f, sizeNormalized.y),	// up
-			glm::vec2(-sizeNormalized.x, 0.0f),	// left
-			glm::vec2(0.0f, -sizeNormalized.y),	// down
-			glm::vec2(sizeNormalized.x, 0.0f)	// right
+			glm::vec2(0.0f, sizeNormalized.x),	// up
+			glm::vec2(-sizeNormalized.y, 0.0f),	// left
+			glm::vec2(0.0f, -sizeNormalized.x),	// down
+			glm::vec2(sizeNormalized.y, 0.0f)	// right
 		};
 		GLfloat max = 0.0f;
 		GLuint best_match = -1;
