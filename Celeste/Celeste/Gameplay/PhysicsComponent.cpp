@@ -11,15 +11,13 @@ PhysicsComponent::PhysicsComponent(GameObject & _object, glm::vec2 _TLOffset, gl
 	gravity(_gravity),
 	maxSpeed(_maxSpeed),
 	groundFriction(_gFric),
-	airFriction(_aFric),
-	lastPos(_object.pos + TLOffset)
+	airFriction(_aFric)
 {
 	sprite = ResourceManager::GetTexture("Exit");
 }
 
 void PhysicsComponent::Update(GLboolean _affByGrav, GLfloat _dt)
 {
-	lastPos = GetPos();
 	if (vel.y < maxSpeed && _affByGrav)
 	{
 		Accelerate(glm::vec2(0.0f, gravity), _dt);
@@ -85,7 +83,7 @@ void PhysicsComponent::ApplyAirFriction()
 //helper function for GetCollision
 GLboolean PhysicsComponent::CheckCollision(PhysicsComponent& _other)
 {
-	glm::vec2 rbPos = GetPos();
+	/*glm::vec2 rbPos = GetPos();
 	glm::vec2 otherRbPos = _other.GetPos();
 	//collisions arent supposed to use =, but will fix later
 	// Collision x - axis ?
@@ -96,7 +94,13 @@ GLboolean PhysicsComponent::CheckCollision(PhysicsComponent& _other)
 		otherRbPos.y + _other.GetSize().y >= rbPos.y;
 
 	// Collision only if on both axes
-	return collisionX && collisionY;
+	return collisionX && collisionY;*/
+
+	GLfloat w = .5f * (size.x + _other.size.x);
+	GLfloat h = .5f * (size.y + _other.size.y);
+	GLfloat dx = (GetPos().x + (size.x / 2.0f)) - (_other.GetPos().x + (_other.GetSize().x / 2.0f));
+	GLfloat dy = (GetPos().y + (size.y / 2.0f)) - (_other.GetPos().y + (_other.GetSize().y / 2.0f));
+	return abs(dx) <= w && abs(dy) <= h;
 }
 
 Collision PhysicsComponent::GetCollision(PhysicsComponent& _other) // AABB collision
@@ -123,7 +127,7 @@ Collision PhysicsComponent::GetCollision(PhysicsComponent& _other) // AABB colli
 		glm::vec2 closest = aabb_center + clamped;
 		// Retrieve vector between center of celeste and closest point AABB
 		//added a bit of padding to difference so it's slightly off but helps with determining which side rb collided with
-		difference = closest - center + .001f;
+		difference = closest - center;
 
 		//grab direction of collision relative to _other
 		/*glm::vec2 sizeNormalized(glm::normalize(size));
@@ -148,8 +152,8 @@ Collision PhysicsComponent::GetCollision(PhysicsComponent& _other) // AABB colli
 
 		GLfloat w = .5f * (size.x + _other.size.x);
 		GLfloat h = .5f * (size.y + _other.size.y);
-		GLfloat dx = lastPos.x + (size.x / 2.0f) - aabb_center.x;
-		GLfloat dy = lastPos.y + (size.y / 2.0f) - aabb_center.y;
+		GLfloat dx = GetPos().x + (size.x / 2.0f) - aabb_center.x;
+		GLfloat dy = GetPos().y + (size.y / 2.0f) - aabb_center.y;
 
 
 		GLfloat wy = w * dy;
