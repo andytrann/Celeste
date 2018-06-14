@@ -11,13 +11,15 @@ PhysicsComponent::PhysicsComponent(GameObject & _object, glm::vec2 _TLOffset, gl
 	gravity(_gravity),
 	maxSpeed(_maxSpeed),
 	groundFriction(_gFric),
-	airFriction(_aFric)
+	airFriction(_aFric),
+	lastPos(_object.pos + TLOffset)
 {
 	sprite = ResourceManager::GetTexture("Exit");
 }
 
 void PhysicsComponent::Update(GLboolean _affByGrav, GLfloat _dt)
 {
+	lastPos = GetPos();
 	if (vel.y < maxSpeed && _affByGrav)
 	{
 		Accelerate(glm::vec2(0.0f, gravity), _dt);
@@ -120,10 +122,11 @@ Collision PhysicsComponent::GetCollision(PhysicsComponent& _other) // AABB colli
 		// Add clamped value to AABB_center and we get the value of box closest to celeste
 		glm::vec2 closest = aabb_center + clamped;
 		// Retrieve vector between center of celeste and closest point AABB
-		difference = closest - center;
+		//added a bit of padding to difference so it's slightly off but helps with determining which side rb collided with
+		difference = closest - center + .001f;
 
 		//grab direction of collision relative to _other
-		glm::vec2 sizeNormalized(glm::normalize(size));
+		/*glm::vec2 sizeNormalized(glm::normalize(size));
 		glm::vec2 compass[] = {
 			glm::vec2(0.0f, sizeNormalized.x),	// up
 			glm::vec2(-sizeNormalized.y, 0.0f),	// left
@@ -141,7 +144,38 @@ Collision PhysicsComponent::GetCollision(PhysicsComponent& _other) // AABB colli
 				best_match = i;
 			}
 		}
-		return std::make_tuple((Direction)best_match, difference);
+		return std::make_tuple((Direction)best_match, difference);*/
+
+		GLfloat w = .5f * (size.x + _other.size.x);
+		GLfloat h = .5f * (size.y + _other.size.y);
+		GLfloat dx = lastPos.x + (size.x / 2.0f) - aabb_center.x;
+		GLfloat dy = lastPos.y + (size.y / 2.0f) - aabb_center.y;
+
+
+		GLfloat wy = w * dy;
+		GLfloat hx = h * dx;
+		if (wy > hx)
+		{
+			if (wy > -hx)
+			{
+				return std::make_tuple(Direction::DOWN, difference);
+			}
+			else
+			{
+				return std::make_tuple(Direction::LEFT, difference);
+			}
+		}
+		else
+		{
+			if (wy > -hx)
+			{
+				return std::make_tuple(Direction::RIGHT, difference);
+			}
+			else
+			{
+				return std::make_tuple(Direction::UP, difference);
+			}
+		}
 	}
 	else
 	{

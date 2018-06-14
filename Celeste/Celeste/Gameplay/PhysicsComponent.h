@@ -53,6 +53,7 @@ private:
 	GLfloat airFriction;
 	float gravity;
 	GLfloat maxSpeed;
+	glm::vec2 lastPos;
 };
 
 #endif
