@@ -123,8 +123,6 @@ Collision PhysicsComponent::GetCollision(PhysicsComponent& _other) // AABB colli
 		difference = closest - center;
 
 		//grab direction of collision relative to _other
-		//if (difference.x <= size.x / 2.0f && difference.y <= size.y / 2.0f)
-		//{
 		glm::vec2 sizeNormalized(glm::normalize(size));
 		glm::vec2 compass[] = {
 			glm::vec2(0.0f, sizeNormalized.x),	// up
@@ -144,7 +142,6 @@ Collision PhysicsComponent::GetCollision(PhysicsComponent& _other) // AABB colli
 			}
 		}
 		return std::make_tuple((Direction)best_match, difference);
-		//}
 	}
 	else
 	{
