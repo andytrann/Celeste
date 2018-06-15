@@ -11,13 +11,15 @@ PhysicsComponent::PhysicsComponent(GameObject & _object, glm::vec2 _TLOffset, gl
 	gravity(_gravity),
 	maxSpeed(_maxSpeed),
 	groundFriction(_gFric),
-	airFriction(_aFric)
+	airFriction(_aFric),
+	lastPos(gameObject.pos + TLOffset)
 {
 	sprite = ResourceManager::GetTexture("Exit");
 }
 
 void PhysicsComponent::Update(GLboolean _affByGrav, GLfloat _dt)
 {
+	lastPos = GetPos();
 	if (vel.y < maxSpeed && _affByGrav)
 	{
 		Accelerate(glm::vec2(0.0f, gravity), _dt);
@@ -103,9 +105,9 @@ GLboolean PhysicsComponent::CheckCollision(PhysicsComponent& _other)
 	return abs(dx) <= w && abs(dy) <= h;
 }
 
+//slight bug with colliding with platfrom from top right and bottom left corner from above/below.
 Collision PhysicsComponent::GetCollision(PhysicsComponent& _other) // AABB collision
 {
-	//need to fix how direction is calculated. will need to keep track of previous position to get correct direction.
 	if (CheckCollision(_other))
 	{
 		glm::vec2 rbPos = GetPos();
@@ -126,7 +128,6 @@ Collision PhysicsComponent::GetCollision(PhysicsComponent& _other) // AABB colli
 		// Add clamped value to AABB_center and we get the value of box closest to celeste
 		glm::vec2 closest = aabb_center + clamped;
 		// Retrieve vector between center of celeste and closest point AABB
-		//added a bit of padding to difference so it's slightly off but helps with determining which side rb collided with
 		difference = closest - center;
 
 		//grab direction of collision relative to _other
@@ -154,6 +155,8 @@ Collision PhysicsComponent::GetCollision(PhysicsComponent& _other) // AABB colli
 		GLfloat h = .5f * (size.y + _other.size.y);
 		GLfloat dx = GetPos().x + (size.x / 2.0f) - aabb_center.x;
 		GLfloat dy = GetPos().y + (size.y / 2.0f) - aabb_center.y;
+		//GLfloat dx = lastPos.x + (size.x / 2.0f) - aabb_center.x;
+		//GLfloat dy = lastPos.y + (size.y / 2.0f) - aabb_center.y;
 
 
 		GLfloat wy = w * dy;
