@@ -47,6 +47,11 @@ glm::vec2 PhysicsComponent::GetSize() const
 	return size;
 }
 
+glm::vec2 PhysicsComponent::GetLastPos() const
+{
+	return lastPos;
+}
+
 glm::vec2 PhysicsComponent::GetVelocity() const
 {
 	return vel;
@@ -74,7 +79,14 @@ void PhysicsComponent::ResetVelX()
 
 void PhysicsComponent::ApplyGroundFriction(glm::vec2 _dir)
 {
-	vel *= (_dir * groundFriction);
+	if (_dir.x > 0.0f)
+	{
+		vel.x *= _dir.x * groundFriction;
+	}
+	if (_dir.y > 0.0f)
+	{
+		vel.y *= _dir.y * groundFriction;
+	}
 }
 
 void PhysicsComponent::ApplyAirFriction()

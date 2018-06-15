@@ -31,6 +31,7 @@ public:
 	
 	glm::vec2 GetPos() const;
 	glm::vec2 GetSize() const;
+	glm::vec2 GetLastPos() const;
 
 	glm::vec2 GetVelocity() const;
 	void SetVelX(GLfloat _amt);
