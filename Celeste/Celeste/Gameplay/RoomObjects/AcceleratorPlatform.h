@@ -20,12 +20,15 @@ public:
 	const static GLfloat ACCELERATION;
 	const static GLfloat MAX_REVERSE_SPEED;
 	const static GLfloat REVERSE_ACCELERATION;
+	const static GLfloat STOP_BUFFER;
 
 private:
+	glm::vec2 startPos;
 	glm::vec2 endPos;
 	glm::vec2 dir;
 	glm::vec2 vel;
 	GLboolean start;
+	GLfloat stopTimer;
 	Texture2D chain;
 
 };

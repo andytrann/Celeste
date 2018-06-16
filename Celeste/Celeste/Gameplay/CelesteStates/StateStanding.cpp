@@ -111,10 +111,6 @@ void StateStanding::Update(Celeste& _celeste, GLfloat _dt)
 	{
 		cPhys.Accelerate(glm::vec2((GLfloat)_celeste.direction.x * Celeste::ACCELERATION, 0.0f), _dt);
 	}
-	else
-	{
-		std::cout << _celeste.GetPhysicsComponent().GetVelocity().x << std::endl;
-	}
 }
 
 void StateStanding::Enter(Celeste& _celeste)

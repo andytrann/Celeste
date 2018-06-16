@@ -33,7 +33,7 @@ public:
 	glm::vec2 GetSize() const;
 	glm::vec2 GetLastPos() const;
 
-	glm::vec2 GetVelocity() const;
+	glm::vec2& GetVelocity();
 	void SetVelX(GLfloat _amt);
 	void SetVelY(GLfloat _amt);
 	void ResetVelY();

@@ -52,7 +52,7 @@ glm::vec2 PhysicsComponent::GetLastPos() const
 	return lastPos;
 }
 
-glm::vec2 PhysicsComponent::GetVelocity() const
+glm::vec2& PhysicsComponent::GetVelocity()
 {
 	return vel;
 }
