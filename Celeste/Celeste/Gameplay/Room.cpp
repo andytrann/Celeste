@@ -5,6 +5,7 @@
 #include "Celeste.h"
 #include "RoomObjects/Platform.h"
 #include "RoomObjects/PassablePlatform.h"
+#include "RoomObjects/AcceleratorPlatform.h"
 #include "RoomObjects/Spikes.h"
 #include "RoomObjects/Gem.h"
 #include "RoomObjects/Exit.h"
@@ -86,6 +87,12 @@ void Room::AddObject(std::string _line)
 	{
 		roomObjects.push_back(new PassablePlatform(glm::vec2(std::stof(tokens[1]), std::stof(tokens[2])),
 			glm::vec2(std::stof(tokens[3]), std::stof(tokens[4])), ResourceManager::GetTexture(tokens[0])));
+	}
+	else if (tokens[0] == "Accelerator")
+	{
+		roomObjects.push_back(new AcceleratorPlatform(glm::vec2(std::stof(tokens[1]), std::stof(tokens[2])),
+			glm::vec2(std::stof(tokens[3]), std::stof(tokens[4])), glm::vec2(std::stof(tokens[5]), std::stof(tokens[6])), 
+			ResourceManager::GetTexture(tokens[0]), ResourceManager::GetTexture("Chain")));
 	}
 	else if (tokens[0] == "Spikes")
 	{

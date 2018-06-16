@@ -7,10 +7,11 @@ class AcceleratorPlatform : public GameObject
 {
 public:
 	AcceleratorPlatform();
-	AcceleratorPlatform(glm::vec2 _pos, glm::vec2 _size, glm::vec2 _endPos, Direction _dir, Texture2D _sprite, glm::vec3 _color = glm::vec3(1.0f));
+	AcceleratorPlatform(glm::vec2 _pos, glm::vec2 _size, glm::vec2 _endPos, Texture2D _sprite, Texture2D _chain, glm::vec3 _color = glm::vec3(1.0f));
 	~AcceleratorPlatform();
 
 	void Update(GLfloat _dt);
+	void ResolveCollision(GameObject& _other);
 	void Render(SpriteRenderer & _renderer);
 
 	void Start();
@@ -25,6 +26,7 @@ private:
 	glm::vec2 dir;
 	glm::vec2 vel;
 	GLboolean start;
+	Texture2D chain;
 
 };
 

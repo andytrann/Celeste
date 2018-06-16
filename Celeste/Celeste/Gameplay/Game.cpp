@@ -79,6 +79,8 @@ void Game::Init()
 	ResourceManager::LoadTexture("Assets/Textures/VerticalGround.png", GL_TRUE, "VGround");
 	ResourceManager::LoadTexture("Assets/Textures/HorizontalGround.png", GL_TRUE, "HGround");
 	ResourceManager::LoadTexture("Assets/Textures/PassablePlatform.png", GL_TRUE, "PassablePlatform");
+	ResourceManager::LoadTexture("Assets/Textures/Accelerator.png", GL_TRUE, "Accelerator");
+	ResourceManager::LoadTexture("Assets/Textures/Chain.png", GL_TRUE, "Chain");
 	ResourceManager::LoadTexture("Assets/Textures/Spikes.png", GL_TRUE, "Spikes");
 	ResourceManager::LoadTexture("Assets/Textures/Gem.png", GL_TRUE, "Gem");
 	ResourceManager::LoadTexture("Assets/Textures/GemOutline.png", GL_TRUE, "GemOutline");

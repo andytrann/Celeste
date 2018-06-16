@@ -210,6 +210,63 @@ void Celeste::ResolveCollision(std::vector<GameObject*> _other)
 				}
 				break;
 			}
+			case ObjectType::ACCELERATOR_PLATFORM:
+			{
+				switch (std::get<0>(col))
+				{
+					case Direction::UP:
+					{
+						//if dashing and collides with ground from top
+						if (isDashing && physics->GetVelocity().y > 0)
+						{
+							locState = LocationState::ON_GROUND;
+						}
+						//if collides with ground normally 
+						if (locState == LocationState::IN_AIR && physics->GetVelocity().y > 0)
+						{
+							//change state
+							delete currentState;
+							currentState = new StateStanding();
+							currentState->Enter(*this);
+						}
+						//if climbing and on ground
+						if (locState == LocationState::CLIMBING && physics->GetVelocity().y >= 0)
+						{
+							climbTimer = 0.0f;
+						}
+						inAir = false;
+						break;
+					}
+
+					case Direction::DOWN:
+					{
+						break;
+					}
+
+					case Direction::LEFT:
+					{
+						touchingSomethingLR = true;
+						break;
+					}
+
+					case Direction::RIGHT:
+					{
+						touchingSomethingLR = true;
+						break;
+					}
+
+					case Direction::NONE:
+					{
+						break;
+					}
+
+					default:
+					{
+						break;
+					}
+				}
+				break;
+			}
 			default:
 			{
 				break;

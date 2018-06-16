@@ -160,6 +160,7 @@
     <ClCompile Include="Gameplay\Game.cpp" />
     <ClCompile Include="Gameplay\Room.cpp" />
     <ClCompile Include="Gameplay\RoomManager.cpp" />
+    <ClCompile Include="Gameplay\RoomObjects\AcceleratorPlatform.cpp" />
     <ClCompile Include="Gameplay\RoomObjects\Exit.cpp" />
     <ClCompile Include="Gameplay\RoomObjects\Gem.cpp" />
     <ClCompile Include="Gameplay\RoomObjects\PassablePlatform.cpp" />
