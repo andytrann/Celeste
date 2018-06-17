@@ -251,6 +251,9 @@ void Celeste::ResolveCollision(std::vector<GameObject*> _other)
 
 					case Direction::DOWN:
 					{
+						PhysicsComponent otherPhys = _other[i]->GetPhysicsComponent();
+						glm::vec2 distance = otherPhys.GetPos() - otherPhys.GetLastPos();
+						pos += distance;
 						break;
 					}
 
