@@ -24,6 +24,7 @@ public:
 
 	bool CanWallJump() const;
 	bool CanClimb() const;
+	bool IsClimbingAccelerator() const;
 
 	bool IsInputLocked() const;
 	void InputLockoutUpdate(GLfloat _dt);
@@ -55,6 +56,7 @@ private:
 	int dashCount;
 	bool wallJump;
 	bool climb;
+	bool climbingAccelerator;
 	bool inputLocked;
 	GLfloat lockoutTimer;
 	LocationState locState;

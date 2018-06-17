@@ -41,7 +41,7 @@ CelesteState* StateClimbing::HandleInput(Celeste& _celeste)
 
 	PhysicsComponent& cPhys = _celeste.GetPhysicsComponent();
 	//jump while climbing
-	if (Keyboard::KeyDown(GLFW_KEY_N) && _celeste.CanWallJump())
+	if (!_celeste.IsClimbingAccelerator() && Keyboard::KeyDown(GLFW_KEY_N) && _celeste.CanWallJump())
 	{
 		//vertical jump
 		if (_celeste.direction.x == 0)
