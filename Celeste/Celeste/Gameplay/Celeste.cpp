@@ -265,10 +265,13 @@ void Celeste::ResolveCollision(std::vector<GameObject*> _other)
 							PhysicsComponent otherPhys = _other[i]->GetPhysicsComponent();
 							glm::vec2 distance = otherPhys.GetPos() - otherPhys.GetLastPos();
 							pos += distance;
-							/*if (Keyboard::KeyDown(GLFW_KEY_N) && otherPhys.GetVelocity().y < 0)
+							/*if (!inputLocked)
 							{
-								physics->Accelerate(otherPhys.GetVelocity() - glm::vec2(0.0f, JUMP_FORCE * .8f), 1.0f);
-								StartInputLock(.25f);
+								if (Keyboard::KeyDown(GLFW_KEY_N) && otherPhys.GetVelocity().y < 0)
+								{
+									physics->Accelerate(otherPhys.GetVelocity() - glm::vec2(0.0f, JUMP_FORCE * .8f), 1.0f);
+									StartInputLock(.25f);
+								}
 							}*/
 						}
 						break;
