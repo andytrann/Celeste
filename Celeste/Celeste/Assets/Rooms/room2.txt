@@ -1,5 +1,5 @@
 2
 HGround            0.0f  700.0f    400.0f  150.0f
 HGround          800.0f  700.0f    400.0f  150.0f
-Accelerator      800.0f  600.0f     75.0f   50.0f  800.0f  300.0f
+Accelerator      800.0f  600.0f     75.0f   50.0f  800.0f  450.0f
 Exit            1050.0f  600.0f  -1024.0f    0.0f  0

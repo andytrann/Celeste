@@ -25,7 +25,8 @@ public:
 	bool CanWallJump() const;
 	bool CanClimb() const;
 
-	bool InputLockout();
+	bool IsInputLocked() const;
+	void InputLockoutUpdate(GLfloat _dt);
 	void StartInputLock(GLfloat _minYVel);
 
 	void Respawn();
@@ -55,7 +56,7 @@ private:
 	bool wallJump;
 	bool climb;
 	bool inputLocked;
-	GLfloat minYVelLockout;
+	GLfloat lockoutTimer;
 	LocationState locState;
 	CelesteState* currentState;
 	

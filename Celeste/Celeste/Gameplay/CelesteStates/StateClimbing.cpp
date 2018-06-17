@@ -47,7 +47,7 @@ CelesteState* StateClimbing::HandleInput(Celeste& _celeste)
 		if (_celeste.direction.x == 0)
 		{
 			cPhys.SetVelY(-Celeste::JUMP_FORCE * .8f);
-			_celeste.StartInputLock(50.0f);
+			_celeste.StartInputLock(.25f);
 			_celeste.climbTimer += 3.0f;
 		}
 		//diagonal jump
@@ -56,7 +56,7 @@ CelesteState* StateClimbing::HandleInput(Celeste& _celeste)
 			cPhys.SetVelY(-Celeste::JUMP_FORCE);
 			cPhys.SetVelX(-(GLfloat)_celeste.facingDirection * _celeste.MAX_SPEED);
 			_celeste.direction.x = -_celeste.facingDirection;
-			_celeste.StartInputLock(300.0f);
+			_celeste.StartInputLock(.2f);
 		}
 		return new StateInAir();
 	}

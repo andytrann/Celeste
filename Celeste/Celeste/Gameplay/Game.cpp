@@ -126,8 +126,8 @@ void Game::ProcessInput()
 void Game::Update(GLfloat _dt)
 {
 	Room* currentRoom = rm->GetCurrentRoom();
-	celeste->Update(_dt);
 	currentRoom->Update(_dt);
+	celeste->Update(_dt);
 
 	celeste->ResolveCollision(currentRoom->GetRoomObjects());
 	currentRoom->ResolveCollisions(*celeste);

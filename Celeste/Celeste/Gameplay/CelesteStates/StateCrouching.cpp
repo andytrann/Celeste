@@ -46,7 +46,6 @@ CelesteState * StateCrouching::HandleInput(Celeste & _celeste)
 	//jump
 	if (Keyboard::KeyDown(GLFW_KEY_N))
 	{
-		cPhys.ResetVelY();
 		cPhys.Accelerate(glm::vec2(0.0f, -Celeste::JUMP_FORCE), 1.0f);
 		return new StateInAir();
 	}

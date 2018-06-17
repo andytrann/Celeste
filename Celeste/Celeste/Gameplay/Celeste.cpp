@@ -1,6 +1,7 @@
 #include "Celeste.h"
 
 #include "../Engine/Engine.h"
+#include "../Engine/IO/Keyboard.h"
 #include "CelesteStates/StateStanding.h"
 #include "CelesteStates/StateInAir.h"
 #include "PhysicsComponent.h"
@@ -32,7 +33,7 @@ Celeste::Celeste() :
 	climbTimer(0.0f),
 	isClimbing(false),
 	inputLocked(false),
-	minYVelLockout(300.0f)
+	lockoutTimer(0.0f)
 {
 	objectType = ObjectType::CELESTE;
 	CreatePhysicsComponent(glm::vec2(0.0f, 0.0f), size, 1800.0f, MAX_FALL_SPEED, FRICTION, FRICTION * 2.0f);
@@ -52,7 +53,7 @@ Celeste::Celeste(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, glm::vec3 _
 	climbTimer(0.0f),
 	isClimbing(false),
 	inputLocked(false),
-	minYVelLockout(300.0f)
+	lockoutTimer(0.0f)
 {
 	objectType = ObjectType::CELESTE;
 	CreatePhysicsComponent(glm::vec2(0.0f, 0), size, 1800.0f, MAX_FALL_SPEED, FRICTION, FRICTION * 2.0f);
@@ -79,6 +80,7 @@ void Celeste::HandleInput()
 void Celeste::Update(GLfloat _dt)
 {
 	currentState->Update(*this, _dt);
+	InputLockoutUpdate(_dt);
 	//check if not dashing and is in air
 	if (!isDashing && GetLocationState() == LocationState::IN_AIR)
 	{
@@ -234,6 +236,15 @@ void Celeste::ResolveCollision(std::vector<GameObject*> _other)
 						{
 							climbTimer = 0.0f;
 						}
+
+						if (locState == LocationState::ON_GROUND && !isDashing && _other[i]->GetPhysicsComponent().GetVelocity().y < 0)
+						{
+							if (Keyboard::KeyDown(GLFW_KEY_N))
+							{
+								PhysicsComponent otherPhys = _other[i]->GetPhysicsComponent();
+								physics->Accelerate(otherPhys.GetVelocity() - glm::vec2(0.0f, JUMP_FORCE), 1.0f);
+							}
+						}
 						inAir = false;
 						break;
 					}
@@ -246,12 +257,34 @@ void Celeste::ResolveCollision(std::vector<GameObject*> _other)
 					case Direction::LEFT:
 					{
 						touchingSomethingLR = true;
+						if (locState == LocationState::CLIMBING)
+						{
+							PhysicsComponent otherPhys = _other[i]->GetPhysicsComponent();
+							glm::vec2 distance = otherPhys.GetPos() - otherPhys.GetLastPos();
+							pos += distance;
+							/*if (Keyboard::KeyDown(GLFW_KEY_N) && otherPhys.GetVelocity().y < 0)
+							{
+								physics->Accelerate(otherPhys.GetVelocity() - glm::vec2(0.0f, JUMP_FORCE * .8f), 1.0f);
+								StartInputLock(.25f);
+							}*/
+						}
 						break;
 					}
 
 					case Direction::RIGHT:
 					{
 						touchingSomethingLR = true;
+						if (locState == LocationState::CLIMBING)
+						{
+							PhysicsComponent otherPhys = _other[i]->GetPhysicsComponent();
+							glm::vec2 distance = otherPhys.GetPos() - otherPhys.GetLastPos();
+							pos += distance;
+							/*if (Keyboard::KeyDown(GLFW_KEY_N) && otherPhys.GetVelocity().y < 0)
+							{
+								physics->Accelerate(otherPhys.GetVelocity() - glm::vec2(0.0f, JUMP_FORCE * .8f), 1.0f);
+								StartInputLock(1.0f);
+							}*/
+						}
 						break;
 					}
 
@@ -346,30 +379,30 @@ bool Celeste::CanClimb() const
 	return climb && climbTimer < MAX_CLIMB_DURATION;
 }
 
+bool Celeste::IsInputLocked() const
+{
+	return inputLocked;
+}
+
 //used for wall jumps
-bool Celeste::InputLockout()
+void Celeste::InputLockoutUpdate(GLfloat _dt)
 {
 	if (inputLocked)
 	{
-		if (glm::abs(physics->GetVelocity().y) > minYVelLockout)
-		{
-			return true;
-		}
-		else
+		lockoutTimer -= _dt;
+		if (lockoutTimer <= 0)
 		{
 			inputLocked = false;
-			return false;
+			lockoutTimer = 0.0f;
 		}
 	}
-
-	return false;
 }
 
 //used to prevent any input when walljumping. inputlocked will become false when celeste's y velocity is less than the min.
 //so far, only stateinair checks for the lockout b/c of walljumping
-void Celeste::StartInputLock(GLfloat _minYVel)
+void Celeste::StartInputLock(GLfloat _time)
 {
-	minYVelLockout = _minYVel;
+	lockoutTimer = _time;
 	inputLocked = true;
 }
 

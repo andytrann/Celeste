@@ -11,7 +11,7 @@
 
 CelesteState* StateInAir::HandleInput(Celeste& _celeste)
 {
-	if (!_celeste.InputLockout())
+	if (!_celeste.IsInputLocked())
 	{
 		//calculate new direction
 		glm::ivec2 newDirection(0, 0);
@@ -55,7 +55,7 @@ CelesteState* StateInAir::HandleInput(Celeste& _celeste)
 			cPhys.SetVelY(-Celeste::JUMP_FORCE);
 			cPhys.SetVelX(-(GLfloat)_celeste.direction.x * _celeste.MAX_SPEED);
 			_celeste.direction.x *= -1;
-			_celeste.StartInputLock(300.0f);
+			_celeste.StartInputLock(.2f);
 		}
 
 		//dash in air

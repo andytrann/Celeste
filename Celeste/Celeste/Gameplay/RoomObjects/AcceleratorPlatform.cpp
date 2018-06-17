@@ -1,13 +1,14 @@
 #include "AcceleratorPlatform.h"
 
 #include "../PhysicsComponent.h"
+#include "../../Engine/IO/Keyboard.h"
 #include <iostream>
 
 const GLfloat AcceleratorPlatform::MAX_SPEED = 600.0f;
 const GLfloat AcceleratorPlatform::ACCELERATION = 600.0f;
-const GLfloat AcceleratorPlatform::MAX_REVERSE_SPEED = 200.0f;
-const GLfloat AcceleratorPlatform::REVERSE_ACCELERATION = 500.0f;
-const GLfloat AcceleratorPlatform::STOP_BUFFER = .4f;
+const GLfloat AcceleratorPlatform::MAX_REVERSE_SPEED = 100.0f;
+const GLfloat AcceleratorPlatform::REVERSE_ACCELERATION = 300.0f;
+const GLfloat AcceleratorPlatform::STOP_BUFFER = .2f;
 
 AcceleratorPlatform::AcceleratorPlatform() : 
 	GameObject(),
@@ -69,7 +70,7 @@ void AcceleratorPlatform::Update(GLfloat _dt)
 		if (curDist < maxDist)
 		{
 			stopTimer += _dt;
-			if (glm::length(physics->GetVelocity()) < MAX_REVERSE_SPEED && stopTimer >= STOP_BUFFER)
+			if (glm::length(physics->GetVelocity()) < MAX_REVERSE_SPEED && stopTimer >= STOP_BUFFER * 2.0f)
 			{
 				physics->Accelerate(-dir * REVERSE_ACCELERATION, _dt);
 			}
@@ -124,6 +125,10 @@ void AcceleratorPlatform::ResolveCollision(GameObject & _other)
 			GLfloat penetration = _otherPhys.GetSize().x / 2.0f - abs(std::get<1>(col).x);
 			_otherPhys.ResetVelX();
 			_other.pos.x -= penetration;
+			if (pos == startPos && Keyboard::Key(GLFW_KEY_COMMA))
+			{
+				start = true;
+			}
 			break;
 		}
 
@@ -133,6 +138,10 @@ void AcceleratorPlatform::ResolveCollision(GameObject & _other)
 			GLfloat penetration = _otherPhys.GetSize().x / 2.0f - abs(std::get<1>(col).x);
 			_otherPhys.ResetVelX();
 			_other.pos.x += penetration;
+			if (pos == startPos && Keyboard::Key(GLFW_KEY_COMMA))
+			{
+				start = true;
+			}
 			break;
 		}
 
