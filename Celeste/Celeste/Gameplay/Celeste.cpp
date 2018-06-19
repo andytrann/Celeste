@@ -4,6 +4,7 @@
 #include "../Engine/IO/Keyboard.h"
 #include "CelesteStates/StateStanding.h"
 #include "CelesteStates/StateInAir.h"
+#include "CelesteStates/StateClimbing.h"
 #include "PhysicsComponent.h"
 
 #include <iostream>
@@ -30,7 +31,6 @@ Celeste::Celeste() :
 	dashCount(1),
 	wallJump(false),
 	climb(false),
-	climbingAccelerator(false),
 	climbTimer(0.0f),
 	isClimbing(false),
 	inputLocked(false),
@@ -51,7 +51,6 @@ Celeste::Celeste(glm::vec2 _pos, glm::vec2 _size, Texture2D _sprite, glm::vec3 _
 	dashCount(1),
 	wallJump(false),
 	climb(false),
-	climbingAccelerator(false),
 	climbTimer(0.0f),
 	isClimbing(false),
 	inputLocked(false),
@@ -106,7 +105,6 @@ void Celeste::ResolveCollision(std::vector<GameObject*> _other)
 {
 	bool inAir = true;
 	bool touchingSomethingLR = false;
-	bool _climbingAccelerator = false;
 	for (unsigned int i = 0; i < _other.size(); i++)
 	{
 		Collision col = physics->GetCollision(_other[i]->GetPhysicsComponent());
@@ -240,11 +238,24 @@ void Celeste::ResolveCollision(std::vector<GameObject*> _other)
 							climbTimer = 0.0f;
 						}
 
-						if (locState == LocationState::ON_GROUND && !isDashing && _other[i]->GetPhysicsComponent().GetVelocity().y < 0)
+						//add accelerator force to celeste if jump is pressed
+						PhysicsComponent otherPhys = _other[i]->GetPhysicsComponent();
+						if (locState == LocationState::ON_GROUND && !isDashing && otherPhys.GetVelocity().y < 0)
 						{
 							if (Keyboard::KeyDown(GLFW_KEY_N))
 							{
 								PhysicsComponent otherPhys = _other[i]->GetPhysicsComponent();
+								physics->Accelerate(otherPhys.GetVelocity() - glm::vec2(0.0f, JUMP_FORCE), 1.0f);
+							}
+						}
+						//move celeste accordingly if she is standing on top of horizontal accelerator
+						if (locState == LocationState::ON_GROUND && !isDashing && abs(otherPhys.GetVelocity().x) > 0)
+						{
+							glm::vec2 distance = otherPhys.GetPos() - otherPhys.GetLastPos();
+							pos += distance;
+							//add accelerator force to celeste if jump is pressed
+							if (Keyboard::KeyDown(GLFW_KEY_N))
+							{
 								physics->Accelerate(otherPhys.GetVelocity() - glm::vec2(0.0f, JUMP_FORCE), 1.0f);
 							}
 						}
@@ -268,10 +279,7 @@ void Celeste::ResolveCollision(std::vector<GameObject*> _other)
 							PhysicsComponent otherPhys = _other[i]->GetPhysicsComponent();
 							glm::vec2 distance = otherPhys.GetPos() - otherPhys.GetLastPos();
 							pos += distance;
-							if (otherPhys.GetVelocity().y < 0)
-							{
-								_climbingAccelerator = true;
-							}
+							//add accelerators vertical velocity to celeste if its going up
 							if (!inputLocked)
 							{
 								if (Keyboard::Key(GLFW_KEY_N) && otherPhys.GetVelocity().y < 0)
@@ -304,10 +312,10 @@ void Celeste::ResolveCollision(std::vector<GameObject*> _other)
 							PhysicsComponent otherPhys = _other[i]->GetPhysicsComponent();
 							glm::vec2 distance = otherPhys.GetPos() - otherPhys.GetLastPos();
 							pos += distance;
-							if (otherPhys.GetVelocity().y < 0)
+							if (otherPhys.GetVelocity().x < 0)
 							{
-								_climbingAccelerator = true;
 							}
+							//add accelerators vertical velocity to celeste if its going up
 							if (!inputLocked)
 							{
 								if (Keyboard::Key(GLFW_KEY_N) && otherPhys.GetVelocity().y < 0)
@@ -382,9 +390,6 @@ void Celeste::ResolveCollision(std::vector<GameObject*> _other)
 	{
 		climb = false;
 	}
-
-	//check if player is climbing accelerator platform while it's going up
-	climbingAccelerator = _climbingAccelerator;
 }
 
 void Celeste::Render(SpriteRenderer & _renderer)
@@ -424,11 +429,6 @@ bool Celeste::CanWallJump() const
 bool Celeste::CanClimb() const
 {
 	return climb && climbTimer < MAX_CLIMB_DURATION;
-}
-
-bool Celeste::IsClimbingAccelerator() const
-{
-	return climbingAccelerator;
 }
 
 bool Celeste::IsInputLocked() const

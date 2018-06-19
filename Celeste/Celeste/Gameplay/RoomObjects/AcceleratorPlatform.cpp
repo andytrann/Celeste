@@ -160,9 +160,20 @@ void AcceleratorPlatform::ResolveCollision(GameObject & _other)
 void AcceleratorPlatform::Render(SpriteRenderer & _renderer)
 {
 	GLfloat chainWidth = 8.0f;
-	GLfloat chainLength = abs(endPos.y - startPos.y);
+	GLfloat chainLength = /*abs(endPos.y - startPos.y)*/ glm::length(endPos - startPos);
 	glm::vec2 chainEnd = endPos + (size / 2.0f) - (chainWidth / 2.0f);
-	_renderer.DrawSprite(chain, chainEnd, glm::vec2(chainWidth, chainLength));
+	if (dir.x > 0)
+	{
+		_renderer.DrawSprite(chain, chainEnd - (chainLength) / 2.0f, glm::vec2(chainWidth, chainLength), glm::half_pi<GLfloat>());
+	}
+	else if (dir.x < 0)
+	{
+		_renderer.DrawSprite(chain, chainEnd  + glm::vec2(chainLength, -chainLength) / 2.0f, glm::vec2(chainWidth, chainLength), glm::half_pi<GLfloat>());
+	}
+	else
+	{
+		_renderer.DrawSprite(chain, chainEnd, glm::vec2(chainWidth, chainLength));
+	}
 	_renderer.DrawSprite(sprite, pos, size, rot, color);
 }
 
