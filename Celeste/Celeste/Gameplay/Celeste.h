@@ -58,6 +58,7 @@ private:
 	bool inputLocked;
 	GLfloat lockoutTimer;
 	LocationState locState;
+	LocationState lastLocState;
 	CelesteState* currentState;
 	
 };

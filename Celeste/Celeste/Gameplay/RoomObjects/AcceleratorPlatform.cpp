@@ -53,6 +53,7 @@ void AcceleratorPlatform::Update(GLfloat _dt)
 			{
 				physics->Accelerate(dir * ACCELERATION, _dt);
 			}
+			std::cout << physics->GetVelocity().x << std::endl;
 		}
 		else
 		{

@@ -99,9 +99,12 @@ void StateInAir::Update(Celeste & _celeste, GLfloat _dt)
 {
 	PhysicsComponent& cPhys = _celeste.GetPhysicsComponent();
 	//apply friction
-	if (!(Keyboard::Key(GLFW_KEY_D) || Keyboard::Key(GLFW_KEY_A)) || (Keyboard::Key(GLFW_KEY_D) && Keyboard::Key(GLFW_KEY_A)))
+	if (!_celeste.IsInputLocked())
 	{
-		cPhys.ApplyAirFriction();
+		if (!(Keyboard::Key(GLFW_KEY_D) || Keyboard::Key(GLFW_KEY_A)) || (Keyboard::Key(GLFW_KEY_D) && Keyboard::Key(GLFW_KEY_A)))
+		{
+			cPhys.ApplyAirFriction();
+		}
 	}
 
 	//add horizontal velocity if below max speed

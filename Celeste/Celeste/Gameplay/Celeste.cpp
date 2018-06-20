@@ -5,6 +5,7 @@
 #include "CelesteStates/StateStanding.h"
 #include "CelesteStates/StateInAir.h"
 #include "CelesteStates/StateClimbing.h"
+#include "RoomObjects/AcceleratorPlatform.h"
 #include "PhysicsComponent.h"
 
 #include <iostream>
@@ -68,6 +69,7 @@ Celeste::~Celeste()
 
 void Celeste::HandleInput()
 {
+	lastLocState = locState;
 	CelesteState* state = currentState->HandleInput(*this);
 	if (state != nullptr)
 	{
@@ -244,7 +246,6 @@ void Celeste::ResolveCollision(std::vector<GameObject*> _other)
 						{
 							if (Keyboard::KeyDown(GLFW_KEY_N))
 							{
-								PhysicsComponent otherPhys = _other[i]->GetPhysicsComponent();
 								physics->Accelerate(otherPhys.GetVelocity() - glm::vec2(0.0f, JUMP_FORCE), 1.0f);
 							}
 						}
@@ -257,6 +258,10 @@ void Celeste::ResolveCollision(std::vector<GameObject*> _other)
 							if (Keyboard::KeyDown(GLFW_KEY_N))
 							{
 								physics->Accelerate(otherPhys.GetVelocity() - glm::vec2(0.0f, JUMP_FORCE), 1.0f);
+								if (abs(otherPhys.GetVelocity().x) > 300.0f && direction.x == 0)
+								{
+									StartInputLock(.25f);
+								}
 							}
 						}
 						inAir = false;
@@ -282,7 +287,7 @@ void Celeste::ResolveCollision(std::vector<GameObject*> _other)
 							//add accelerators vertical velocity to celeste if its going up
 							if (!inputLocked)
 							{
-								if (Keyboard::Key(GLFW_KEY_N) && otherPhys.GetVelocity().y < 0)
+								if (Keyboard::Key(GLFW_KEY_N) && (otherPhys.GetVelocity().y < 0 || otherPhys.GetVelocity().x < 0))
 								{
 									if (direction.x == 0)
 									{
@@ -312,13 +317,10 @@ void Celeste::ResolveCollision(std::vector<GameObject*> _other)
 							PhysicsComponent otherPhys = _other[i]->GetPhysicsComponent();
 							glm::vec2 distance = otherPhys.GetPos() - otherPhys.GetLastPos();
 							pos += distance;
-							if (otherPhys.GetVelocity().x < 0)
-							{
-							}
 							//add accelerators vertical velocity to celeste if its going up
 							if (!inputLocked)
 							{
-								if (Keyboard::Key(GLFW_KEY_N) && otherPhys.GetVelocity().y < 0)
+								if (Keyboard::KeyDown(GLFW_KEY_N) && (otherPhys.GetVelocity().y < 0 || otherPhys.GetVelocity().x > 0))
 								{
 									if (direction.x == 0)
 									{
@@ -327,7 +329,7 @@ void Celeste::ResolveCollision(std::vector<GameObject*> _other)
 									}
 									else
 									{
-										physics->Accelerate(otherPhys.GetVelocity() - glm::vec2((GLfloat)facingDirection * MAX_SPEED, JUMP_FORCE * .8f), 1.0f);
+										physics->Accelerate(otherPhys.GetVelocity() - glm::vec2(-(GLfloat)facingDirection * MAX_SPEED, JUMP_FORCE * .8f), 1.0f);
 										direction.x = -facingDirection;
 										StartInputLock(.25f);
 									}
@@ -342,6 +344,40 @@ void Celeste::ResolveCollision(std::vector<GameObject*> _other)
 
 					case Direction::NONE:
 					{
+						PhysicsComponent otherPhys = _other[i]->GetPhysicsComponent();
+						glm::vec2 distance = otherPhys.GetPos() - otherPhys.GetLastPos();
+						if (!inputLocked)
+						{
+							if (lastLocState == LocationState::CLIMBING && Keyboard::Key(GLFW_KEY_COMMA) &&
+								distance.x != 0.0f && glm::length(otherPhys.GetPos() - physics->GetPos()) < 100.0f)
+							{
+								touchingSomethingLR = true;
+								pos += distance;
+								delete currentState;
+								currentState = new StateClimbing();
+								currentState->Enter(*this);
+							}
+							if (locState == LocationState::CLIMBING)
+							{
+								if (Keyboard::Key(GLFW_KEY_N) && (otherPhys.GetVelocity().y < 0 || abs(otherPhys.GetVelocity()).x > AcceleratorPlatform::MAX_REVERSE_SPEED) * 1.2f)
+								{
+									if (direction.x == 0)
+									{
+										physics->Accelerate(otherPhys.GetVelocity() - glm::vec2(0.0f, JUMP_FORCE * .8f), 1.0f);
+										StartInputLock(.25f);
+									}
+									else
+									{
+										physics->Accelerate(otherPhys.GetVelocity() - glm::vec2((GLfloat)facingDirection * MAX_SPEED, JUMP_FORCE * .8f), 1.0f);
+										//direction.x = -facingDirection;
+										StartInputLock(.25f);
+									}
+									delete currentState;
+									currentState = new StateInAir();
+									currentState->Enter(*this);
+								}
+							}
+						}
 						break;
 					}
 

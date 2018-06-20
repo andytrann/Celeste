@@ -16,49 +16,54 @@ CelesteState* StateClimbing::HandleInput(Celeste& _celeste)
 		return new StateInAir();
 	}
 	
-	//calculate new direction
-	glm::ivec2 newDirection(0, 0);
-	if (Keyboard::Key(GLFW_KEY_A))
+	if (!_celeste.IsInputLocked())
 	{
-		newDirection.x--;
-	}
-	if (Keyboard::Key(GLFW_KEY_D))
-	{
-		newDirection.x++;
-	}
-	if (Keyboard::Key(GLFW_KEY_W))
-	{
-		newDirection.y--;
-	}
-	if (Keyboard::Key(GLFW_KEY_S))
-	{
-		newDirection.y++;
-	}
-
-	//update direction
-	_celeste.direction.x = newDirection.x;
-	_celeste.direction.y = newDirection.y;
-
-	PhysicsComponent& cPhys = _celeste.GetPhysicsComponent();
-	//jump while climbing
-	if (Keyboard::KeyDown(GLFW_KEY_N) && _celeste.CanWallJump())
-	{
-		//vertical jump
-		if (_celeste.direction.x == 0)
+		//calculate new direction
+		glm::ivec2 newDirection(0, 0);
+		if (Keyboard::Key(GLFW_KEY_A))
 		{
-			cPhys.SetVelY(-Celeste::JUMP_FORCE * .8f);
-			_celeste.StartInputLock(.25f);
-			_celeste.climbTimer += 3.0f;
+			newDirection.x--;
 		}
-		//diagonal jump
-		else
+		if (Keyboard::Key(GLFW_KEY_D))
 		{
-			cPhys.SetVelY(-Celeste::JUMP_FORCE);
-			cPhys.SetVelX(-(GLfloat)_celeste.facingDirection * _celeste.MAX_SPEED);
-			_celeste.direction.x = -_celeste.facingDirection;
-			_celeste.StartInputLock(.2f);
+			newDirection.x++;
 		}
-		return new StateInAir();
+		if (Keyboard::Key(GLFW_KEY_W))
+		{
+			newDirection.y--;
+		}
+		if (Keyboard::Key(GLFW_KEY_S))
+		{
+			newDirection.y++;
+		}
+
+		//update direction
+		_celeste.direction.x = newDirection.x;
+		_celeste.direction.y = newDirection.y;
+
+		PhysicsComponent& cPhys = _celeste.GetPhysicsComponent();
+		//jump while climbing
+		if (Keyboard::KeyDown(GLFW_KEY_N) && _celeste.CanWallJump())
+		{
+			//vertical jump
+			if (_celeste.direction.x == 0)
+			{
+				//cPhys.SetVelY(-Celeste::JUMP_FORCE * .8f);
+				cPhys.Accelerate(glm::vec2(0.0f, -Celeste::JUMP_FORCE * .8f), 1.0f);
+				_celeste.StartInputLock(.25f);
+				_celeste.climbTimer += 3.0f;
+			}
+			//diagonal jump
+			else
+			{
+				//cPhys.SetVelY(-Celeste::JUMP_FORCE);
+				//cPhys.SetVelX(-(GLfloat)_celeste.facingDirection * _celeste.MAX_SPEED);
+				cPhys.Accelerate(glm::vec2(-(GLfloat)_celeste.facingDirection * _celeste.MAX_SPEED, -Celeste::JUMP_FORCE), 1.0f);
+				_celeste.direction.x = -_celeste.facingDirection;
+				_celeste.StartInputLock(.2f);
+			}
+			return new StateInAir();
+		}
 	}
 	
 	return nullptr;
