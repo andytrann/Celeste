@@ -284,7 +284,7 @@ void Celeste::ResolveCollision(std::vector<GameObject*> _other)
 							PhysicsComponent otherPhys = _other[i]->GetPhysicsComponent();
 							glm::vec2 distance = otherPhys.GetPos() - otherPhys.GetLastPos();
 							pos += distance;
-							//add accelerators vertical velocity to celeste if its going up
+							//add accelerators vertical velocity to celeste if its going up, but not horizontal for now
 							if (!inputLocked)
 							{
 								if (Keyboard::Key(GLFW_KEY_N) && (otherPhys.GetVelocity().y < 0 || otherPhys.GetVelocity().x < 0))
@@ -317,7 +317,7 @@ void Celeste::ResolveCollision(std::vector<GameObject*> _other)
 							PhysicsComponent otherPhys = _other[i]->GetPhysicsComponent();
 							glm::vec2 distance = otherPhys.GetPos() - otherPhys.GetLastPos();
 							pos += distance;
-							//add accelerators vertical velocity to celeste if its going up
+							//add accelerators vertical velocity to celeste if its going up, but not horizontal for now
 							if (!inputLocked)
 							{
 								if (Keyboard::KeyDown(GLFW_KEY_N) && (otherPhys.GetVelocity().y < 0 || otherPhys.GetVelocity().x > 0))
@@ -369,7 +369,7 @@ void Celeste::ResolveCollision(std::vector<GameObject*> _other)
 									else
 									{
 										physics->Accelerate(otherPhys.GetVelocity() - glm::vec2((GLfloat)facingDirection * MAX_SPEED, JUMP_FORCE * .8f), 1.0f);
-										//direction.x = -facingDirection;
+										direction.x = -facingDirection;
 										StartInputLock(.25f);
 									}
 									delete currentState;
