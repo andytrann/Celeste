@@ -1,4 +1,5 @@
 #include "Spikes.h"
+#include "../PhysicsComponent.h"
 
 #include "../Celeste.h"
 
@@ -14,7 +15,7 @@ Spikes::Spikes(glm::vec2 _pos, glm::vec2 _size, GLfloat _rot, Texture2D _sprite,
 {
 	objectType = ObjectType::SPIKES;
 	rot = _rot;
-	CreatePhysicsComponent(glm::vec2(0.0f, 0.0f), size, 0.0f, 0.0f, 0.0f, 0.0f);
+	CreatePhysicsComponent(glm::vec2(1.5f, 3.0f), glm::vec2(size.x - 3.0f, size.y - 3.0f), 0.0f, 0.0f, 0.0f, 0.0f);
 }
 
 Spikes::~Spikes()
@@ -28,4 +29,5 @@ void Spikes::Update(GLfloat _dt)
 void Spikes::Render(SpriteRenderer & _renderer)
 {
 	_renderer.DrawSprite(sprite, pos, size, rot, color);
+	physics->Render(_renderer);
 }
