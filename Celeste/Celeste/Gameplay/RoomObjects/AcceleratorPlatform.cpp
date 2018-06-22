@@ -53,7 +53,6 @@ void AcceleratorPlatform::Update(GLfloat _dt)
 			{
 				physics->Accelerate(dir * ACCELERATION, _dt);
 			}
-			std::cout << physics->GetVelocity().x << std::endl;
 		}
 		else
 		{
@@ -124,7 +123,10 @@ void AcceleratorPlatform::ResolveCollision(GameObject & _other)
 		{
 			//move _other back left difference of penetration
 			GLfloat penetration = _otherPhys.GetSize().x / 2.0f - abs(std::get<1>(col).x);
-			_otherPhys.ResetVelX();
+			if (_otherPhys.GetVelocity().x > 0)
+			{
+				_otherPhys.ResetVelX();
+			}
 			_other.pos.x -= penetration;
 			if (pos == startPos && Keyboard::Key(GLFW_KEY_COMMA))
 			{
@@ -137,7 +139,10 @@ void AcceleratorPlatform::ResolveCollision(GameObject & _other)
 		{
 			//move _other back right difference of penetration
 			GLfloat penetration = _otherPhys.GetSize().x / 2.0f - abs(std::get<1>(col).x);
-			_otherPhys.ResetVelX();
+			if (_otherPhys.GetVelocity().x < 0)
+			{
+				_otherPhys.ResetVelX();
+			}
 			_other.pos.x += penetration;
 			if (pos == startPos && Keyboard::Key(GLFW_KEY_COMMA))
 			{

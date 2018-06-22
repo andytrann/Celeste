@@ -292,11 +292,13 @@ void Celeste::ResolveCollision(std::vector<GameObject*> _other)
 									if (direction.x == 0)
 									{
 										physics->Accelerate(otherPhys.GetVelocity() - glm::vec2(0.0f, JUMP_FORCE * .8f), 1.0f);
+										std::cout << physics->GetVelocity().x << std::endl;
 										StartInputLock(.25f);
 									}
 									else
 									{
-										physics->Accelerate(otherPhys.GetVelocity() - glm::vec2((GLfloat)facingDirection * MAX_SPEED, JUMP_FORCE * .8f), 1.0f);
+										physics->Accelerate(otherPhys.GetVelocity() - glm::vec2(0.8f * MAX_SPEED, JUMP_FORCE), 1.0f);
+										std::cout << physics->GetVelocity().x << std::endl;
 										direction.x = -facingDirection;
 										StartInputLock(.25f);
 									}
@@ -325,11 +327,13 @@ void Celeste::ResolveCollision(std::vector<GameObject*> _other)
 									if (direction.x == 0)
 									{
 										physics->Accelerate(otherPhys.GetVelocity() - glm::vec2(0.0f, JUMP_FORCE * .8f), 1.0f);
+										std::cout << physics->GetVelocity().x << std::endl;
 										StartInputLock(.25f);
 									}
 									else
 									{
-										physics->Accelerate(otherPhys.GetVelocity() - glm::vec2(-(GLfloat)facingDirection * MAX_SPEED, JUMP_FORCE * .8f), 1.0f);
+										physics->Accelerate(otherPhys.GetVelocity() - glm::vec2(-0.8f * MAX_SPEED, JUMP_FORCE), 1.0f);
+										std::cout << physics->GetVelocity().x << std::endl;
 										direction.x = -facingDirection;
 										StartInputLock(.25f);
 									}
@@ -356,26 +360,6 @@ void Celeste::ResolveCollision(std::vector<GameObject*> _other)
 								delete currentState;
 								currentState = new StateClimbing();
 								currentState->Enter(*this);
-							}
-							if (locState == LocationState::CLIMBING)
-							{
-								if (Keyboard::Key(GLFW_KEY_N) && (otherPhys.GetVelocity().y < 0 || abs(otherPhys.GetVelocity()).x > AcceleratorPlatform::MAX_REVERSE_SPEED) * 1.2f)
-								{
-									if (direction.x == 0)
-									{
-										physics->Accelerate(otherPhys.GetVelocity() - glm::vec2(0.0f, JUMP_FORCE * .8f), 1.0f);
-										StartInputLock(.25f);
-									}
-									else
-									{
-										physics->Accelerate(otherPhys.GetVelocity() - glm::vec2((GLfloat)facingDirection * MAX_SPEED, JUMP_FORCE * .8f), 1.0f);
-										direction.x = -facingDirection;
-										StartInputLock(.25f);
-									}
-									delete currentState;
-									currentState = new StateInAir();
-									currentState->Enter(*this);
-								}
 							}
 						}
 						break;

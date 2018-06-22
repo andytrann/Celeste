@@ -126,11 +126,12 @@ void Game::ProcessInput()
 void Game::Update(GLfloat _dt)
 {
 	Room* currentRoom = rm->GetCurrentRoom();
-	currentRoom->Update(_dt);
 	celeste->Update(_dt);
+	currentRoom->Update(_dt);
 
 	celeste->ResolveCollision(currentRoom->GetRoomObjects());
 	currentRoom->ResolveCollisions(*celeste);
+	
 }
 
 void Game::Render()
