@@ -166,7 +166,7 @@ void AcceleratorPlatform::ResolveCollision(GameObject & _other)
 void AcceleratorPlatform::Render(SpriteRenderer & _renderer)
 {
 	GLfloat chainWidth = 8.0f;
-	GLfloat chainLength = /*abs(endPos.y - startPos.y)*/ glm::length(endPos - startPos);
+	GLfloat chainLength = glm::length(endPos - startPos);
 	glm::vec2 chainEnd = endPos + (size / 2.0f) - (chainWidth / 2.0f);
 	if (dir.x > 0)
 	{

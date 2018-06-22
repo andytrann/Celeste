@@ -348,6 +348,7 @@ void Celeste::ResolveCollision(std::vector<GameObject*> _other)
 
 					case Direction::NONE:
 					{
+						//used so player will stay attached to horizontal accelerators while climbing
 						PhysicsComponent otherPhys = _other[i]->GetPhysicsComponent();
 						glm::vec2 distance = otherPhys.GetPos() - otherPhys.GetLastPos();
 						if (!inputLocked)
