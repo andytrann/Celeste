@@ -4,9 +4,9 @@
 #include "../../Engine/IO/Keyboard.h"
 #include <iostream>
 
-const GLfloat AcceleratorPlatform::MAX_SPEED = 500.0f;
+const GLfloat AcceleratorPlatform::MAX_SPEED = 600.0f;
 const GLfloat AcceleratorPlatform::ACCELERATION = 600.0f;
-const GLfloat AcceleratorPlatform::MAX_REVERSE_SPEED = 100.0f;
+const GLfloat AcceleratorPlatform::MAX_REVERSE_SPEED = 150.0f;
 const GLfloat AcceleratorPlatform::REVERSE_ACCELERATION = 300.0f;
 const GLfloat AcceleratorPlatform::STOP_BUFFER = .2f;
 

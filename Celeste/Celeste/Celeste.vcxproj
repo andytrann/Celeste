@@ -231,9 +231,9 @@
     <Font Include="Assets\Fonts\arialbd.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Assets\Rooms\room0.txt" />
     <Text Include="Assets\Rooms\room1.txt" />
-    <Text Include="Assets\Rooms\room2.txt" />
+    <Text Include="Assets\Rooms\room.txt" />
+    <Text Include="Assets\Rooms\room0.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

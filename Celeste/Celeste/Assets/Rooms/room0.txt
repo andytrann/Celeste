@@ -1,35 +1,29 @@
-0
-HGround            0.0f  700.0f    300.0f  150.0f
-HGround          300.0f  625.0f    150.0f  175.0f
-VGround          350.0f  175.0f     50.0f  450.0f
-VGround          400.0f  175.0f     50.0f  225.0f
-HGround            0.0f  450.0f    225.0f  100.0f
-HGround            0.0f  300.0f    200.0f   25.0f 
-VGround            0.0f    0.0f    150.0f  300.0f
-VGround          550.0f  150.0f    100.0f  250.0f
-HGround          450.0f  725.0f    400.0f   50.0f 
-VGround          850.0f  650.0f    174.0f  250.0f
-VGround          975.0f  450.0f     49.0f  200.0f
-HGround          750.0f  450.0f    100.0f   75.0f 
-PassablePlatform 850.0f  450.0f    125.0f   20.0f
-PassablePlatform 700.0f  500.0f     50.0f   25.0f
-PassablePlatform 675.0f  650.0f    175.0f   20.0f
-Spikes           355.0f  155.0f     45.0f   20.0f  0.0f
-Spikes           400.0f  155.0f     45.0f   20.0f  0.0f
-Spikes           555.0f  130.0f     45.0f   20.0f  0.0f
-Spikes           600.0f  130.0f     45.0f   20.0f  0.0f
-Spikes           405.0f  605.0f     40.0f   20.0f  0.0f
-Spikes           405.0f  605.0f     40.0f   20.0f  0.0f
-Spikes           455.0f  705.0f     45.0f   20.0f  0.0f
-Spikes           500.0f  705.0f     50.0f   20.0f  0.0f
-Spikes           550.0f  705.0f     50.0f   20.0f  0.0f
-Spikes           600.0f  705.0f     50.0f   20.0f  0.0f
-Spikes           650.0f  705.0f     50.0f   20.0f  0.0f
-Spikes           700.0f  705.0f     50.0f   20.0f  0.0f
-Spikes           750.0f  705.0f     50.0f   20.0f  0.0f
-Spikes           800.0f  705.0f     45.0f   20.0f  0.0f
-Gem              490.0f  250.0f     30.0f   30.0f
-Exit            -125.0f  350.0f   1024.0f    0.0f  1
-HGround          -75.0f  450.0f     75.0f  100.0f
-Exit            -125.0f  600.0f   1024.0f    0.0f  2
-HGround          -75.0f  700.0f     75.0f  100.0f
+2
+VGround            0.0f    0.0f     50.0   350.0f
+VGround            0.0f  450.0f     50.0f  350.0f
+HGround           50.0f  675.0f    100.0f  125.0f
+VGround          150.0f  525.0f     50.0f  275.0f
+VGround          200.0f  600.0f     45.0f  200.0f
+HGround          245.0f  725.0f    450.0f  175.0f
+HGround           50.0f    0.0f    375.0f  200.0f
+HGround          500.0f    0.0f    350.0f   50.0f
+HGround          850.0f    0.0f    200.0f  100.0f
+VGround          175.0f  200.0f     25.0f   75.0f
+VGround          425.0f    0.0f     75.0f  275.0f
+HGround          750.0f  200.0f    350.0f   85.0f
+VGround          650.0f  175.0f    100.0f  110.0f
+VGround          825.0f  285.0f    200.0f  200.0f
+VGround          975.0f  485.0f     50.0f  350.0f
+PassablePlatform 550.0f  175.0f    100.0f   20.0f
+Accelerator      175.0f  300.0f     80.0f  150.0f  640.0f  300.0f
+Spikes           200.0f  580.0f     45.0f   20.0f  0.0f
+Spikes           245.0f  705.0f     45.0f   20.0f  0.0f
+Spikes           290.0f  705.0f     45.0f   20.0f  0.0f
+Spikes           335.0f  705.0f     45.0f   20.0f  0.0f
+Spikes           380.0f  705.0f     45.0f   20.0f  0.0f
+Spikes           425.0f  705.0f     45.0f   20.0f  0.0f
+Spikes           470.0f  705.0f     45.0f   20.0f  0.0f
+Spikes           515.0f  705.0f     45.0f   20.0f  0.0f
+Spikes           560.0f  705.0f     45.0f   20.0f  0.0f
+Spikes           605.0f  705.0f     45.0f   20.0f  0.0f
+Spikes           650.0f  705.0f     45.0f   20.0f  0.0f
